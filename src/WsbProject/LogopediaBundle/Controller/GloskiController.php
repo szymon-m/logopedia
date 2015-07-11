@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use WsbProject\LogopediaBundle\Entity\Ajax;
 use WsbProject\LogopediaBundle\Entity\Artykulacja;
 use WsbProject\LogopediaBundle\Entity\Gloski;
+use WsbProject\LogopediaBundle\Entity\Pacjent;
 use WsbProject\LogopediaBundle\Entity\Spotkanie;
 use WsbProject\LogopediaBundle\Form\GloskiType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -153,7 +154,26 @@ class GloskiController extends Controller
         $dane = $request->request->all();
         $dane_wyjsciowe = \Doctrine\Common\Util\Debug::dump($dane);
 
+
+
+        $spotkanie = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Spotkanie')
+            ->find(1);
+
+
+
+        /*$pacjent = new Pacjent();
+        $pacjent->setImie('Szymon');
+        $pacjent->setNazwisko('Matyla');
+        $pacjent->setTelefon('535187390');
+        $pacjent->setAdres('Reja 13');
+        $pacjent->setMiejscowosc('Chojnice');
+
         $spotkanie = new Spotkanie();
+        $spotkanie->setStart(new \DateTime('now'));
+        $spotkanie->setEnd(new \DateTime('now'));
+        $spotkanie->setAllday(true);
+        $spotkanie->setPacjenci($pacjent);*/
 
 
         $artykulacja = new Artykulacja();
@@ -163,6 +183,7 @@ class GloskiController extends Controller
             $artykulacja->setValue('a',$key,$value);
         }
 
+        $artykulacja->setSpotkanie($spotkanie);
 
 
         $em = $this->getDoctrine()->getManager();

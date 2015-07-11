@@ -2,6 +2,7 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -194,17 +195,24 @@ class Artykulacja
      *
      * @ORM\ManyToOne(targetEntity="Spotkanie")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="spotkanie", referencedColumnName="id")
+     *     @ORM\JoinColumn(name="spotkanie", referencedColumnName="id")
      * })
      */
     private $spotkanie;
 
+    public function __construct()
+    {
+        $this->spotkanie = new ArrayCollection();
+    }
+
     /**
      * @param \Spotkanie $spotkanie
      */
-    public function setSpotkanie($spotkanie)
+    public function setSpotkanie(\WsbProject\LogopediaBundle\Entity\Spotkanie $spotkanie = null)
     {
         $this->spotkanie = $spotkanie;
+
+
     }
 
 

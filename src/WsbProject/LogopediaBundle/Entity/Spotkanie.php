@@ -2,6 +2,7 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -103,9 +104,11 @@ class Spotkanie
     /**
      * @param \Pacjent $pacjenci
      */
-    public function setPacjenci($pacjenci)
+    public function setPacjenci(\LogopediaBundle\Entity\Pacjent $pacjenci = null)
     {
         $this->pacjenci = $pacjenci;
+
+        return $this;
     }
     /**
      * @var integer
@@ -153,6 +156,11 @@ class Spotkanie
      * })
      */
     private $pacjenci;
+
+    public function __construct()
+    {
+        $this->pacjenci = new ArrayCollection();
+    }
 
 
 }
