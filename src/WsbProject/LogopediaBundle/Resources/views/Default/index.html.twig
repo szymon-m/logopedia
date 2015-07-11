@@ -1,1 +1,29 @@
-Hello {{ name }}!
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+    <div class="section group">
+        <div class="col span_1_of_3">
+            Hello world
+
+        </div>
+        <div class="col span_2_of_3">
+
+            <div id="calendar">{% include 'LogopediaBundle:Default:calendar.html.twig' %}</div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+

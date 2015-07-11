@@ -7,3 +7,8 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+      calendar_listener:
+               class: WsbProject\LogopediaBundle\EventListener\CalendarEventListener
+               arguments: ["@doctrine.orm.entity_manager"]
+               tags:
+                    - { name: kernel.event_listener, event: calendar.load_events, method: loadEvents }

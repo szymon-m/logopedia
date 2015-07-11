@@ -1,0 +1,77 @@
+.logopedia {
+    background: #abd22e;
+    color: #fff;
+    display: block;
+    padding: 7px 8px;
+    text-decoration: none;
+    border-top: 1px solid #069;
+    border-radius: 0px 0px 0px 7px;
+    border-radius: 0px 0px 7px 0px;
+    color: #fff;
+}
+
+
+.navigation {
+    float:right;
+}
+
+.nav {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.nav li {
+    float: left;
+    margin-right: 2px;
+    width: 160px;
+    position: relative;
+
+
+}
+
+.nav li a {
+    background: #abd22e;
+    color: #fff;
+    display: block;
+    padding: 7px 8px;
+    text-decoration: none;
+    border-top: 1px solid #069;
+    border-radius: 0px 0px 0px 7px;
+}
+
+.nav li a:hover {
+    color: #069;
+}
+
+/*=== submenu ===*/
+
+.nav ul {
+    display: none;
+    position: absolute;
+    margin-left: 0px;
+    list-style: none;
+    padding: 0px;
+
+}
+
+.nav ul li {
+    width: 160px;
+    float: left;
+}
+
+.nav ul a {
+    display: block;
+    height: 1em;
+    padding: 7px 8px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 2px;
+    border-bottom: 1px solid #abd22e;
+    border-top: 1px solid #abd22e;
+    border-radius: 7px 7px 7px 7px;
+}
+
+.nav ul li a:hover {
+    color: #069;
+}

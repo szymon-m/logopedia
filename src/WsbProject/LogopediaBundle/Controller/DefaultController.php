@@ -10,10 +10,19 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/hello/{name}")
-     * @Template()
+     * @Template("LogopediaBundle:Default:index.html.twig")
      */
     public function indexAction($name)
     {
         return array('name' => $name);
     }
+    /**
+     * @Route("/kalendarz")
+     * @Template()
+     */
+    public function kalendarzAction($name)
+    {
+        return array('name' => $name);
+    }
+
 }
