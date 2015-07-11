@@ -1,0 +1,6 @@
+logopedia:
+    resource: "@LogopediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
