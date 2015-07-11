@@ -1,0 +1,54 @@
+
+    <script>
+        $(function() {
+            $('.nav li').hover(
+                    function () { //appearing on hover
+                        $('ul', this).fadeIn();
+                    },
+                    function () { //disappearing on hover
+                        $('ul', this).fadeOut();
+                    }
+            );
+        });
+    </script>
+
+
+<div class="container">
+    <div class="section group">
+        <div class="col span_1_of_3">
+
+            <ul class="logopedia">
+                <li>
+                    Logopedia
+                </li>
+
+        </div>
+        <div class="col span_2_of_3">
+            <div class="navigation">
+                <ul class="nav">
+                    <li>
+                        <a href="#">Strona główna</a>
+                    </li>
+                    <li>
+                        <a href="#">Pacjent</a>
+                        <ul>
+                            <li><a href="#">Dodaj nowego pacjenta</a></li>
+                            <li><a href="#">Umów spotkanie</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Spotkanie</a>
+                        <ul>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Mission</a></li>
+                            <li><a href="#">Contact Information</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+

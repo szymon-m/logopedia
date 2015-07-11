@@ -1,0 +1,251 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+{% block content %}
+    <script>
+        $(document).ready(function () {
+
+            //$("[id^=group]").buttonset();
+            var wynik = {};
+
+
+            for (var num = 1; num <= 24; num++) {
+
+
+                $('#group-' + num).buttonset();
+                //('#group[id]).buttonset();
+            }
+            $( '#a' ).button( "option", "disabled", true );
+            $( '#e' ).button( "option", "disabled", true );
+            $( '#o' ).button( "option", "disabled", true );
+            $( '#u' ).button( "option", "disabled", true );
+            $( '#i' ).button( "option", "disabled", true );
+            $( '#ae' ).button( "option", "disabled", true );
+            $( '#l' ).button( "option", "disabled", true );
+            $( '#r' ).button( "option", "disabled", true );
+            $( '#m' ).button( "option", "disabled", true );
+            $( '#n' ).button( "option", "disabled", true );
+            $( '#ni' ).button( "option", "disabled", true );
+            $( '#w' ).button( "option", "disabled", true );
+            $( '#j' ).button( "option", "disabled", true );
+
+            $( '#kg' ).button( "option", "disabled", true );
+            $( '#t' ).button( "option", "disabled", true );
+            $( '#pb' ).button( "option", "disabled", true );
+            $( '#sz' ).button( "option", "disabled", true );
+            $( '#cz' ).button( "option", "disabled", true );
+            $( '#szzy' ).button( "option", "disabled", true );
+            $( '#czzy' ).button( "option", "disabled", true );
+            $( '#cizi' ).button( "option", "disabled", true );
+            $( '#sizi' ).button( "option", "disabled", true );
+            $( '#fw' ).button( "option", "disabled", true );
+            $( '#h' ).button( "option", "disabled", true );
+
+            $("#accordion").accordion();
+        });
+
+    </script>
+    {{ text }}
+
+<div id="accordion">
+    <h3>Samogłoski</h3>
+    <div>
+    <div id="group-1">
+        <input type="checkbox" id="a" name="a1" value="0" /><label for="a"><b>A</b></label>
+        <input type="checkbox" id="1" name="a2" value="6" /><label for="1">Nie</label>
+        <input type="checkbox" id="2" name="a3" value="7" /><label for="2">Nagłos</label>
+        <input type="checkbox" id="3" name="a4" value="8" /><label for="3">Śródgłos</label>
+        <input type="checkbox" id="4" name="a5" value="9" /><label for="4">Wygłos</label>
+        <input type="checkbox" id="5" name="a6" value="10" /><label for="5">Grupa spółgł.</label>
+    </div>
+    <div id="group-2">
+        <input type="checkbox" id="e" name="e" value="0" /><label for="e"><b>E</b></label>
+        <input type="checkbox" id="6" name="e1" value="10" /><label for="6">Nie</label>
+        <input type="checkbox" id="7" name="e2" value="0" /><label for="7">Nagłos</label>
+        <input type="checkbox" id="8" name="e3" value="0" /><label for="8">Śródgłos</label>
+        <input type="checkbox" id="9" name="e4" value="0" /><label for="9">Wygłos</label>
+        <input type="checkbox" id="10" name="e5" value="0" /><label for="10">Grupa spółgł.</label>
+    </div>
+    <div id="group-3">
+        <input type="checkbox" id="o" name="o" value="0" /><label for="o"><b>O</b></label>
+        <input type="checkbox" id="11" name="o1" value="10" /><label for="11">Nie</label>
+        <input type="checkbox" id="12" name="o2" value="0" /><label for="12">Nagłos</label>
+        <input type="checkbox" id="13" name="o3" value="0" /><label for="13">Śródgłos</label>
+        <input type="checkbox" id="14" name="o4" value="0" /><label for="14">Wygłos</label>
+        <input type="checkbox" id="15" name="o5" value="0" /><label for="15">Grupa spółgł.</label>
+    </div>
+    <div id="group-4">
+        <input type="checkbox" id="u" name="u" value="0" /><label for="u"><b>U</b></label>
+        <input type="checkbox" id="16" name="u1" value="1" /><label for="16">Nie</label>
+        <input type="checkbox" id="17" name="u2" value="2" /><label for="17">Nagłos</label>
+        <input type="checkbox" id="18" name="u3" value="3" /><label for="18">Śródgłos</label>
+        <input type="checkbox" id="19" name="u4" value="4" /><label for="19">Wygłos</label>
+        <input type="checkbox" id="20" name="u5" value="5" /><label for="20">Grupa spółgł.</label>
+    </div>
+    <div id="group-5">
+        <input type="checkbox" id="i" name="i" value="0" /><label for="i"><b>I</b></label>
+        <input type="checkbox" id="21" name="i1" value="1" /><label for="21">Nie</label>
+        <input type="checkbox" id="22" name="i2" value="2" /><label for="22">Nagłos</label>
+        <input type="checkbox" id="23" name="i3" value="3" /><label for="23">Śródgłos</label>
+        <input type="checkbox" id="24" name="i4" value="4" /><label for="24">Wygłos</label>
+        <input type="checkbox" id="25" name="i5" value="5" /><label for="25">Grupa spółgł.</label>
+    </div>
+    <div id="group-6">
+        <input type="checkbox" id="ae" name="ae" value="0" /><label for="ae"><b>Ą Ę</b></label>
+        <input type="checkbox" id="26" name="ae1" value="1" /><label for="26">Nie</label>
+        <input type="checkbox" id="27" name="ae2" value="2" /><label for="27">Nagłos</label>
+        <input type="checkbox" id="28" name="ae3" value="3" /><label for="28">Śródgłos</label>
+        <input type="checkbox" id="29" name="ae4" value="4" /><label for="29">Wygłos</label>
+        <input type="checkbox" id="30" name="ae5" value="5" /><label for="30">Grupa spółgł.</label>
+    </div></div>
+
+    <h3>Spółgłoski</h3>
+    <div>
+    <div id="group-7">
+        <input type="checkbox" id="l" name="1" value="0" /><label for="l"><b>L Ł</b></label>
+        <input type="checkbox" id="31" name="l1" value="1" /><label for="31">Nie</label>
+        <input type="checkbox" id="32" name="l2" value="2" /><label for="32">Nagłos</label>
+        <input type="checkbox" id="33" name="l3" value="3" /><label for="33">Śródgłos</label>
+        <input type="checkbox" id="34" name="l4" value="4" /><label for="34">Wygłos</label>
+        <input type="checkbox" id="35" name="l5" value="5" /><label for="35">Grupa spółgł.</label>
+    </div>
+    <div id="group-8">
+        <input type="checkbox" id="r" name="r" value="0" /><label for="r"><b>R</b></label>
+        <input type="checkbox" id="36" name="r1" value="1" /><label for="36">Nie</label>
+        <input type="checkbox" id="37" name="r2" value="2" /><label for="37">Nagłos</label>
+        <input type="checkbox" id="38" name="r3" value="3" /><label for="38">Śródgłos</label>
+        <input type="checkbox" id="39" name="r4" value="4" /><label for="39">Wygłos</label>
+        <input type="checkbox" id="40" name="r5" value="5" /><label for="40">Grupa spółgł.</label>
+    </div>
+    <div id="group-9">
+        <input type="checkbox" id="m" name="m" value="0" /><label for="m"><b>M</b></label>
+        <input type="checkbox" id="41" name="m1" value="1" /><label for="41">Nie</label>
+        <input type="checkbox" id="42" name="m2" value="2" /><label for="42">Nagłos</label>
+        <input type="checkbox" id="43" name="m3" value="3" /><label for="43">Śródgłos</label>
+        <input type="checkbox" id="44" name="m4" value="4" /><label for="44">Wygłos</label>
+        <input type="checkbox" id="45" name="m5" value="5" /><label for="45">Grupa spółgł.</label>
+    </div>
+    <div id="group-10">
+        <input type="checkbox" id="n" name="n" value="0" /><label for="n"><b>N</b></label>
+        <input type="checkbox" id="46" name="n1" value="1" /><label for="46">Nie</label>
+        <input type="checkbox" id="47" name="n2" value="2" /><label for="47">Nagłos</label>
+        <input type="checkbox" id="48" name="n3" value="3" /><label for="48">Śródgłos</label>
+        <input type="checkbox" id="49" name="n4" value="4" /><label for="49">Wygłos</label>
+        <input type="checkbox" id="50" name="n5" value="5" /><label for="50">Grupa spółgł.</label>
+    </div>
+    <div id="group-11">
+        <input type="checkbox" id="ni" name="ni" value="0" /><label for="ni"><b>Ń</b></label>
+        <input type="checkbox" id="51" name="ni1" value="1" /><label for="51">Nie</label>
+        <input type="checkbox" id="52" name="ni2" value="2" /><label for="52">Nagłos</label>
+        <input type="checkbox" id="53" name="ni3" value="3" /><label for="53">Śródgłos</label>
+        <input type="checkbox" id="54" name="ni4" value="4" /><label for="54">Wygłos</label>
+        <input type="checkbox" id="55" name="ni5" value="5" /><label for="55">Grupa spółgł.</label>
+    </div>
+    <div id="group-12">
+        <input type="checkbox" id="w" name="w" value="0" /><label for="w"><b>W</b></label>
+        <input type="checkbox" id="56" name="w1" value="1" /><label for="56">Nie</label>
+        <input type="checkbox" id="57" name="w2" value="2" /><label for="57">Nagłos</label>
+        <input type="checkbox" id="58" name="w3" value="3" /><label for="58">Śródgłos</label>
+        <input type="checkbox" id="59" name="w4" value="4" /><label for="59">Wygłos</label>
+        <input type="checkbox" id="60" name="w5" value="5" /><label for="60">Grupa spółgł.</label>
+    </div>
+    <div id="group-13">
+        <input type="checkbox" id="j" name="j" value="0" /><label for="j"><b>J</b></label>
+        <input type="checkbox" id="61" name="le1" value="1" /><label for="61">Nie</label>
+        <input type="checkbox" id="62" name="le2" value="2" /><label for="62">Nagłos</label>
+        <input type="checkbox" id="63" name="le3" value="3" /><label for="63">Śródgłos</label>
+        <input type="checkbox" id="64" name="le4" value="4" /><label for="64">Wygłos</label>
+        <input type="checkbox" id="65" name="le5" value="5" /><label for="65">Grupa spółgł.</label>
+    </div>
+    </div>
+    <h3>Inne</h3>
+    <div>
+    <div id="group-14">
+        <input type="checkbox" id="kg" name="kg" value="0" /><label for="kg"><b>K:G</b></label>
+        <input type="checkbox" id="66" name="kg1" value="1" /><label for="66">Nie</label>
+        <input type="checkbox" id="67" name="kg2" value="2" /><label for="67">Nagłos</label>
+        <input type="checkbox" id="68" name="kg3" value="3" /><label for="68">Śródgłos</label>
+        <input type="checkbox" id="69" name="kg4" value="4" /><label for="69">Wygłos</label>
+        <input type="checkbox" id="70" name="kg5" value="5" /><label for="70">Grupa spółgł.</label>
+    </div>
+    <div id="group-15">
+        <input type="checkbox" id="t" name="t" value="0" /><label for="t"><b>T:D</b></label>
+        <input type="checkbox" id="71" name="t1" value="1" /><label for="71">Nie</label>
+        <input type="checkbox" id="72" name="t2" value="2" /><label for="72">Nagłos</label>
+        <input type="checkbox" id="73" name="t3" value="3" /><label for="73">Śródgłos</label>
+        <input type="checkbox" id="74" name="t4" value="4" /><label for="74">Wygłos</label>
+        <input type="checkbox" id="75" name="t5" value="5" /><label for="75">Grupa spółgł.</label>
+    </div>
+    <div id="group-16">
+        <input type="checkbox" id="pb" name="pb" value="0" /><label for="pb"><b>P:B</b></label>
+        <input type="checkbox" id="76" name="pb1" value="1" /><label for="76">Nie</label>
+        <input type="checkbox" id="77" name="pb2" value="2" /><label for="77">Nagłos</label>
+        <input type="checkbox" id="78" name="pb3" value="3" /><label for="78">Śródgłos</label>
+        <input type="checkbox" id="79" name="pb4" value="4" /><label for="79">Wygłos</label>
+        <input type="checkbox" id="80" name="pb5" value="5" /><label for="80">Grupa spółgł.</label>
+    </div>
+    <div id="group-17">
+        <input type="checkbox" id="sz" name="sz" value="0" /><label for="sz"><b>S:Z</b></label>
+        <input type="checkbox" id="81" name="sz1" value="1" /><label for="81">Nie</label>
+        <input type="checkbox" id="82" name="sz2" value="2" /><label for="82">Nagłos</label>
+        <input type="checkbox" id="83" name="sz3" value="3" /><label for="83">Śródgłos</label>
+        <input type="checkbox" id="84" name="sz4" value="4" /><label for="84">Wygłos</label>
+        <input type="checkbox" id="85" name="sz5" value="5" /><label for="85">Grupa spółgł.</label>
+    </div>
+    <div id="group-18">
+        <input type="checkbox" id="cz" name="cz" value="0" /><label for="cz"><b>C:Ż</b></label>
+        <input type="checkbox" id="86" name="cz1" value="1" /><label for="86">Nie</label>
+        <input type="checkbox" id="87" name="cz2" value="2" /><label for="87">Nagłos</label>
+        <input type="checkbox" id="88" name="cz3" value="3" /><label for="88">Śródgłos</label>
+        <input type="checkbox" id="89" name="cz4" value="4" /><label for="89">Wygłos</label>
+        <input type="checkbox" id="90" name="cz5" value="5" /><label for="90">Grupa spółgł.</label>
+    </div>
+    <div id="group-19">
+        <input type="checkbox" id="szzy" name="szzy" value="0" /><label for="szzy"><b>SZ:Ż</b></label>
+        <input type="checkbox" id="91" name="szzy1" value="1" /><label for="91">Nie</label>
+        <input type="checkbox" id="92" name="szzy2" value="2" /><label for="92">Nagłos</label>
+        <input type="checkbox" id="93" name="szzy3" value="3" /><label for="93">Śródgłos</label>
+        <input type="checkbox" id="94" name="szzy4" value="4" /><label for="94">Wygłos</label>
+        <input type="checkbox" id="95" name="szzy5" value="5" /><label for="95">Grupa spółgł.</label>
+    </div>
+    <div id="group-20">
+        <input type="checkbox" id="czzy" name="czzy" value="0" /><label for="czzy"><b>CZ:Ż</b></label>
+        <input type="checkbox" id="96" name="czzy1" value="1" /><label for="96">Nie</label>
+        <input type="checkbox" id="97" name="czzy2" value="2" /><label for="97">Nagłos</label>
+        <input type="checkbox" id="98" name="czzy3" value="3" /><label for="98">Śródgłos</label>
+        <input type="checkbox" id="99" name="czzy4" value="4" /><label for="99">Wygłos</label>
+        <input type="checkbox" id="100" name="czzy5" value="5" /><label for="100">Grupa spółgł.</label>
+    </div>
+    <div id="group-21">
+        <input type="checkbox" id="cizi" name="cizi" value="0" /><label for="cizi"><b>Ć:Ź</b></label>
+        <input type="checkbox" id="101" name="cizi1" value="1" /><label for="101">Nie</label>
+        <input type="checkbox" id="102" name="cizi2" value="2" /><label for="102">Nagłos</label>
+        <input type="checkbox" id="103" name="cizi3" value="3" /><label for="103">Śródgłos</label>
+        <input type="checkbox" id="104" name="cizi4" value="4" /><label for="104">Wygłos</label>
+        <input type="checkbox" id="105" name="cizi5" value="5" /><label for="105">Grupa spółgł.</label>
+    </div>
+    <div id="group-22">
+        <input type="checkbox" id="sizi" name="sizi" value="0" /><label for="sizi"><b>Ś:Ź</b></label>
+        <input type="checkbox" id="106" name="sizi1" value="1" /><label for="106">Nie</label>
+        <input type="checkbox" id="107" name="sizi2" value="2" /><label for="107">Nagłos</label>
+        <input type="checkbox" id="108" name="sizi3" value="3" /><label for="108">Śródgłos</label>
+        <input type="checkbox" id="109" name="sizi4" value="4" /><label for="109">Wygłos</label>
+        <input type="checkbox" id="110" name="sizi5" value="5" /><label for="110">Grupa spółgł.</label>
+    </div>
+    <div id="group-23">
+        <input type="checkbox" id="fw" name="fw" value="0" /><label for="fw"><b>F:W</b></label>
+        <input type="checkbox" id="111" name="fw1" value="1" /><label for="111">Nie</label>
+        <input type="checkbox" id="112" name="fw2" value="2" /><label for="112">Nagłos</label>
+        <input type="checkbox" id="113" name="fw3" value="3" /><label for="113">Śródgłos</label>
+        <input type="checkbox" id="114" name="fw4" value="4" /><label for="114">Wygłos</label>
+        <input type="checkbox" id="115" name="fw5" value="5" /><label for="115">Grupa spółgł.</label>
+    </div>
+    <div id="group-24">
+        <input type="checkbox" id="h" name="h" value="0" /><label for="h"><b>H</b></label>
+        <input type="checkbox" id="116" name="h1" value="1" /><label for="116">Nie</label>
+        <input type="checkbox" id="117" name="h2" value="2" /><label for="117">Nagłos</label>
+        <input type="checkbox" id="118" name="h3" value="3" /><label for="118">Śródgłos</label>
+        <input type="checkbox" id="119" name="h4" value="4" /><label for="119">Wygłos</label>
+        <input type="checkbox" id="120" name="h5" value="5" /><label for="120">Grupa spółgł.</label>
+    </div>
+    </div>
+</div>
+{% endblock %}

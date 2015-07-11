@@ -17,12 +17,16 @@ class DefaultController extends Controller
         return array('name' => $name);
     }
     /**
-     * @Route("/kalendarz")
-     * @Template()
+     * @Route("/artykulacja", name="artykulacja")
+     * @Template("LogopediaBundle:Default:artykulacja.html.twig")
      */
-    public function kalendarzAction($name)
+    public function artykulacjaAction()
     {
-        return array('name' => $name);
+        $text = "To jest formularz artykulacji";
+
+        return array('text'=> $text);
+
+
     }
 
 }
