@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use WsbProject\LogopediaBundle\Entity\Ajax;
+use WsbProject\LogopediaBundle\Entity\Artykulacja;
 use WsbProject\LogopediaBundle\Entity\Gloski;
+use WsbProject\LogopediaBundle\Entity\Spotkanie;
 use WsbProject\LogopediaBundle\Form\GloskiType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -143,25 +145,29 @@ class GloskiController extends Controller
 
     }
     /**
-     * @Route("/sprawdz", name="sprawdz", options={"expose"=true})
+     * @Route("/dodaj", name="dodaj", options={"expose"=true})
      * @Template()
      */
-    public function sprawdzAction(Request $request) {
+    public function dodajAction(Request $request) {
 
         $dane = $request->request->all();
         $dane_wyjsciowe = \Doctrine\Common\Util\Debug::dump($dane);
 
+        $spotkanie = new Spotkanie();
 
-        $ajax = new Ajax();
+
+        $artykulacja = new Artykulacja();
 
         foreach($dane as $key => $value) {
 
-            $ajax->setValue('a',$key,$value);
+            $artykulacja->setValue('a',$key,$value);
         }
 
 
+
         $em = $this->getDoctrine()->getManager();
-        $em->persist($ajax);
+
+        $em->persist($artykulacja);
         $em->flush();
 
         $rodzaj_danych = $request->getContentType();

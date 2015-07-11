@@ -40,10 +40,70 @@
             $( '#h' ).button( "option", "disabled", true );
 
             $("#accordion").accordion();
+
+            $(":input").change( function () {
+
+                var tmp = '';
+                for (var num = 1; num <= 120; num++) {
+
+                    if($('#'+num).is(':checked')) {
+
+                        tmp += '1';
+                    } else { tmp += '0'};
+
+                    //var value = $('#'+num).get('checked');
+
+                    //tmp = tmp+value;
+
+                    if((num%5) == 0) {
+
+                        position = num/5;
+
+                        wynik[position] = tmp;
+                        tmp = '';
+                    };
+
+
+
+                }
+
+
+
+            });
+            $("#wyslij").click(function (){
+
+                $.ajax({
+                    url : Routing.generate('dodaj'),
+                    type: "POST",
+                    data : wynik,
+                    success: function(dane) {
+                        // Replace current position field ...
+
+
+                        // $('#aktorzy').empty();
+                        // $('#aktorzy').append(html);
+                        $('#odpowiedz').append(dane);
+
+                        // is working !! $("#odpowiedz").append(dane);
+
+                        //var result = $('<div />').append(dane).find('#aktorzy').html();
+                        //$('#aktorzy').html(result);
+                        //$('#aktorzy').replaceWith
+                        //($(dane).find('#aktorzy'));
+                        //$('#aktorzy').replaceWith(
+                        // ... with the returned one from the AJAX response.
+                        //      $(html).find('aktorzy')
+                        // Position field now displays the appropriate positions.
+                    }
+
+                });
+
+            });
         });
 
     </script>
     {{ text }}
+    <div id="wyslij"><button type="button" id="wyslij" name="wyslij">Wyślij</button></div>
 
 <div id="accordion">
     <h3>Samogłoski</h3>
