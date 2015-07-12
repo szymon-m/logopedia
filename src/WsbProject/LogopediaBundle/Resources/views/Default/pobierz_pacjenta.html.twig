@@ -3,37 +3,31 @@
 {% block content %}
 
     {%  include 'LogopediaBundle:Default:menu.html.twig' %}
-
-    <script>
+<script>
         $(function () {
 
-            var dostepni = [
-                    "Lechu Copa",
-                    "Szymon Matyla"
-            ];
-            function log (message) {
-                $("<div>").text(message).prependTo("#log");
-                $("#log").scrollTop(0);
-            }
+
 
 
             $("#pacjent").autocomplete({
 
-                source: Routing.generate('pobierz_pacjenta'),
-                minLength: 3,
-                select: function (event, ui) {
-                    log( ui.item ?
-                    "Wybrano" + ui.item.label :
-                    "Nie wybrano , wartość była" + this.value);
-                },
-                open: function () {
-                    $(this).removeClass("ui-corner-all").addClass("ui-corner-top");
-                },
-                close: function () {
-                    $(this).removeClass("ui-corner-top").addClass("ui-corner-all");
-                }
+                source: function (request, response){
 
-            });
+                    $.ajax({
+                        url: Routing.generate('pobierz_pacjenta'),
+
+                        data: {
+                            q: request.value
+                        },
+                        success: function(data) {
+
+                           return response(data);
+                        }
+                    });
+                },
+                minLength: 3
+
+            })
 
 
         });
@@ -45,7 +39,7 @@
 
 
 
-    <br>
+        <br>
     <br>
     <br>
     <div class="section group">
@@ -57,7 +51,7 @@
                 <input id="pacjent">
             </div>
             <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-                Result:
+            Result:
                 <div id="log" style="height: 200px; width:300px; overflow: auto;" class="ui-widget-content">
                 </div>
             </div>
@@ -68,6 +62,7 @@
 
         </div>
     </div>
+
 
 
 
