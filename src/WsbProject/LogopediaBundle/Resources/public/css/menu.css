@@ -1,15 +1,6 @@
-.logopedia {
-    background: #abd22e;
-    color: #fff;
-    display: block;
-    padding: 7px 8px;
-    text-decoration: none;
-    border-top: 1px solid #069;
-    border-radius: 0px 0px 0px 7px;
-    border-radius: 0px 0px 7px 0px;
-    color: #fff;
+.hbutton {
+    width: 100px;
 }
-
 
 .navigation {
     float:right;
