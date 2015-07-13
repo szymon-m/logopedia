@@ -2,6 +2,7 @@
 <html>
 <head lang="pl">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
@@ -38,19 +39,7 @@
         }
 
     </style>
-    <script>
-        $(function() {
-            $('.nav li').hover(
-                    function () { //appearing on hover
-                        $('ul', this).fadeIn();
-                    },
-                    function () { //disappearing on hover
-                        $('ul', this).fadeOut();
-                    }
-            );
-        });
-    </script>
-</head>
+    </head>
 <body>
 <div class="container">
     {% block content %}{% endblock %}

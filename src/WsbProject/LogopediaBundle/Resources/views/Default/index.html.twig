@@ -11,19 +11,34 @@
                     "Lechu Copa",
                     "Szymon Matyla"
             ];
+
             function log (message) {
                 $("<div>").text(message).prependTo("#log");
                 $("#log").scrollTop(0);
             }
+            /*
 
+                    DZIAŁAJĄCY AUTOCOMPLETE
+                    pobiera dane pacjenta
+                    zwraca obiekt :
+
+                        - id : id_pacjenta
+                        - value : czyli treść do wyśiwetleniea : imie + nazwisko
+                        - label : j.w.
+
+
+
+             */
 
             $("#pacjent").autocomplete({
 
                 source: Routing.generate('pobierz_pacjenta'),
                 minLength: 3,
                 select: function (event, ui) {
+                    //event.preventDefault();
+                    //('#pacjent').val(ui.item.label);
                     log( ui.item ?
-                    "Wybrano" + ui.item.label :
+                    "Wybrano" + ui.item.id :
                     "Nie wybrano , wartość była" + this.value);
                 },
                 open: function () {
@@ -42,12 +57,6 @@
 
 
     </script>
-
-
-
-    <br>
-    <br>
-    <br>
     <div class="section group">
         <div class="col span_1_of_3">
 

@@ -88,7 +88,7 @@ class DefaultController extends Controller
 
         foreach($pacjenci as $pacjent) {
 
-            array_push($list,array("label"=> $pacjent->getImie().' '.$pacjent->getNazwisko(), "value" => $pacjent->getId()) );
+            array_push($list,array("value" => $pacjent->getImie().' '.$pacjent->getNazwisko(), "label"=> $pacjent->getImie().' '.$pacjent->getNazwisko(), "id" => $pacjent->getId()) );
 
             //$list['label'] = $pacjent->getImie().' '.$pacjent->getNazwisko();
             //$list['value'] = $pacjent->getId();
