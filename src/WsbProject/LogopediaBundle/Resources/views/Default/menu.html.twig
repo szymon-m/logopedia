@@ -27,25 +27,32 @@
             <div class="navigation">
                 <ul class="nav">
                     <li>
-                        <a href="#">Strona główna</a>
+                        <a href="{{ path('kalendarz')}}">Kalendarz</a>
                     </li>
                     <li>
-                        <a href="#">Pacjent</a>
+                        <a href="{{ path('main')}}">Pacjent</a>
                         <ul>
-                            <li><a href="#">Dodaj nowego pacjenta</a></li>
-                            <li><a href="#">Umów spotkanie</a></li>
+                            <li><a href="#">Przeglądaj</a></li>
+                            <li><a href="#">Dodaj nowego</a></li>
+
+
 
                         </ul>
                     </li>
                     <li>
                         <a href="#">Spotkanie</a>
                         <ul>
-                            <li><a href="#">Company</a></li>
-                            <li><a href="#">Mission</a></li>
-                            <li><a href="#">Contact Information</a></li>
-                            <li><a href="#">Contact Information</a></li>
-                            <li><a href="#">Contact Information</a></li>
-                            <li><a href="#">Contact Information</a></li>
+                            <li><a href="{{ path('kalendarz')}}">Dzisiaj</a></li>
+                            <li><a href="#">Szukaj</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Administrator</a>
+                        <ul>
+                            <li><a href="#">Usuń pacjenta</a></li>
+                            <li><a href="#">Ustawienia</a></li>
+
                         </ul>
                     </li>
                 </ul>

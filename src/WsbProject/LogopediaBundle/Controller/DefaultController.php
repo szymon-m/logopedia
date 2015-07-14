@@ -11,11 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
+     * @Route("/", name="main", options={"expose"=true})
      * @Template("LogopediaBundle:Default:index.html.twig")
      */
-    public function indexAction($name)
+    public function indexAction()
     {
+        $name = "Szymon";
         return array('name' => $name);
     }
     /**
