@@ -104,7 +104,7 @@ class Spotkanie
     /**
      * @param \Pacjent $pacjenci
      */
-    public function setPacjenci(\LogopediaBundle\Entity\Pacjent $pacjenci = null)
+    public function setPacjenci(\Pacjent $pacjenci = null)
     {
         $this->pacjenci = $pacjenci;
 

@@ -20,6 +20,7 @@ $(function () {
                 // options apply to agendaWeek and agendaDay views
             },
             week: {
+                setHeight: 400,
                 timeFormat: 'HH:mm'
                 // options apply to basicWeek and agendaWeek views
             },

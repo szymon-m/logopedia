@@ -29,7 +29,7 @@ class CalendarEventListener
 
         // load events using your custom logic here,
         // for instance, retrieving events from a repository
-        $companyEvents = $this->entityManager->getRepository('LogopediaBundle:Zdarzenia')
+        $companyEvents = $this->entityManager->getRepository('LogopediaBundle:Spotkanie')
             ->createQueryBuilder('company_events')
             ->getQuery()->getResult();
 
