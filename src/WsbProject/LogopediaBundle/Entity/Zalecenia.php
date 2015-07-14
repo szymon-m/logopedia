@@ -38,7 +38,10 @@ class Zalecenia
      */
     private $idSpotkania;
 
-
+    public function __construct()
+    {
+        $this->idSpotkania = new ArrayCollection();
+    }
 
     /**
      * Get id

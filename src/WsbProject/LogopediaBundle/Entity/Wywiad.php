@@ -178,7 +178,10 @@ class Wywiad
      */
     private $idPacjenta;
 
-
+    public function __construct()
+    {
+        $this->idPacjenta = new ArrayCollection();
+    }
 
     /**
      * Get id
