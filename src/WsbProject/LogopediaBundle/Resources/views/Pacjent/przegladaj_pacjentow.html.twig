@@ -1,0 +1,95 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    <br>
+    <br>
+
+    <div class="section group">
+
+
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                    Zestawienie pacjentów odwiedzających Twój gabinet.
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col span_3_of_4">
+
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Pacjenci</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab2" class="tab active">
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="flash-notice">{{ flashMessage }}</div>
+                        {% endfor %}
+
+                        <div class="CSSTableGenerator">
+                            <table>
+                                <tr>
+                                    <td>Lp.</td>
+                                    <td>Imię i nazwisko</td>
+                                    <td>Adres i miejscowość</td>
+                                    <td>Telefon</td>
+                                    <td>Wybierz</td>
+                                </tr>
+                                {% for pacjent in pacjenci %}
+                                <tr>
+                                    <td>{{ pacjent.id }}</td>
+                                    <td>{{ pacjent.imie }}  {{ pacjent.nazwisko }}</td>
+                                    <td>{{ pacjent.adres }} {{ pacjent.miejscowosc }}</td>
+                                    <td>{{ pacjent.telefon }}</td>
+                                    <td><a href="{{ path('pacjent',{'id': pacjent.id }) }}"> Wybierz</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+

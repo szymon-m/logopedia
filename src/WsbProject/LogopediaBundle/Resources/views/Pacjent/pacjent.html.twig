@@ -20,6 +20,12 @@
         });
 
     </script>
+    <style>
+        p {
+            word-wrap: break-word;
+            overflow: auto;
+        }
+    </style>
     <br>
     <br>
 
@@ -29,13 +35,21 @@
         <div class="col span_1_of_4">
             <div class="tabs">
                 <ul class="tab-links">
-                    <li class="active"><a href="#tab1">Informacja</a></li>
+                    <li class="active"><a href="#tab1">Pacjent</a></li>
 
                 </ul>
 
                 <div class="tab-content">
                     <div id="tab1" class="tab active">
-                    W tym miejscu możesz dodać nowego pacjenta
+
+                        <br>
+
+                    <b>Imie: </b> {{ pacjent.imie }}<br>
+                    <b>Nazwisko: </b> {{ pacjent.nazwisko }}<br>
+                    <b>Adres:</b> {{ pacjent.adres }} {{ pacjent.miejscowosc }}<br>
+                    <b>Telefon:</b> {{ pacjent.telefon }}<br>
+
+
                     </div>
 
 
@@ -43,24 +57,37 @@
             </div>
         </div>
         <div class="col span_3_of_4">
-            <div class="tabs">
-                <ul class="tab-links">
-                    <li class="active"><a href="#tab2">Dodaj pacjenta</a></li>
 
+            <div class="tabs">
+
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="flash-notice">{{ flashMessage }}</div>
+                {% endfor %}
+
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Diagnoza</a></li>
+                    <li class="active"><a href="#tab3">Wywiad</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="tab2" class="tab active">
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        {{ form_end(form) }}
-                    </div>
+
+                            <div id="tab2" class="tab active">
+                                <h3>Diagnoza</h3>
+                                <p>{{ diagnoza.tresc }}</p>
+
+                            </div>
 
 
+                            <div id="tab3" class="tab">
+
+                                Wywiad
+
+                            </div>
                 </div>
             </div>
         </div>
-    </div>
+
+</div>
 
 
 

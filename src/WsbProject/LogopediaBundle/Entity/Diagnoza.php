@@ -24,9 +24,9 @@ class Diagnoza
     /**
      * @var string
      *
-     * @ORM\Column(name="treść", type="string", length=255, nullable=true)
+     * @ORM\Column(name="tresc", type="string", length=255, nullable=true)
      */
-    private $treść;
+    private $tresc;
 
     /**
      * @var \DateTime
@@ -62,26 +62,26 @@ class Diagnoza
     }
 
     /**
-     * Set treść
+     * Set tresc
      *
-     * @param string $treść
+     * @param string $tresc
      * @return Diagnoza
      */
-    public function setTreść($treść)
+    public function setTresc($tresc)
     {
-        $this->treść = $treść;
+        $this->tresc = $tresc;
 
         return $this;
     }
 
     /**
-     * Get treść
+     * Get tresc
      *
      * @return string 
      */
-    public function getTreść()
+    public function getTresc()
     {
-        return $this->treść;
+        return $this->tresc;
     }
 
     /**

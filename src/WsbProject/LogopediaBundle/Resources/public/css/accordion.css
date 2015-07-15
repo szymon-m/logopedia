@@ -1,8 +1,9 @@
-/*----- Accordion -----*/
-.accordion, .accordion * {
+
+.accordion,  {
     -webkit-box-sizing:border-box;
     -moz-box-sizing:border-box;
-    box-sizing:border-box;
+    box-sizing: border-box;
+    background:#f7f7f7;
 }
 
 .accordion {
@@ -17,8 +18,8 @@
     width:100%;
     padding:15px;
     display:inline-block;
-    border-bottom:1px solid #1a1a1a;
-    background:#333;
+    border-bottom:1px solid #abd22e;
+    background:#abd22e;
     transition:all linear 0.15s;
     /* Type */
     font-size:1.200em;

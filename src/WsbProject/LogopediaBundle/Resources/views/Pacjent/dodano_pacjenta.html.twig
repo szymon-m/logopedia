@@ -1,0 +1,105 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    <br>
+    <br>
+
+    <div class="section group">
+
+
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                    W tym miejscu możesz dodać nowego pacjenta
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col span_3_of_4">
+
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Dodano pacjenta</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab2" class="tab active">
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="flash-notice">{{ flashMessage }}</div>
+                        {% endfor %}
+                        <b>{{ nowy_pacjent.imie }}  {{ nowy_pacjent.nazwisko }}</b><br>
+
+                        {{ nowy_pacjent.adres }}<br>
+                        {{ nowy_pacjent.miejscowosc }}<br>
+                        tel. {{ nowy_pacjent.telefon }}
+                        <br><br>
+                        <div class="CSSTableGenerator" >
+                            <table>
+                                <tr>
+                                    <td>
+                                        Title 1
+                                    </td>
+                                    <td >
+                                        Title 2
+                                    </td>
+                                    <td>
+                                        Title 3
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        Row 1
+                                    </td>
+                                    <td>
+                                        Row 1
+                                    </td>
+                                    <td>
+                                        Row 1
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
