@@ -1,0 +1,64 @@
+
+    <script>
+        $(function() {
+            $('.nav li').hover(
+                    function () { //appearing on hover
+                        $('ul', this).fadeIn();
+                    },
+                    function () { //disappearing on hover
+                        $('ul', this).fadeOut();
+                    }
+            );
+        });
+    </script>
+
+
+<div class="container">
+    <div class="section group">
+        <div class="col span_1_of_3">
+
+            <ul class="logopedia">
+                {% image '@LogopediaBundle/Resources/public/images/logo-male.png' %}
+                <img src="{{ asset_url }}" alt="Logopedia" />
+                {% endimage %}
+
+        </div>
+        <div class="col span_2_of_3">
+            <div class="navigation">
+                <ul class="nav">
+                    <li>
+                        <a href="{{ path('kalendarz')}}">Kalendarz</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('main')}}">Pacjent</a>
+                        <ul>
+                            <li><a href="#">Przeglądaj</a></li>
+                            <li><a href="#">Dodaj nowego</a></li>
+
+
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Spotkanie</a>
+                        <ul>
+                            <li><a href="{{ path('kalendarz')}}">Dzisiaj</a></li>
+                            <li><a href="#">Szukaj</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Administrator</a>
+                        <ul>
+                            <li><a href="#">Usuń pacjenta</a></li>
+                            <li><a href="#">Ustawienia</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
