@@ -1,0 +1,67 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        $(document).ready(function() {
+            $('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    <br>
+    <br>
+
+    <div class="section group">
+
+
+        <div class="col span_3_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                    W tym miejscu możesz dodać nowego pacjenta
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Dodaj pacjenta</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab2" class="tab active">
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
