@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Pacjent
  *
- * @ORM\Table("Pacjent")
+ * @ORM\Table(name="pacjent")
  * @ORM\Entity
  */
 class Pacjent
@@ -16,91 +16,72 @@ class Pacjent
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="imie", type="string", length=255)
+     * @ORM\Column(name="imie", type="string", length=45, nullable=false)
      */
     private $imie;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwisko", type="string", length=255)
+     * @ORM\Column(name="nazwisko", type="string", length=45, nullable=false)
      */
     private $nazwisko;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="adres", type="string", length=255)
+     * @ORM\Column(name="adres", type="string", length=45, nullable=false)
      */
     private $adres;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="miejscowosc", type="string", length=255)
+     * @ORM\Column(name="miejscowosc", type="string", length=45, nullable=false)
      */
     private $miejscowosc;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefon", type="string", length=255)
+     * @ORM\Column(name="telefon", type="string", length=45, nullable=false)
      */
     private $telefon;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_wywiadu", type="integer", nullable=false)
+     */
+    private $idWywiadu;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_diagnozy", type="integer", nullable=false)
+     */
+    private $idDiagnozy;
+
+    /**
      * @ORM\OneToMany(targetEntity="Spotkanie", mappedBy="pacjent")
-     * @var Spotkania[]
+     *
      */
 
-    protected $spotkania = null;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Wywiad", mappedBy="pacjent")
-     * @var Wywiady[]
-     */
-
-    protected $wywiady = null;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Diagnoza", mappedBy="pacjent")
-     * @var Diagnozy[]
-     */
-
-    protected $diagnozy = null;
-
-
+    private $spotkania;
 
     public function __construct()
     {
         $this->spotkania = new ArrayCollection();
-        $this->wywiady = new ArrayCollection();
-        $this->diagnozy = new ArrayCollection();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSpotkania()
-    {
-        return $this->spotkania;
-    }
-
-    /**
-     * @param mixed $spotkania
-     */
-    public function setSpotkania($spotkania)
-    {
-        $this->spotkania[] = $spotkania;
     }
 
     /**
@@ -226,5 +207,51 @@ class Pacjent
     public function getTelefon()
     {
         return $this->telefon;
+    }
+
+    /**
+     * Set idWywiadu
+     *
+     * @param integer $idWywiadu
+     * @return Pacjent
+     */
+    public function setIdWywiadu($idWywiadu)
+    {
+        $this->idWywiadu = $idWywiadu;
+
+        return $this;
+    }
+
+    /**
+     * Get idWywiadu
+     *
+     * @return integer 
+     */
+    public function getIdWywiadu()
+    {
+        return $this->idWywiadu;
+    }
+
+    /**
+     * Set idDiagnozy
+     *
+     * @param integer $idDiagnozy
+     * @return Pacjent
+     */
+    public function setIdDiagnozy($idDiagnozy)
+    {
+        $this->idDiagnozy = $idDiagnozy;
+
+        return $this;
+    }
+
+    /**
+     * Get idDiagnozy
+     *
+     * @return integer 
+     */
+    public function getIdDiagnozy()
+    {
+        return $this->idDiagnozy;
     }
 }

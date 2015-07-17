@@ -2,12 +2,13 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Wywiad
  *
- * @ORM\Table("Wywiad")
+ * @ORM\Table(name="wywiad", indexes={@ORM\Index(name="fk_Wywiad_Pacjent1_idx", columns={"id_pacjenta"})})
  * @ORM\Entity
  */
 class Wywiad
@@ -15,166 +16,128 @@ class Wywiad
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Pacjent", inversedBy="wywiady")
-     */
-
-    protected $pacjent;
-
-    /**
-     * @return mixed
-     */
-    public function getPacjent()
-    {
-        return $this->pacjent;
-    }
-
-    /**
-     * @param mixed $pacjent
-     */
-    public function setPacjent($pacjent)
-    {
-        $this->pacjent = $pacjent;
-    }
-
-    public function setValue($name, $key, $value) {
-
-        $property = $name.$key;
-
-        $this->$property = $value;
-
-    }
-    public function getValue($name, $key) {
-
-        $property = $name.$key;
-
-        return $this->$property;
-    }
-
-
-
-    /**
      * @var integer
      *
-     * @ORM\Column(name="b1", type="integer")
+     * @ORM\Column(name="b1", type="integer", nullable=true)
      */
     private $b1;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b2", type="integer")
+     * @ORM\Column(name="b2", type="integer", nullable=true)
      */
     private $b2;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b3", type="integer")
+     * @ORM\Column(name="b3", type="integer", nullable=true)
      */
     private $b3;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b4", type="integer")
+     * @ORM\Column(name="b4", type="integer", nullable=true)
      */
     private $b4;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="b5", type="integer")
+     * @ORM\Column(name="b5", type="integer", nullable=true)
      */
     private $b5;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b6", type="integer")
+     * @ORM\Column(name="b6", type="integer", nullable=true)
      */
     private $b6;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b7", type="integer")
+     * @ORM\Column(name="b7",type="integer", nullable=true)
      */
     private $b7;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b8", type="integer")
+     * @ORM\Column(name="b8", type="integer", nullable=true)
      */
     private $b8;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b9", type="integer")
+     * @ORM\Column(name="b9",type="integer", nullable=true)
      */
     private $b9;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b10", type="integer")
+     * @ORM\Column(name="b10",type="integer", nullable=true)
      */
     private $b10;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b11", type="integer")
+     * @ORM\Column(name="b11",type="integer", nullable=true)
      */
     private $b11;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b12", type="integer")
+     * @ORM\Column(name="b12",type="integer", nullable=true)
      */
     private $b12;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b13", type="integer")
+     * @ORM\Column(name="b13",type="integer", nullable=true)
      */
     private $b13;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b14", type="integer")
+     * @ORM\Column(name="b14",type="integer", nullable=true)
      */
     private $b14;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b15", type="integer")
+     * @ORM\Column(name="b15",type="integer", nullable=true)
      */
     private $b15;
 
     /**
-     * @var integer
+     *  @var integer
      *
-     * @ORM\Column(name="b16", type="integer")
+     * @ORM\Column(name="b16", type="integer", nullable=true)
      */
     private $b16;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="b17", type="integer")
+     * @ORM\Column(name="b17",type="integer", nullable=true)
      */
     private $b17;
 
@@ -206,6 +169,34 @@ class Wywiad
      */
     private $b21;
 
+    /**
+     * @var \Pacjent
+     *
+     * @ORM\ManyToOne(targetEntity="Pacjent")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_pacjenta", referencedColumnName="id")
+     * })
+     */
+    private $idPacjenta;
+
+    public function __construct()
+    {
+        $this->idPacjenta = new ArrayCollection();
+    }
+
+    public function setValue($name, $key, $value) {
+
+        $property = $name.$key;
+
+        $this->$property = $value;
+
+    }
+    public function getValue($name, $key) {
+
+        $property = $name.$key;
+
+        return $this->$property;
+    }
 
     /**
      * Get id
@@ -220,7 +211,7 @@ class Wywiad
     /**
      * Set b1
      *
-     * @param integer $b1
+     * @param string $b1
      * @return Wywiad
      */
     public function setB1($b1)
@@ -233,7 +224,7 @@ class Wywiad
     /**
      * Get b1
      *
-     * @return integer 
+     * @return string 
      */
     public function getB1()
     {
@@ -243,7 +234,7 @@ class Wywiad
     /**
      * Set b2
      *
-     * @param integer $b2
+     * @param string $b2
      * @return Wywiad
      */
     public function setB2($b2)
@@ -256,7 +247,7 @@ class Wywiad
     /**
      * Get b2
      *
-     * @return integer 
+     * @return string 
      */
     public function getB2()
     {
@@ -266,7 +257,7 @@ class Wywiad
     /**
      * Set b3
      *
-     * @param integer $b3
+     * @param string $b3
      * @return Wywiad
      */
     public function setB3($b3)
@@ -279,7 +270,7 @@ class Wywiad
     /**
      * Get b3
      *
-     * @return integer 
+     * @return string 
      */
     public function getB3()
     {
@@ -289,7 +280,7 @@ class Wywiad
     /**
      * Set b4
      *
-     * @param integer $b4
+     * @param string $b4
      * @return Wywiad
      */
     public function setB4($b4)
@@ -302,7 +293,7 @@ class Wywiad
     /**
      * Get b4
      *
-     * @return integer 
+     * @return string 
      */
     public function getB4()
     {
@@ -312,7 +303,7 @@ class Wywiad
     /**
      * Set b5
      *
-     * @param integer $b5
+     * @param string $b5
      * @return Wywiad
      */
     public function setB5($b5)
@@ -325,7 +316,7 @@ class Wywiad
     /**
      * Get b5
      *
-     * @return integer 
+     * @return string 
      */
     public function getB5()
     {
@@ -335,7 +326,7 @@ class Wywiad
     /**
      * Set b6
      *
-     * @param integer $b6
+     * @param string $b6
      * @return Wywiad
      */
     public function setB6($b6)
@@ -348,7 +339,7 @@ class Wywiad
     /**
      * Get b6
      *
-     * @return integer 
+     * @return string 
      */
     public function getB6()
     {
@@ -358,7 +349,7 @@ class Wywiad
     /**
      * Set b7
      *
-     * @param integer $b7
+     * @param string $b7
      * @return Wywiad
      */
     public function setB7($b7)
@@ -371,7 +362,7 @@ class Wywiad
     /**
      * Get b7
      *
-     * @return integer 
+     * @return string 
      */
     public function getB7()
     {
@@ -381,7 +372,7 @@ class Wywiad
     /**
      * Set b8
      *
-     * @param integer $b8
+     * @param string $b8
      * @return Wywiad
      */
     public function setB8($b8)
@@ -394,7 +385,7 @@ class Wywiad
     /**
      * Get b8
      *
-     * @return integer 
+     * @return string 
      */
     public function getB8()
     {
@@ -404,7 +395,7 @@ class Wywiad
     /**
      * Set b9
      *
-     * @param integer $b9
+     * @param string $b9
      * @return Wywiad
      */
     public function setB9($b9)
@@ -417,7 +408,7 @@ class Wywiad
     /**
      * Get b9
      *
-     * @return integer 
+     * @return string 
      */
     public function getB9()
     {
@@ -427,7 +418,7 @@ class Wywiad
     /**
      * Set b10
      *
-     * @param integer $b10
+     * @param string $b10
      * @return Wywiad
      */
     public function setB10($b10)
@@ -440,7 +431,7 @@ class Wywiad
     /**
      * Get b10
      *
-     * @return integer 
+     * @return string 
      */
     public function getB10()
     {
@@ -450,7 +441,7 @@ class Wywiad
     /**
      * Set b11
      *
-     * @param integer $b11
+     * @param string $b11
      * @return Wywiad
      */
     public function setB11($b11)
@@ -463,7 +454,7 @@ class Wywiad
     /**
      * Get b11
      *
-     * @return integer 
+     * @return string 
      */
     public function getB11()
     {
@@ -473,7 +464,7 @@ class Wywiad
     /**
      * Set b12
      *
-     * @param integer $b12
+     * @param string $b12
      * @return Wywiad
      */
     public function setB12($b12)
@@ -486,7 +477,7 @@ class Wywiad
     /**
      * Get b12
      *
-     * @return integer 
+     * @return string 
      */
     public function getB12()
     {
@@ -496,7 +487,7 @@ class Wywiad
     /**
      * Set b13
      *
-     * @param integer $b13
+     * @param string $b13
      * @return Wywiad
      */
     public function setB13($b13)
@@ -509,7 +500,7 @@ class Wywiad
     /**
      * Get b13
      *
-     * @return integer 
+     * @return string 
      */
     public function getB13()
     {
@@ -519,7 +510,7 @@ class Wywiad
     /**
      * Set b14
      *
-     * @param integer $b14
+     * @param string $b14
      * @return Wywiad
      */
     public function setB14($b14)
@@ -532,7 +523,7 @@ class Wywiad
     /**
      * Get b14
      *
-     * @return integer 
+     * @return string 
      */
     public function getB14()
     {
@@ -542,7 +533,7 @@ class Wywiad
     /**
      * Set b15
      *
-     * @param integer $b15
+     * @param string $b15
      * @return Wywiad
      */
     public function setB15($b15)
@@ -555,7 +546,7 @@ class Wywiad
     /**
      * Get b15
      *
-     * @return integer 
+     * @return string 
      */
     public function getB15()
     {
@@ -565,7 +556,7 @@ class Wywiad
     /**
      * Set b16
      *
-     * @param integer $b16
+     * @param string $b16
      * @return Wywiad
      */
     public function setB16($b16)
@@ -578,7 +569,7 @@ class Wywiad
     /**
      * Get b16
      *
-     * @return integer 
+     * @return string 
      */
     public function getB16()
     {
@@ -588,7 +579,7 @@ class Wywiad
     /**
      * Set b17
      *
-     * @param integer $b17
+     * @param string $b17
      * @return Wywiad
      */
     public function setB17($b17)
@@ -601,7 +592,7 @@ class Wywiad
     /**
      * Get b17
      *
-     * @return integer 
+     * @return string 
      */
     public function getB17()
     {
@@ -698,5 +689,28 @@ class Wywiad
     public function getB21()
     {
         return $this->b21;
+    }
+
+    /**
+     * Set idPacjenta
+     *
+     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta
+     * @return Wywiad
+     */
+    public function setIdPacjenta(\WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta = null)
+    {
+        $this->idPacjenta = $idPacjenta;
+
+        return $this;
+    }
+
+    /**
+     * Get idPacjenta
+     *
+     * @return \WsbProject\LogopediaBundle\Entity\Pacjent 
+     */
+    public function getIdPacjenta()
+    {
+        return $this->idPacjenta;
     }
 }

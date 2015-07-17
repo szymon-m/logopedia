@@ -43,8 +43,8 @@ class PacjentController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $nowy_pacjent = $form->getData();
-            $nowy_pacjent->setIdWywiadu(0);
-            $nowy_pacjent->setIdDiagnozy(0);
+            //$nowy_pacjent->setIdWywiadu(0);
+            //$nowy_pacjent->setIdDiagnozy(0);
 
             $em->persist($nowy_pacjent);
             $em->flush();
@@ -130,10 +130,10 @@ class PacjentController extends Controller
 
 
             $diagnoza = $this->getDoctrine()->getRepository('LogopediaBundle:Diagnoza')
-                ->findOneBy(array('idPacjenta' => $id));
+                ->findOneBy(array('pacjent' => $id));
 
             $wywiad = $this->getDoctrine()->getRepository('LogopediaBundle:Wywiad')
-                ->findOneBy(array('idPacjenta' => $id));
+                ->findOneBy(array('pacjent' => $id));
 
             return array('pacjent'=> $pacjent, 'diagnoza'=> $diagnoza, 'wywiad' => $wywiad);
 
@@ -226,7 +226,7 @@ class PacjentController extends Controller
 
         }
 
-        $wywiad->setIdPacjenta($pacjent);
+        $wywiad->setPacjent($pacjent);
 
 
         $em = $this->getDoctrine()->getManager();
@@ -259,7 +259,7 @@ class PacjentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $wywiad = $em->getRepository('LogopediaBundle:Wywiad')
-            ->findOneBy(array('idPacjenta'=>(int)$id_pacjenta));
+            ->findOneBy(array('pacjent'=>(int)$id_pacjenta));
 
         for($i = 1; $i <= 17; ++$i) {
 

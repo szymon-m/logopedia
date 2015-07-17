@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Diagnoza
  *
- * @ORM\Table(name="diagnoza", indexes={@ORM\Index(name="fk_Diagnoza_Pacjent1_idx", columns={"id_pacjenta"})})
+ * @ORM\Table("Diagnoza")
  * @ORM\Entity
  */
 class Diagnoza
@@ -15,40 +15,31 @@ class Diagnoza
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Pacjent", inversedBy="diagnozy")
+     */
+
+    protected $pacjent;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="tresc", type="string", length=255, nullable=true)
+     * @ORM\Column(name="tresc", type="string", length=255)
      */
     private $tresc;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="data", type="datetime", nullable=true)
+     * @ORM\Column(name="data", type="datetime")
      */
     private $data;
-
-    /**
-     * @var \Pacjent
-     *
-     * @ORM\ManyToOne(targetEntity="Pacjent")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pacjenta", referencedColumnName="id")
-     * })
-     */
-    private $idPacjenta;
-
-    public function __construct()
-    {
-        $this->idPacjenta = new ArrayCollection();
-    }
 
 
     /**
@@ -105,28 +96,5 @@ class Diagnoza
     public function getData()
     {
         return $this->data;
-    }
-
-    /**
-     * Set idPacjenta
-     *
-     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta
-     * @return Diagnoza
-     */
-    public function setIdPacjenta(\WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta = null)
-    {
-        $this->idPacjenta = $idPacjenta;
-
-        return $this;
-    }
-
-    /**
-     * Get idPacjenta
-     *
-     * @return \WsbProject\LogopediaBundle\Entity\Pacjent 
-     */
-    public function getIdPacjenta()
-    {
-        return $this->idPacjenta;
     }
 }

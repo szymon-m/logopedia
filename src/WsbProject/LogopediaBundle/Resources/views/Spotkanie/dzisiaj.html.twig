@@ -45,9 +45,9 @@
                                 </tr>
                                 {% for dane in dzisiaj %}
                                     <tr>
-                                        <td>{{ dane.start |date ('H:i') }}</td>
-                                        <td>{{ dane.idPacjenta.imie }} {{ dane.idPacjenta.nazwisko }}</td>
-                                        <td><a href="{{ path('spotkanie',{'id': dane.id, 'id_pacjenta': dane.idPacjenta.id }) }}"> Przejdź</a></td>
+
+                                        <td>{{ dane.imie }} {{ dane.nazwisko }}</td>
+
 
                                     </tr>
                                 {% endfor %}

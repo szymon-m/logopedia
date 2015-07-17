@@ -2,13 +2,12 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Spotkanie
  *
- * @ORM\Table(name="spotkanie", indexes={@ORM\Index(name="fk_Spotkanie_Pacjent_idx", columns={"id_pacjenta"}), @ORM\Index(name="fk_Spotkanie_Obrazki1_idx", columns={"id_obrazki"})})
+ * @ORM\Table("Spotkanie")
  * @ORM\Entity
  */
 class Spotkanie
@@ -16,79 +15,109 @@ class Spotkanie
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="start", type="datetime", nullable=false)
+     * @ORM\Column(name="start", type="datetime")
      */
     private $start;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="end", type="datetime", nullable=false)
+     * @ORM\Column(name="end", type="datetime")
      */
     private $end;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="allday", type="boolean", nullable=false)
+     * @ORM\Column(name="allday", type="boolean")
      */
     private $allday;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="done", type="boolean", nullable=false)
-     */
-    private $done;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="first", type="boolean", nullable=false)
+     * @ORM\Column(name="first", type="boolean")
      */
     private $first;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="uwagi", type="string", length=255, nullable=true)
+     * @ORM\Column(name="uwagi", type="string", length=255)
      */
     private $uwagi;
 
-    /**
-     * @var \Obrazki
-     *
-     * @ORM\ManyToOne(targetEntity="Obrazki")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_obrazki", referencedColumnName="id")
-     * })
-     */
-    private $idObrazki;
 
     /**
-     * @var \Pacjent
+     * @ORM\ManyToOne(targetEntity="Pacjent", inversedBy="spotkania")
      *
-     * @ORM\ManyToOne(targetEntity="Pacjent")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pacjenta", referencedColumnName="id")
-     * })
      */
-    private $idPacjenta;
+
+    protected $pacjent;
+
+    /**
+     * @return \WsbProject\LogopediaBundle\Entity\Pacjent
+     */
+    public function getPacjent()
+    {
+        return $this->pacjent;
+    }
+
+    /**
+     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $pacjent
+     * @return Spotkanie
+     */
+    public function setPacjent($pacjent)
+    {
+        $this->pacjent = $pacjent;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Artykulacja", mappedBy="spotkanie")
+     * @var Artykulacja[]
+     */
+
+    protected $artykulacje = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Obrazki", mappedBy="spotkanie")
+     * @var Obrazki[]
+     */
+
+    protected $obrazki = null;
+
+
 
     public function __construct()
     {
-        $this->idPacjenta = new ArrayCollection();
+        $this->artykulacje = new ArrayCollection();
+        $this->obrazki = new ArrayCollection();
     }
 
+    /**
+     * @return Artykulacja[]
+     */
+    public function getArtykulacje()
+    {
+        return $this->artykulacje;
+    }
+
+    /**
+     * @param Artykulacja[] $artykulacje
+     */
+    public function setArtykulacje($artykulacje)
+    {
+        $this->artykulacje = $artykulacje;
+    }
 
     /**
      * Get id
@@ -170,29 +199,6 @@ class Spotkanie
     }
 
     /**
-     * Set done
-     *
-     * @param boolean $done
-     * @return Spotkanie
-     */
-    public function setDone($done)
-    {
-        $this->done = $done;
-
-        return $this;
-    }
-
-    /**
-     * Get done
-     *
-     * @return boolean 
-     */
-    public function getDone()
-    {
-        return $this->done;
-    }
-
-    /**
      * Set first
      *
      * @param boolean $first
@@ -236,51 +242,5 @@ class Spotkanie
     public function getUwagi()
     {
         return $this->uwagi;
-    }
-
-    /**
-     * Set idObrazki
-     *
-     * @param \WsbProject\LogopediaBundle\Entity\Obrazki $idObrazki
-     * @return Spotkanie
-     */
-    public function setIdObrazki(\WsbProject\LogopediaBundle\Entity\Obrazki $idObrazki = null)
-    {
-        $this->idObrazki = $idObrazki;
-
-        return $this;
-    }
-
-    /**
-     * Get idObrazki
-     *
-     * @return \WsbProject\LogopediaBundle\Entity\Obrazki 
-     */
-    public function getIdObrazki()
-    {
-        return $this->idObrazki;
-    }
-
-    /**
-     * Set idPacjenta
-     *
-     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta
-     * @return Spotkanie
-     */
-    public function setIdPacjenta(\WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta = null)
-    {
-        $this->idPacjenta = $idPacjenta;
-
-        return $this;
-    }
-
-    /**
-     * Get idPacjenta
-     *
-     * @return \WsbProject\LogopediaBundle\Entity\Pacjent 
-     */
-    public function getIdPacjenta()
-    {
-        return $this->idPacjenta;
     }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Obrazki
  *
- * @ORM\Table("Obrazki")
+ * @ORM\Table(name="obrazki")
  * @ORM\Entity
  */
 class Obrazki
@@ -15,31 +15,26 @@ class Obrazki
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=255)
+     * @ORM\Column(name="nazwa", type="string", length=255, nullable=false)
      */
     private $nazwa;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="opis", type="string", length=255)
+     * @ORM\Column(name="skrot", type="string", length=45, nullable=false)
      */
-    private $opis;
+    private $skrot;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Spotkanie", inversedBy="obrazki")
-     */
-
-    protected $spotkanie;
 
 
     /**
@@ -76,25 +71,25 @@ class Obrazki
     }
 
     /**
-     * Set opis
+     * Set skrot
      *
-     * @param string $opis
+     * @param string $skrot
      * @return Obrazki
      */
-    public function setOpis($opis)
+    public function setSkrot($skrot)
     {
-        $this->opis = $opis;
+        $this->skrot = $skrot;
 
         return $this;
     }
 
     /**
-     * Get opis
+     * Get skrot
      *
      * @return string 
      */
-    public function getOpis()
+    public function getSkrot()
     {
-        return $this->opis;
+        return $this->skrot;
     }
 }
