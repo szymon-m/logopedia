@@ -29,14 +29,27 @@
         <div class="col span_3_of_4">
             <div class="tabs">
                 <ul class="tab-links">
-                    <li class="active"><a href="#tab1">Informacja</a></li>
-
+                    <li class="active"><a href="#artykulacja">Formularz artykulacji</a></li>
+                    <li><a href="artykulacja">Zalecenia</a></li>
+                    <li><a href="obrazki">Zestawy obrazków</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="tab1" class="tab active">
-                    W tym miejscu możesz dodać nowego pacjenta
+                    <div id="artykulacja" class="tab active">
+
                     </div>
+
+                    <div id="zalecenia" class="tab">
+
+                        {{ spotkanie.start |date ('H:i')}}
+                </div>
+
+
+
+                    <div id="obrazki" class="tab">
+                     {{ spotkanie.obrazki.nazwa }}
+                    </div>
+
 
 
                 </div>
@@ -45,13 +58,13 @@
         <div class="col span_1_of_4">
             <div class="tabs">
                 <ul class="tab-links">
-                    <li class="active"><a href="#tab2">Dodaj pacjenta</a></li>
+                    <li class="active"><a href="#tab2">Spotkanie</a></li>
 
                 </ul>
 
                 <div class="tab-content">
                     <div id="tab2" class="tab active">
-
+                        {{ spotkanie.start |date ('H:i')}}
                     </div>
 
 

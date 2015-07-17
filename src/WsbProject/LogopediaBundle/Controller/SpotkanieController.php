@@ -47,7 +47,61 @@ class SpotkanieController extends Controller
      */
     public function spotkanieAction($id, $id_pacjenta) {
 
-        return array('dzisiaj' => $dzisiaj);
+
+
+        /*$em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+            'SELECT s, p
+                 FROM LogopediaBundle:Spotkanie s
+                 JOIN s.idPacjenta p
+                 WHERE s.idPacjenta = :id_pacjenta')
+            ->setParameter('id_pacjenta', $id_pacjenta);
+
+        $spotkanie = $query->getResult();
+        //exit(\Doctrine\Common\Util\Debug::dump($spotkanie));
+
+        return array('spotkanie'=>$spotkanie); */
+
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery(
+            'SELECT s, o
+                 FROM LogopediaBundle:Spotkanie s
+                 JOIN s.idObrazki o
+                 WHERE s.id = :id_spotkania')
+            ->setParameter('id_spotkania', $id);
+
+        $spotkanie = $query->getResult();
+
+        /*$spotkanie = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id);
+
+
+        if($spotkanie) {
+
+
+
+            $obrazki = $this->getDoctrine()->getRepository('LogopediaBundle:Obrazki')
+                ->findOneBy(array('idSpotkania'=> $id));
+
+
+
+            $artykulacja = $this->getDoctrine()->getRepository('LogopediaBundle:Artykulacja')
+                ->findOneBy(array('idSpotkania' => $id));
+
+            $zalecenia = $this->getDoctrine()->getRepository('LogopediaBundle:Zalecenia')
+                ->findOneBy(array('idSpotkania' => $id)); */
+
+            return array('spotkanie'=> $spotkanie);
+
+        /*} else {
+
+            $this->addFlash('notice', 'Nie znaleziono pacjenta');
+            return $this->redirectToRoute('przegladaj_pacjentow');
+
+        }*/
+
 
     }
 

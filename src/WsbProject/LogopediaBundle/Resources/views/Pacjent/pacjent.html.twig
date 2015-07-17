@@ -32,30 +32,7 @@
     <div class="section group">
 
 
-        <div class="col span_1_of_4">
-            <div class="tabs">
-                <ul class="tab-links">
-                    <li class="active"><a href="#tab1">Pacjent</a></li>
 
-                </ul>
-
-                <div class="tab-content">
-                    <div id="tab1" class="tab active">
-
-                        <br>
-
-                    <b>Imie: </b> {{ pacjent.imie }}<br>
-                    <b>Nazwisko: </b> {{ pacjent.nazwisko }}<br>
-                    <b>Adres:</b> {{ pacjent.adres }} {{ pacjent.miejscowosc }}<br>
-                    <b>Telefon:</b> {{ pacjent.telefon }}<br>
-
-
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
         <div class="col span_3_of_4">
 
             <div class="tabs">
@@ -65,24 +42,97 @@
                 {% endfor %}
 
                 <ul class="tab-links">
-                    <li class="active"><a href="#tab2">Diagnoza</a></li>
-                    <li class="active"><a href="#tab3">Wywiad</a></li>
+                    <li class="active"><a href="#diagnoza">Diagnoza</a></li>
+                    <li><a href="#wywiad">Wywiad</a></li>
+                    <li><a hreg="#spotkania">Spotkania</a></li>
                 </ul>
 
                 <div class="tab-content">
 
-                            <div id="tab2" class="tab active">
-                                <h3>Diagnoza</h3>
-                                <p>{{ diagnoza.tresc }}</p>
+                            <div id="diagnoza" class="tab active">
+
+
+                                {% if not diagnoza %}
+
+                                    <i>Niestety nie wprowadzono jeszcze diagnozy dla tego pacjenta</i>
+
+                                {%  else %}
+
+
+                                    <h3>Diagnoza:</h3><br>
+                                    <p>{{ diagnoza.tresc }}</p>
+
+                                {% endif %}
 
                             </div>
 
 
-                            <div id="tab3" class="tab">
+                            <div id="wywiad" class="tab">
 
-                                Wywiad
+                               {% if not wywiad %}
+
+                                <i>Niestety nie przeprowadzono jeszcze wywiadu z tym pacjentem</i>{% include 'LogopediaBundle:Default:wywiad.html.twig' %}
+
+                                {%  else %}
+
+                                {% include 'LogopediaBundle:Default:wywiad.html.twig' %}
+
+                                {% endif %}
 
                             </div>
+                </div>
+            </div>
+        </div>
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Pacjent</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        <div class="section group">
+
+                            <div class="col span_1_of_3">
+                                <b>Imie: </b>
+                                </div>
+                            <div class="col span_2_of_3">
+                                    {{ pacjent.imie }}
+                            </div>    <br>
+
+                            <div class="section group">
+
+                            <div class="col span_1_of_3">
+                                <b>Nazwisko: </b>
+                                </div>
+                            <div class="col span_2_of_3">
+                                    {{ pacjent.nazwisko }}
+                            </div>    <br>
+
+                            <div class="section group">
+                                <div class="col span_1_of_3">
+                                    <b>Adres: </b>
+                                </div>
+                                <div class="col span_2_of_3">
+                                    {{ pacjent.adres }}<br>{{ pacjent.miejscowosc }}
+                                </div>    <br>
+                                <div class="section group">
+                            <div class="col span_1_of_3">
+                                <b>Telefon:</b>
+                            </div>
+                            <div class="col span_2_of_3">
+                                {{ pacjent.telefon }}
+                            </div>    <br>
+                          </div>
+
+
+
+
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>

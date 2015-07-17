@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use WsbProject\LogopediaBundle\Entity\Pacjent;
+use WsbProject\LogopediaBundle\Entity\Wywiad;
 use WsbProject\LogopediaBundle\Form\Type\DodajPacjentaType;
 
 class PacjentController extends Controller
@@ -131,10 +132,10 @@ class PacjentController extends Controller
             $diagnoza = $this->getDoctrine()->getRepository('LogopediaBundle:Diagnoza')
                 ->findOneBy(array('idPacjenta' => $id));
 
-            //$wywiad = $this->getDoctrine()->getRepository('LogopediaBundle:Wywiad')
-            //    ->findOneBy(array('id_pacjenta' => $))
+            $wywiad = $this->getDoctrine()->getRepository('LogopediaBundle:Wywiad')
+                ->findOneBy(array('idPacjenta' => $id));
 
-            return array('pacjent'=> $pacjent, 'diagnoza'=> $diagnoza);
+            return array('pacjent'=> $pacjent, 'diagnoza'=> $diagnoza, 'wywiad' => $wywiad);
 
         } else {
 
@@ -145,5 +146,155 @@ class PacjentController extends Controller
 
 
     }
+    /**
+     * @Route("/pobierz_wywiad", name="pobierz_wywiad", options={"expose"=true})
+     *
+     */
+    public function pobierz_wywiadAction(Request $request)
+    {
+        $id_pacjenta = (int)$request->request->get('id');
+        //$id_pacjenta = $id;
+
+        //$wywiad = new Wywiad();
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                'SELECT w
+                 FROM LogopediaBundle:Wywiad w
+                 WHERE w.idPacjenta = :id_pacjenta')
+            ->setParameter('id_pacjenta', $id_pacjenta);
+
+        $wywiad = $query->getSingleResult();
+
+
+        $tablica = [];
+
+        for($i = 1; $i <= 21; ++$i) {
+
+            $temp = $wywiad->getValue('b',$i);
+
+            $tablica[$i] = $temp;
+
+
+        }
+
+        $tablica[0] = $wywiad->getId();
+        $tablica = json_encode($tablica);
+        //exit(\Doctrine\Common\Util\Debug::dump($tablica));
+        return new Response($tablica, 200, array('Content-Type' => 'aplication/json'));
+
+
+    }
+    /**
+     * @Route("/zapisz_wywiad", name="zapisz_wywiad", options={"expose"=true})
+     *
+     */
+    public function zapisz_wywiadAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_pacjenta = $dane['0'];
+
+
+        $pacjent = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Pacjent')
+            ->find($id_pacjenta);
+
+
+        $wywiad = new Wywiad();
+
+        for($i = 1; $i <= 17; ++$i) {
+
+            $dane[$i] = (int)$dane[$i];
+
+        }
+
+        foreach($dane as $key => $value) {
+
+            if($key == '0') {
+                continue;
+            }
+
+            if($key != '0') {
+
+
+
+            $wywiad->setValue('b',$key, $value);
+
+            }
+
+        }
+
+        $wywiad->setIdPacjenta($pacjent);
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($wywiad);
+        $em->flush();
+
+        $dane = json_encode($dane);
+
+        return new Response($dane, 200, array('Content-Type' => 'application/json'));
+
+
+    }
+    /**
+     * @Route("/popraw_wywiad", name="popraw_wywiad", options={"expose"=true})
+     *
+     */
+    public function popraw_wywiadAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_pacjenta = $dane['0'];
+
+
+
+        $pacjent = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Pacjent')
+            ->find($id_pacjenta);
+
+        $em = $this->getDoctrine()->getManager();
+        $wywiad = $em->getRepository('LogopediaBundle:Wywiad')
+            ->findOneBy(array('idPacjenta'=>(int)$id_pacjenta));
+
+        for($i = 1; $i <= 17; ++$i) {
+
+            $dane[$i] = (int)$dane[$i];
+
+        }
+
+
+        foreach($dane as $key => $value) {
+
+            if($key == '0') {
+
+                continue;
+            }
+
+            if($key != '0') {
+
+
+
+                $wywiad->setValue('b',$key,$value);
+
+            }
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        $dane = json_encode($dane);
+
+        return new Response($dane, 200, array('Content-Type' => 'application/json'));
+
+
+    }
+
+
 
 }

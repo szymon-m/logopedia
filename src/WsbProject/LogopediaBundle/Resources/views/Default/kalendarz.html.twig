@@ -4,12 +4,41 @@
 
     {%  include 'LogopediaBundle:Default:menu.html.twig' %}
 
+    <script>
+        $(document).ready(function() {
+            $('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
 
+                // Show/Hide Tabs
+                $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
 
     <div class="section group">
 
+        <div class="tabs">
+            <ul class="tab-links">
+                <li class="active"><a href="#kalendarz">Kalendarz</a></li>
 
-           {% include 'LogopediaBundle:Default:calendar.html.twig' %}
+            </ul>
+
+            <div class="tab-content">
+                <div id="kalendarz" class="tab active">
+                    {% include 'LogopediaBundle:Default:calendar.html.twig' %}
+
+                </div>
+
+
+            </div>
+        </div>
+
 
 
     </div>

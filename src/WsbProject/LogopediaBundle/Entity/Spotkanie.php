@@ -2,6 +2,7 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -83,6 +84,10 @@ class Spotkanie
      */
     private $idPacjenta;
 
+    public function __construct()
+    {
+        $this->idPacjenta = new ArrayCollection();
+    }
 
 
     /**

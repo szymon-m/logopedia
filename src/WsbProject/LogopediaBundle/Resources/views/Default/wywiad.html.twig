@@ -1,0 +1,527 @@
+<style>
+    .header { padding:1em 0; }
+    .heading { background-color: rgba(255, 221, 43, 0.26);}
+
+    form label, form input {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    form label {
+        width: 30%;
+        float: left;
+        text-align: right;
+        padding: 0% 3% 0% 0%;
+    }
+
+    form input {
+        width: 70%;
+        float: right;
+    }
+
+</style>
+
+<script>
+
+
+
+
+
+    $(document).ready( function () {
+
+
+        var id_pacjenta = {{ app.request.get('id')}};
+
+
+        $.ajax({
+            url :Routing.generate('pobierz_wywiad'),
+            type: "POST",
+            data : { id: id_pacjenta },
+            success: function(dane) {
+
+
+
+                for (var num = 1; num <= 17; num++) {
+
+                    var position = 'b'+num;
+
+                    $('input:radio[name='+position+']').val([dane[num]]);
+
+
+                }
+                $("#zgryz").val(dane[18]);
+                $("#podniebienie").val(dane[19]);
+                $("#polykanie").val(dane[20]);
+                $("#odgryzanie").val(dane[21]);
+
+
+
+
+            }});
+
+        $('.grp1').attr("disabled", true);
+
+
+        // ==========================================================
+        // Logika formularza - jakie pola mają się pojawiać i znikać
+        // ==========================================================
+        var wynik = {};
+        // 1. ZGRYZ
+        // pierwsza grupa radio buttonów
+        $('#zgryz').click( function () {
+
+            var a = [];
+            a[0] = 3;
+            $('input:radio[name=b4]').val([a]);
+
+        });
+
+
+        $('input:radio[name=b4]').click( function () {
+
+            //przypisujemy wartosc
+            var wartosc = $('input:radio[name=b4]:checked').val();
+
+            //jeżeli pierwszy
+            if (wartosc == 1) {
+
+                var a = [];
+                a[0] = 0;
+                $('input:radio[name=b5]').val([a]);
+                $('#zgryz').val(null);
+
+                var grp = $('input:radio[name=b5]:checked').val();
+                if(grp == null) { grp = 0;}
+                alert(grp);
+            }
+
+            //jeżeli drugi
+            if (wartosc == 2) {
+
+                $('input:radio[name=b5]').removeAttr("disabled");
+                $('#zgryz').val(null);
+
+            } else { $('input:radio[name=b5]').attr('disabled', true); }
+
+            //jeżeli trzeci
+            if (wartosc == 3) {
+
+                var a = [];
+                a[0] = 0;
+                $('input:radio[name=b5]').val([a]);
+                var grp = $('input:radio[name=b5]:checked').val();
+                if(grp == null ) { grp = 0;}
+                alert(grp);
+
+
+                $("#zgryz").removeAttr("disabled");
+            } else  {
+
+                $('#zgryz').attr('disabled', true);
+
+            }
+
+
+            alert(wartosc);
+        });
+
+        // 2. PODNIEBIENIE MIEKKIE i TWARDE
+        $('#podniebienie').click( function () {
+
+            var a = [];
+            a[0] = 2;
+            $('input:radio[name=b8]').val([a]);
+
+        });
+
+        $('input:radio[name=b8]').click( function () {
+
+            //przypisujemy wartosc
+            var wartosc = $('input:radio[name=b8]:checked').val();
+
+            if (wartosc == 1) {
+
+                $('#podniebienie').val(null);
+                $('#podniebienie').attr('disabled', true);
+
+            }
+
+            if (wartosc == 2) {
+
+                $('#podniebienie').removeAttr("disabled");
+
+            }
+
+        });
+
+        // 3. POŁYKANIE
+        $('#polykanie').click( function () {
+
+            var a = [];
+            a[0] = 2;
+            $('input:radio[name=b11]').val([a]);
+
+        });
+
+
+        $('input:radio[name=b11]').click( function () {
+
+            //przypisujemy wartosc
+            var wartosc = $('input:radio[name=b11]:checked').val();
+
+            if (wartosc == 1) {
+
+                $('#polykanie').val(null);
+                $('#polykanie').attr('disabled', true);
+
+            }
+
+            if (wartosc == 2) {
+
+                $('#polykanie').removeAttr("disabled");
+
+            }
+
+        });
+        // 4. ODGRYZANIE
+        $('#odgryzanie').click( function () {
+
+            var a = [];
+            a[0] = 2;
+            $('input:radio[name=b13]').val([a]);
+
+        });
+        $('input:radio[name=b13]').click( function () {
+
+            //przypisujemy wartosc
+            var wartosc = $('input:radio[name=b13]:checked').val();
+
+            if (wartosc == 1) {
+
+                $('#odgryzanie').val(null);
+                $('#odgryzanie').attr('disabled', true);
+
+            }
+
+            if (wartosc == 2) {
+
+                $('#odgryzanie').removeAttr("disabled");
+
+            }
+
+        });
+
+        // =========================================================
+        // tworzymy wynik
+        // =========================================================
+
+
+        $('#zapisz').click( function () {
+
+            var tmp = [];
+
+            wynik[0] = id_pacjenta;
+
+            for (var num = 1; num <= 17; num++) {
+
+
+                var position_name = 'b' + num;
+
+                if ($('input:radio[name=b4]:checked').val() == 3) {
+
+                    wynik[18] = $('#zgryz').val();
+                }
+                if ($('input:radio[name=b8]:checked').val() == 2) {
+
+                    wynik[19] = $('#podniebienie').val();
+                }
+                if ($('input:radio[name=b11]:checked').val() == 2) {
+
+                    wynik[20] = $('#polykanie').val();
+                }
+                if ($('input:radio[name=b13]:checked').val() == 2) {
+
+                    wynik[21] = $('#odgryzanie').val();
+                }
+                var wartosc = $('input:radio[name='+position_name+']:checked').val();
+
+                if(wartosc) {
+                    wynik[num] = wartosc;
+
+                }
+                if(wartosc==null) {
+                    wynik[num] = null;
+                }
+
+
+
+            }
+
+
+            console.log(wynik);
+
+            for (var num = 0; num <= 21; num++) {
+
+
+            }
+
+            $.ajax({
+                url: Routing.generate('zapisz_wywiad'),
+                type: "POST",
+                data: wynik,
+                success: function (dane) {
+
+                    alert('Zapisano wywiad');
+
+                }
+            });
+
+        });
+        $('#popraw').click( function () {
+
+            var tmp = [];
+
+            wynik[0] = id_pacjenta;
+
+            for (var num = 1; num <= 17; num++) {
+
+
+                var position_name = 'b' + num;
+
+                if ($('input:radio[name=b4]:checked').val() == 3) {
+
+                    wynik[18] = $('#zgryz').val();
+                }
+                if ($('input:radio[name=b8]:checked').val() == 2) {
+
+                    wynik[19] = $('#podniebienie').val();
+                }
+                if ($('input:radio[name=b11]:checked').val() == 2) {
+
+                    wynik[20] = $('#polykanie').val();
+                }
+                if ($('input:radio[name=b13]:checked').val() == 2) {
+
+                    wynik[21] = $('#odgryzanie').val();
+                }
+                var wartosc = $('input:radio[name='+position_name+']:checked').val();
+
+                if(wartosc) {
+                    wynik[num] = wartosc;
+
+                }
+                if(wartosc==null) {
+                    wynik[num] = null;
+                }
+
+
+
+            }
+
+
+            console.log(wynik);
+
+            $.ajax({
+                url: Routing.generate('popraw_wywiad'),
+                type: "POST",
+                data: wynik,
+                success: function (dane) {
+
+                    alert('Poprawiono wywiad');
+
+                }
+            });
+
+        });
+});
+
+
+
+
+</script>
+<div class="section group">
+    <div class="col span_1_of_3">
+       {%  if not wywiad %} <button id="zapisz">Zapisz wywiad</button> {% endif %}
+        {%  if wywiad %} <button id="popraw">Zapisz poprawiony wywiad</button> {% endif %}
+    </div>
+</div>
+
+<div class="section group heading">
+    <div class="col span_1_of_3 ">
+        KOMPETENCJA JĘZYKOWA I KOMUNIKACYJNA
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-25">
+            <input type="radio" id="121" name="b1" value="1" align="top"><label for="121">prawidłowa</label><br>
+            <input type="radio" id="122" name="b1" value="2" align="top"><label for="122">nieprawidłowa</label><br>
+            <input type="radio" id="123" name="b1" value="3" align="top"><label for="123">obniżona</label><br>
+
+        </div>
+    </div>
+</div>
+<div class="section group">
+    <div class="col span_1_of_3">
+        SPRAWNOŚĆ SYSTEMOWA I KOMUNIKACYJNA
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-26">
+            <input type="radio" id="124" name="b2" value="1" align="top"><label for="124">prawidłowa</label><br>
+            <input type="radio" id="125" name="b2" value="2" align="top"><label for="125">nieprawidłowa</label><br>
+            <input type="radio" id="126" name="b2" value="3" align="top"><label for="126">obniżona</label><br>
+        </div>
+    </div>
+    <div class="section group heading">
+        <div class="col span_1_of_3 ">
+            KINESTEZJA ARTYKULACYJNA
+        </div>
+        <div class="col span_2_of_3">
+            <div id="group-27">
+                <input type="radio" id="127" name="b3" value="1" align="top"><label for="127">prawidłowa</label><br>
+                <input type="radio" id="128" name="b3" value="2" align="top"><label for="128">nieprawidłowa</label><br>
+            </div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_3">
+            ZGRYZ	</div>
+        <div class="col span_2_of_3">
+            <div id="group-28">
+                <input type="radio" id="129" name="b4" value="1" align="top"><label for="129">prawidłowy</label><br>
+                <input type="radio" id="130" name="b4" value="2" align="top"><label for="130">nieprawidłowy:</label><br>
+                <span style="display:inline-block; width: 20px;"></span>
+                <input type="radio" id="131" class="grp1" name="b5" value="1" align="right" ><label for="131">krzyżowy</label>
+                <input type="radio" id="132" class="grp1" name="b5" value="2" align="right" ><label for="132">otwarty</label>
+                <input type="radio" id="133" class="grp1" name="b5" value="3" align="right" ><label for="133">tyłozgryz</label>
+                <input type="radio" id="134" class="grp1" name="b5" value="4" align="right" ><label for="134">przodozgryz</label>
+
+                <br><input type="radio" id="135" name="b4" value="3" align="top"><label for="135">inne:  </label> <input type="text" id="zgryz" name="zgryz" width="100">
+            </div>
+        </div>
+    </div>
+    <div class="section group heading">
+        <div class="col span_1_of_3 ">
+            STAN UZĘBIENIA
+        </div>
+        <div class="col span_2_of_3">
+            <div id="group-29">
+                <input type="radio" id="136" name="b6" value="1" align="top"><label for="136">prawidłowy</label><br>
+                <input type="radio" id="137" name="b6" value="2" align="top"><label for="137">zęby w trakcie wymiany</label><br>
+                <input type="radio" id="138" name="b6" value="3" align="top"><label for="138">diastema</label><br>
+                <input type="radio" id="139" name="b6" value="4" align="top"><label for="139">zęby luźno rozstawione</label><br>
+                <input type="radio" id="140" name="b6" value="5" align="top"><label for="140">zęby lapisowane</label><br>
+                <input type="radio" id="141" name="b6" value="6" align="top"><label for="141">liczne plomby</label><br>
+                <input type="radio" id="142" name="b6" value="7" align="top"><label for="142">próchnica</label><br>
+            </div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_3 ">
+            MIGDAŁKI PODNIEBIENNE
+        </div>
+        <div class="col span_2_of_3">
+            <div id="group-30">
+                <input type="radio" id="143" name="b7" value="1" align="top"><label for="143">prawidłowe</label><br>
+                <input type="radio" id="144" name="b7" value="2" align="top"><label for="144">powiększone</label><br>
+            </div>
+        </div>
+    </div>
+    <div class="section group heading">
+        <div class="col span_1_of_3 ">
+            PODNIEBIENIE TWARDE I MIĘKKIE
+        </div>
+        <div class="col span_2_of_3">
+            <div id="group-30">
+                <input type="radio" id="145" name="b8" value="1" align="top"><label for="145">prawidłowe</label><br>
+                <input type="radio" id="146" name="b8" value="2" align="top"><label for="146">nieprawidłowe, jakie</label>
+                </label>   <input type="text" id="podniebienie" name="podniebienie" width="100"><br>
+            </div>
+        </div>
+    </div>
+    <div class="section group">
+        <div class="col span_1_of_3 ">
+            SPRAWNOŚĆ APARATU MOWY
+        </div>
+        <div class="col span_2_of_3">
+            <div id="group-31">
+                <b>Wargi:</b><br>
+                <input type="radio" id="147" name="b9" value="1" align="top"><label for="147">prawidłowa</label><br>
+                <input type="radio" id="148" name="b9" value="2" align="top"><label for="148">lekkko obniżona</label><br>
+                <input type="radio" id="149" name="b9" value="3" align="top"><label for="149">obniżona</label><br>
+                <input type="radio" id="150" name="b9" value="4" align="top"><label for="150">znacznie obniżona sprawność warg</label><br>
+
+            </div>
+            <b>Język:</b><br>
+            <input type="radio" id="151" name="b10" value="1" align="top"><label for="151">prawidłowa</label><br>
+            <input type="radio" id="152" name="b10" value="2" align="top"><label for="152">lekko obniżona</label><br>
+            <input type="radio" id="153" name="b10" value="3" align="top"><label for="153">obniżona</label><br>
+            <input type="radio" id="154" name="b10" value="4" align="top"><label for="154">znacznie obniżona sprawność języka</label><br>
+        </div>
+    </div>
+</div>
+<div class="section group heading">
+    <div class="col span_1_of_3 ">
+        STAN FUNKCJI FIZJOLOGICZNYCH W OBRĘBIE APARATU MOWY
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-32">
+            <b>Połykanie:</b><br>
+            <input type="radio" id="155" name="b11" value="1" align="top"><label for="155">prawidłowe</label><br>
+            <input type="radio" id="156" name="b11" value="2" align="top"><label for="156">nieprawidłowe, jakie</label>
+            </label>   <input type="text" id="polykanie" name="polykanie" width="100"><br>
+
+            <b>Oddychanie:</b><br>
+            <input type="radio" id="157" name="b12" value="1" align="top"><label for="157">prawidłowa</label><br>
+            <input type="radio" id="158" name="b12" value="2" align="top"><label for="158">przez usta</label><br>
+            <input type="radio" id="159" name="b12" value="3" align="top"><label for="159">typ mieszany</label><br>
+
+            <b>Odgryzanie:</b><br>
+            <input type="radio" id="160" name="b13" value="1" align="top"><label for="160">prawidłowe</label><br>
+            <input type="radio" id="161" name="b13" value="2" align="top"><label for="161">nieprawidłowe, jakie</label>
+            </label>   <input type="text" id="odgryzanie" name="odgryzanie" width="100"><br>
+            <b>Gryzienie i żucie:</b><br>
+            <input type="radio" id="162" name="b14" value="1" align="top"><label for="162">prawidłowe</label><br>
+            <input type="radio" id="163" name="b14" value="2" align="top"><label for="163">nieprawidłowe</label><br>
+        </div>
+    </div>
+</div>
+<div class="section group">
+    <div class="col span_1_of_3 ">
+        SŁUCH FIZJOLOGICZNY
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-33">
+            <b>W badaniu orientacyjnym:</b><br>
+            <input type="radio" id="164" name="b15" value="1" align="top"><label for="164">prawidłowy</label><br>
+            <input type="radio" id="165" name="b15" value="2" align="top"><label for="165">nieprawidłowy</label><br>
+        </div>
+    </div>
+</div>
+<div class="section group heading">
+    <div class="col span_1_of_3 ">
+        SŁUCH FONEMOWY
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-34">
+
+            <input type="radio" id="166" name="b16" value="1" align="top"><label for="166">prawidłowy</label><br>
+            <input type="radio" id="167" name="b16" value="2" align="top"><label for="167">nieprawidłowy</label><br>
+        </div>
+    </div>
+</div>
+<div class="section group ">
+    <div class="col span_1_of_3 ">
+        ANALIZA I SYNTEZA SŁUCHOWA
+    </div>
+    <div class="col span_2_of_3">
+        <div id="group-34">
+
+            <input type="radio" id="168" name="b17" value="1" align="top"><label for="168">prawidłowa</label><br>
+            <input type="radio" id="169" name="b17" value="2" align="top"><label for="169">nieprawidłowa</label><br>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
