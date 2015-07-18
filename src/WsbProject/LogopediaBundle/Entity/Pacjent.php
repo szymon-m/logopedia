@@ -59,7 +59,7 @@ class Pacjent
 
     /**
      * @ORM\OneToMany(targetEntity="Spotkanie", mappedBy="pacjent")
-     * @var Spotkania[]
+     * @var Spotkanie[]
      */
 
     protected $spotkania = null;

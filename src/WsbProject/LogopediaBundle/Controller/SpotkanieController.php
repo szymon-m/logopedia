@@ -93,14 +93,14 @@ class SpotkanieController extends Controller
             'SELECT s, p
                  FROM LogopediaBundle:Spotkanie s
                  JOIN s.pacjent p
-                WHERE p.spotkanie = :id_spotkania')
-            ->setParameter('id_spotkania', $id);
+                WHERE p.id = :id_pacjenta')
+            ->setParameter('id_pacjenta', $id_pacjenta);
 
-        $pacjent = $query->getResult();
+        $spotkanie = $query->getResult();
 
-        exit(\Doctrine\Common\Util\Debug::dump($pacjent));
+        //exit(\Doctrine\Common\Util\Debug::dump($pacjent));
 
-        return array('pacjent' => $pacjent);
+        return array('spotkanie' => $spotkanie);
 
         /*return array('spotkanie'=>$spotkanie);
 

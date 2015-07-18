@@ -36,7 +36,18 @@
 
                 <div class="tab-content">
                     <div id="artykulacja" class="tab active">
-                    {{ pacjent.imie }}
+                        {% for spotkanie in spotkanie %}
+                            <tr>
+
+                                <td>{{ spotkanie.pacjent.imie }} </td>
+
+                                <td>{{ spotkanie.pacjent.telefon }}</td>
+
+                                <td>{{ spotkanie.id }}</td>
+
+
+                            </tr>
+                        {% endfor %}
                     </div>
 
                     <div id="zalecenia" class="tab">

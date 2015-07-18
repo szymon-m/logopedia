@@ -74,10 +74,11 @@ class Spotkanie
 
     /**
      * @param \WsbProject\LogopediaBundle\Entity\Pacjent $pacjent
-     * @return Spotkanie
+     * return Spotkanie
      */
     public function setPacjent($pacjent)
     {
+        $pacjent->setSpotkania($this);
         $this->pacjent = $pacjent;
     }
 
