@@ -5,6 +5,9 @@ namespace WsbProject\LogopediaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use WsbProject\LogopediaBundle\Entity\Artykulacja;
 
 
 class SpotkanieController extends Controller
@@ -27,34 +30,18 @@ class SpotkanieController extends Controller
         $koniec = new \DateTime();
         $koniec->setTime(23,59,59);
 
-        /*$repository = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie');
-
-        $query = $repository->createQueryBuilder('s')
-            ->where('s.start >= :poczatek')
-            ->andWhere('s.end <= :koniec')
-            ->setParameter('poczatek', $poczatek)
-            ->setParameter('koniec', $koniec)
-            ->orderBy('s.start', 'ASC')
-            ->getQuery();
-
-        $spotkania = $query->getResult();
-
-        //$pacjenci = $spotkania->getPacjent(); */
-
-        //exit(\Doctrine\Common\Util\Debug::dump($spotkania));
-
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-            'SELECT p, s
-                 FROM LogopediaBundle:Pacjent p
-                  JOIN p.spotkania s
+            'SELECT s, p
+                 FROM LogopediaBundle:Spotkanie s
+                  JOIN s.pacjent p
                   WHERE s.start >= :poczatek
                   AND s.end <= :koniec
                   ORDER BY s.start ASC')
             ->setParameters(array('poczatek'=> $poczatek,'koniec'=> $koniec));
 
         $dzisiaj = $query->getResult();
-        exit(\Doctrine\Common\Util\Debug::dump($dzisiaj));
+        //exit(\Doctrine\Common\Util\Debug::dump($dzisiaj));
         return array('dzisiaj' => $dzisiaj);
 
     }
@@ -88,19 +75,37 @@ class SpotkanieController extends Controller
 
         $zalecenia = $query->getResult();
         */
+        // ============================= też działa
 
         $query = $em->createQuery(
-            'SELECT s, p
+            'SELECT o, s, p
+                 FROM LogopediaBundle:Obrazki o
+                 JOIN o.spotkanie s
+                 JOIN s.pacjent p
+                WHERE p.id = :id_pacjenta
+                AND s.id = :id_spotkania')
+            ->setParameters(array('id_pacjenta'=> $id_pacjenta, 'id_spotkania' => $id));
+
+        $obrazki = $query->getResult();
+
+        //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
+
+
+        //=================== działajace
+        $query = $em->createQuery(
+            'SELECT s, p, o
                  FROM LogopediaBundle:Spotkanie s
                  JOIN s.pacjent p
-                WHERE p.id = :id_pacjenta')
-            ->setParameter('id_pacjenta', $id_pacjenta);
+                 JOIN s.obrazki o
+                WHERE p.id = :id_pacjenta
+                AND s.id = :id_spotkania')
+            ->setParameters(array('id_pacjenta'=> $id_pacjenta, 'id_spotkania' => $id));
 
         $spotkanie = $query->getResult();
 
-        //exit(\Doctrine\Common\Util\Debug::dump($pacjent));
+        //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
+        return array('spotkanie' => $spotkanie, 'obrazki'=> $obrazki);
 
-        return array('spotkanie' => $spotkanie);
 
         /*return array('spotkanie'=>$spotkanie);
 
@@ -145,17 +150,131 @@ class SpotkanieController extends Controller
 
     }
 
-
-
-
-
-    public function poprzednieAction($name)
+    /**
+     * @Route("/zapisz_artykulacje", name="zapisz_artykulacje", options={"expose"=true})
+     *
+     */
+    public function zapisz_artykulacjeAction(Request $request)
     {
-        return $this->render('', array('name' => $name));
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_spotkania = $dane['0'];
+
+
+        $spotkanie = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+
+        $artykulacja = new Artykulacja();
+
+        foreach($dane as $key => $value) {
+
+            if($key == '0') {
+                continue;
+            }
+
+            if($key != '0') {
+
+                $artykulacja->setValue('a',$key, $value);
+
+            }
+
+        }
+        /* --- do oodczytania wartośći
+        for($i = 1; $i <= 24; ++$i) {
+
+            $temp = $artykulacja->getValue('a',$i);
+            for($j = 0; $j <= 4; ++$j) {
+
+                $text = str_split($temp);
+
+                if($text[$j]=='1') { $tablica[$i*($j+1)] = true; }
+
+                else {
+                    $tablica[$i*($j+1)] = false;
+                }
+
+
+
+            }
+
+        }*/
+
+        $artykulacja->setSpotkanie($spotkanie);
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($artykulacja);
+        $em->flush();
+
+        $dane = json_encode($dane);
+
+        return new Response($dane, 200, array('Content-Type' => 'application/json'));
+
+
     }
 
-    public function zapisz_spotkanieAction($name) {
+    /**
+     * @Route("/pobierz_ostatnia_artykulacje", name="pobierz_ostatnia_artykulacje", options={"expose"=true})
+     *
+     */
 
-        return $this->render('', array('name' => $name));
+
+    public function pobierz_ostatnia_artykulacjeAction(Request $request) {
+
+        $id_pacjenta = $request->request->get('id_pacjenta');
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $time_zone = new \DateTimeZone('UTC');
+        $time_zone->getName();
+
+        // definiujemy dzisiejszy dzień
+
+        $poczatek = new \DateTime();
+        $poczatek->setTime(00,00,00);
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a, s, p
+                 FROM LogopediaBundle:Artykulacja a
+                  JOIN a.spotkanie s
+                  JOIN s.pacjent p
+                  WHERE p.id = :id_pacjenta
+                  AND s.start < :poczatek
+                  ORDER BY s.start DESC')
+            ->setParameters(array('id_pacjenta'=> $id_pacjenta,'poczatek'=> $poczatek));
+
+
+
+        $artykulacja = $query->getSingleResult();
+
+        //exit(\Doctrine\Common\Util\Debug::dump($artykulacja));
+        if($artykulacja) {
+
+
+            for($i = 1; $i <= 24; ++$i) {
+
+                $temp = $artykulacja->getValue('a',$i);
+                $text = str_split($temp);
+
+                for($j = 0; $j <= 4; ++$j) {
+
+                    if($text[$j]=='1') { $tablica[$i*($j+1)] = true; }
+
+                    else {
+                        $tablica[$i*($j+1)] = false;
+                    }
+                }
+            }
+            //exit(\Doctrine\Common\Util\Debug::dump($tablica));
+            $tablica = json_encode($tablica);
+            return new Response($tablica, 200, array('Content-Type' => 'aplication/json'));
+
+        }
+        return array('spotkanie'=> $spotkanie);
+
     }
 }

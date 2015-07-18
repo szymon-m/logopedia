@@ -43,11 +43,11 @@
                                     <td>Imię i nazwisko</td>
                                     <td>Wybierz</td>
                                 </tr>
-                                {% for dane in dzisiaj %}
+                                {% for dzisiaj in dzisiaj %}
                                     <tr>
-
-                                        <td>{{ dane.pacjent.imie }} </td>
-
+                                        <td>{{ dzisiaj.start |date ('H:i') }}</td>
+                                        <td>{{ dzisiaj.pacjent.imie }} {{ dzisiaj.pacjent.nazwisko }}</td>
+                                        <td><a href="{{ path('spotkanie',{'id': dzisiaj.id, 'id_pacjenta': dzisiaj.pacjent.id }) }}"> Przejdź</a></td>
 
                                     </tr>
                                 {% endfor %}

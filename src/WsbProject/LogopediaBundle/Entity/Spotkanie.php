@@ -56,6 +56,29 @@ class Spotkanie
      */
     private $uwagi;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zalecenia", type="string", length=255)
+     */
+    private $zalecenia;
+
+    /**
+     * @return string
+     */
+    public function getZalecenia()
+    {
+        return $this->zalecenia;
+    }
+
+    /**
+     * @param string $zalecenia
+     */
+    public function setZalecenia($zalecenia)
+    {
+        $this->zalecenia = $zalecenia;
+    }
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Pacjent", inversedBy="spotkania")
@@ -84,7 +107,7 @@ class Spotkanie
 
     /**
      * @ORM\OneToMany(targetEntity="Artykulacja", mappedBy="spotkanie")
-     * @var Artykulacja[]
+     * @var Artykulacje[]
      */
 
     protected $artykulacje = null;
@@ -95,6 +118,22 @@ class Spotkanie
      */
 
     protected $obrazki = null;
+
+    /**
+     * @return Obrazki[]
+     */
+    public function getObrazki()
+    {
+        return $this->obrazki;
+    }
+
+    /**
+     * @param Obrazki[] $obrazki
+     */
+    public function setObrazki($obrazki)
+    {
+        $this->obrazki[] = $obrazki;
+    }
 
 
 
@@ -117,7 +156,7 @@ class Spotkanie
      */
     public function setArtykulacje($artykulacje)
     {
-        $this->artykulacje = $artykulacje;
+        $this->artykulacje[] = $artykulacje;
     }
 
     /**

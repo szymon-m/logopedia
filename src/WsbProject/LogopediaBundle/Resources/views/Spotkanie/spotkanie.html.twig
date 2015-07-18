@@ -30,8 +30,8 @@
             <div class="tabs">
                 <ul class="tab-links">
                     <li class="active"><a href="#artykulacja">Formularz artykulacji</a></li>
-                    <li><a href="artykulacja">Zalecenia</a></li>
-                    <li><a href="obrazki">Zestawy obrazków</a></li>
+                    <li><a href="#artykulacja">Zalecenia</a></li>
+                    <li><a href="#obrazki">Zestawy obrazków</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -41,28 +41,30 @@
 
                                 <td>{{ spotkanie.pacjent.imie }} </td>
 
-                                <td>{{ spotkanie.pacjent.telefon }}</td>
+                                <td>{{ spotkanie.pacjent.nazwisko }}</td>
 
-                                <td>{{ spotkanie.id }}</td>
-
+                                <td>{{ spotkanie.zalecenia }}</td>
 
                             </tr>
+                            {%  include 'LogopediaBundle:Default:artykulacja.html.twig' %}
                         {% endfor %}
                     </div>
 
                     <div id="zalecenia" class="tab">
 
 
-                </div>
-
-
-
-                    <div id="obrazki" class="tab">
 
                     </div>
 
+                    <div id="obrazki" class="tab">
+                        {% for obrazki in obrazki %}
+                            {{ obrazki.id }}
+                            {{ obrazki.spotkanie.id }}
+                            {{ obrazki.spotkanie.pacjent.imie }}
 
 
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

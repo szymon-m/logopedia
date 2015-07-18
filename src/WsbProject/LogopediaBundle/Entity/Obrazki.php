@@ -41,6 +41,24 @@ class Obrazki
 
     protected $spotkanie;
 
+    /**
+     * @return \WsbProject\LogopediaBundle\Entity\Spotkanie
+     */
+    public function getSpotkanie()
+    {
+        return $this->spotkanie;
+    }
+
+    /**
+     * @param \WsbProject\LogopediaBundle\Entity\Spotkanie $spotkanie
+     * return Obrazki
+     */
+    public function setSpotkanie($spotkanie)
+    {
+        $spotkanie->setObrazki($this);
+        $this->spotkanie = $spotkanie;
+    }
+
 
     /**
      * Get id

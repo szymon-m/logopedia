@@ -30,7 +30,8 @@
 
     $(document).ready( function () {
 
-
+        //zmienne globalne
+        var wynik = {};
         var id_pacjenta = {{ app.request.get('id')}};
 
 
@@ -66,7 +67,7 @@
         // ==========================================================
         // Logika formularza - jakie pola mają się pojawiać i znikać
         // ==========================================================
-        var wynik = {};
+
         // 1. ZGRYZ
         // pierwsza grupa radio buttonów
         $('#zgryz').click( function () {

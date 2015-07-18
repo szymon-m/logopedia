@@ -1,7 +1,10 @@
 <script>
         $(document).ready(function () {
 
-            var wynik = [];
+            //zmienne globalne
+            var wynik = {};
+            var id_pacjenta = {{ app.request.get('id_pacjenta')}};
+            var id_spotkania = {{  app.request.get('id')}};
 
             // zbieramy wyniki
             $('.tabs .tab-links a').on('click', function(e)  {
@@ -60,6 +63,7 @@
              */
             $("#wyslij").click(function (){
 
+                wynik[0] = id_spotkania;
                 var tmp = '';
                 for (var num = 1; num <= 120; num++) {
 
@@ -83,12 +87,13 @@
 
 
                 }
+                console.log(wynik);
 
 
 
                 alert(wynik);
                 $.ajax({
-                    url : Routing.generate('dodaj'),
+                    url : Routing.generate('zapisz_artykulacje'),
                     type: "POST",
                     data : wynik,
                     success: function(dane) {
@@ -97,7 +102,7 @@
 
                         // $('#aktorzy').empty();
                         // $('#aktorzy').append(html);
-                        $('#odpowiedz').append(dane);
+                        allert("Dodano formularz");
 
                         // is working !! $("#odpowiedz").append(dane);
 
@@ -123,11 +128,10 @@
 
             $("#zapytaj").click(function () {
 
-                var wejsciowe = $("#pobierz").val();
-                var dane = { id_ajax: wejsciowe };
+                dane = { 'id_pacjenta': id_pacjenta};
 
                 $.ajax({
-                    url :"/logopedia/web/app_dev.php/poprzedni",
+                    url : Routing.generate('pobierz_ostatnia_artykulacje'),
                     type: "POST",
                     data : dane,
                     success: function(dane) {
@@ -137,22 +141,23 @@
                         // $('#aktorzy').empty();
                         // $('#aktorzy').append(html);
                         //$('#pobierz').append(dane);
-                        for (var num = 1; num <= 20; num++) {
+                        for (var k in dane){
+                            if (dane.hasOwnProperty(k)) {
+
+                                $('#'+k).prop('checked', dane[k]);
+
+                            }
+                        }
+
+
+
+                        //for (var num = 1; num <= 120; num++) {
 
                             //$('#'+num).checked = dane[num];
-                            $('#'+num).prop('checked', dane[num]);
-                            $('#'+num).button( "option", "disabled", true );
-                            $('#'+num+'.ui-state-disabled').css('opacity','.60');
-                        }
-
-
-                        for (var num = 1; num <= 4; num++) {
-
-
-                            $('#group-' + num).buttonset("refresh");
-                            //('#group[id]).buttonset();
-                        }
-
+                            //$('#'+num).prop('checked', dane[num]);
+                            //$('#'+num).button( "option", "disabled", true );
+                            //$('#'+num+'.ui-state-disabled').css('opacity','.60');
+                        //}
 
 
                         console.log(dane[1]);
@@ -171,9 +176,9 @@
 
 
     </script>
-    {{ text }}
-    <div id="wyslij"><button type="button" id="wyslij" name="wyslij">Wyślij</button></div>
 
+    <div id="wyslij"><button type="button" id="wyslij" name="wyslij">Wyślij</button></div>
+    <div id="zapytaj"><button type="button" id="zapytaj" name="zapytaj">Zapytaj</button></div>
 <div class="tabs">
 
     <ul class="tab-links">
