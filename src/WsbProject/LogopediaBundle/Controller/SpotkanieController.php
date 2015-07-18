@@ -49,19 +49,19 @@ class SpotkanieController extends Controller
 
 
 
-        /*$em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery(
-            'SELECT s, p
-                 FROM LogopediaBundle:Spotkanie s
-                 JOIN s.idPacjenta p
-                 WHERE s.idPacjenta = :id_pacjenta')
-            ->setParameter('id_pacjenta', $id_pacjenta);
+            'SELECT p, s
+                 FROM LogopediaBundle:Pacjent p
+                 JOIN p.spotkania s
+                 WHERE s.id = :id_spotkania')
+            ->setParameter('id_spotkania', $id);
 
         $spotkanie = $query->getResult();
-        //exit(\Doctrine\Common\Util\Debug::dump($spotkanie));
+        exit(\Doctrine\Common\Util\Debug::dump($spotkanie));
 
-        return array('spotkanie'=>$spotkanie); */
+        return array('spotkanie'=>$spotkanie);
 
         $em = $this->getDoctrine()->getManager();
 

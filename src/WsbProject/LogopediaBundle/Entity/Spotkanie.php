@@ -77,18 +77,34 @@ class Spotkanie
     /**
      * @var \Pacjent
      *
-     * @ORM\ManyToOne(targetEntity="Pacjent")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_pacjenta", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Pacjent" , inversedBy="spotkania")
+
      */
     private $idPacjenta;
 
-    public function __construct()
+
+    /**
+     * Set idPacjenta
+     *
+     * param \WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta
+     * return Spotkanie
+     */
+    public function setIdPacjenta(\WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta = null)
     {
-        $this->idPacjenta = new ArrayCollection();
+        $idPacjenta->setSpotkania($this);
+        $this->idPacjenta = $idPacjenta;
+
     }
 
+    /**
+     * Get idPacjenta
+     *
+     * @return \WsbProject\LogopediaBundle\Entity\Pacjent
+     */
+    public function getIdPacjenta()
+    {
+        return $this->idPacjenta;
+    }
 
     /**
      * Get id
@@ -261,26 +277,4 @@ class Spotkanie
         return $this->idObrazki;
     }
 
-    /**
-     * Set idPacjenta
-     *
-     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta
-     * @return Spotkanie
-     */
-    public function setIdPacjenta(\WsbProject\LogopediaBundle\Entity\Pacjent $idPacjenta = null)
-    {
-        $this->idPacjenta = $idPacjenta;
-
-        return $this;
-    }
-
-    /**
-     * Get idPacjenta
-     *
-     * @return \WsbProject\LogopediaBundle\Entity\Pacjent 
-     */
-    public function getIdPacjenta()
-    {
-        return $this->idPacjenta;
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,7 +71,35 @@ class Pacjent
      */
     private $idDiagnozy;
 
+    /**
+     * @var integer
+     *
+     * @ORM\OneToMany(targetEntity="Spotkanie", mappedBy="idPacjenta")
+     *
+     */
 
+    protected $spotkania;
+
+    public function __construct() {
+
+        $this->spotkania = new ArrayCollection();
+    }
+
+    /**
+     *
+     */
+    public function getSpotkania()
+    {
+        return $this->spotkania;
+    }
+
+    /**
+     *
+     */
+    public function setSpotkania($spotkania)
+    {
+        $this->spotkania[] = $spotkania;
+    }
 
     /**
      * Get id
