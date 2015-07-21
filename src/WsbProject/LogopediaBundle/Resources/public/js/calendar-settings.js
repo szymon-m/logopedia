@@ -4,7 +4,15 @@ $(function () {
     var m = date.getMonth();
     var y = date.getFullYear();
 
+    var pierwsze =  {
 
+        start: '15:00', // a start time (10am in this example)
+        end: '18:00', // an end time (6pm in this example)
+
+        dow: [ 3, 4 ]
+        // days of week. an array of zero-based day of week integers (0=Sunday)
+        // (Monday-Thursday in this example)
+        };
 
     $('#calendar-holder').fullCalendar({
         lang: 'pl',
@@ -30,20 +38,30 @@ $(function () {
             }
         },
         defaultView: 'agendaWeek',
+        minTime: czasOd,
+        maxTime: czasDo,
+        slotDuration: '00:15:00',
         editable: true,
         eventLimit: true,
-        businessHours: {
-            start: '15:00', // a start time (10am in this example)
-            end: '18:00', // an end time (6pm in this example)
+        businessHours:[
 
-            dow: [ 1,2, 3, 4 ]
-            // days of week. an array of zero-based day of week integers (0=Sunday)
-            // (Monday-Thursday in this example)
-        },
+            pierwsze,
+
+            {
+
+                start: '15:00', // a start time (10am in this example)
+                end: '18:00', // an end time (6pm in this example)
+
+                dow: [ 3, 4 ]
+                // days of week. an array of zero-based day of week integers (0=Sunday)
+                // (Monday-Thursday in this example)
+            }
+
+        ],
         eventClick: function(event, element) {
 
-            $("#startTime").html(moment(event.start).format('dD MMMM YYYY HH:mm'));
-            $("#endTime").html(moment(event.end).format('dD MMMM YYYY HH:mm'));
+            $("#startTime").html(moment(event.start).format('D MMMM YYYY HH:mm'));
+            $("#endTime").html(moment(event.end).format('dd MMMM YYYY HH:mm'));
             $("#eventInfo").html(event.description);
             $("#eventLink").attr('href', event.url);
             $("#eventContent").dialog({ modal: true, title: event.title, width:350})
@@ -61,38 +79,97 @@ $(function () {
         ////////////////////////////////////////////////
         select: function(start, end, jsEvent, view) {
 
-            var title = prompt('Tytuł:');
-            var url = prompt('URL:');
-            var description = prompt('Opis:');
-            var location = prompt('Gdzie:');
-            var contact = prompt('Kontakt');
+            var dane = { imie: "nieznane"};
+            $.ajax({
+
+                url: Routing.generate('pobierz_pacjentow'),
+                type: "POST",
+                data: dane,
+                success: function(dane) {
+
+                    $('select#pacjent').html(dane);
+
+                }
+
+
+            });
+            $("#startTime").html(moment(start).format('D MMMM YYYY HH:mm'));
+            $("#endTime").html(moment(end).format('dd MMMM YYYY HH:mm'));
+
+
+            $("#dodaj_nowe_spotkanie").dialog({
+                height: 300,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Dodaj spotkanie": dodajSpotkanie,
+                    "Anuluj" : function() {
+                        $("#dodaj_nowe_spotkanie").dialog( "close" );
+                    }
+                }});
+
+
+            // działajace /*
+            /*$('select#pacjent').on('click',  function () {
+
+             console.log("zmiana");
+             }); */
+            function dodajSpotkanie () {
+
+                var dane = {};
+
+                //var id_pacjenta = $('#pacjent').val();
+
+                var first = 1;
 
                 var startTime = moment(start).format('YYYY-MM-DD\THH:MM:SS');
                 var endTime = moment(end).format('YYYY-MM-DD\THH:MM:SS');
 
+
                 var allday = '0';
+                var done ='1';
+                var id_pacjenta = $('select#pacjent').val();
+                var wybrany = $('#pacjent option:selected').text();
+                var uwagi = $('#uwagi').val();
+
+                var dane = {
+                    start: start.format(),
+                    end: end.format(),
+                    alldayevent: allday,
+                    uwagi : uwagi,
+                    first: first,
+                    done: done,
+                    id_pacjenta: id_pacjenta
+                };
+
 
                 $.ajax({
                     url: Routing.generate('dodaj_zdarzenie'),
 
-                    data: 'title='+ title+'&start='+ startTime +'&end='+ endTime +'&url='+ url+ '&description='+ description
-                    + '&location=' + location + '&contact=' + contact + '&alldayevent=' + allday,
+                    data: dane,
                     type: "POST",
                     success: function(json) {
                         alert('Added Successfully');
                     }
                 });
-                $('#calendar').fullCalendar('renderEvent',
+                $("#dodaj_nowe_spotkanie").dialog( "close" );
+
+                $('#calendar-holder').fullCalendar('renderEvent',
                     {
-                        title: title,
-                        start: start,
-                        end: end,
-                        allDay: allDay
+                        title: wybrany,
+                        start: start.format(),
+                        end: end.format(),
+                        alldayevent: dane.alldayevent
                     },
                     true // make the event "stick"
                 );
 
-            $('#calendar').fullCalendar('unselect');
+                $('#calendar-holder').fullCalendar('unselect');
+            };
+
+
+
+
         },
 
         eventSources: [

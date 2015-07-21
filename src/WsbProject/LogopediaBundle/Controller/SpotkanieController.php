@@ -234,7 +234,7 @@ class SpotkanieController extends Controller
         // definiujemy dzisiejszy dzień
 
         $poczatek = new \DateTime();
-        $poczatek->setTime(00,00,00);
+        //$poczatek->setTime(00,00,00);
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
@@ -244,28 +244,36 @@ class SpotkanieController extends Controller
                   JOIN s.pacjent p
                   WHERE p.id = :id_pacjenta
                   AND s.start < :poczatek
-                  ORDER BY s.start DESC')
+                  ORDER BY s.id DESC')
             ->setParameters(array('id_pacjenta'=> $id_pacjenta,'poczatek'=> $poczatek));
 
 
 
-        $artykulacja = $query->getSingleResult();
+
+        $artykulacja = $query->setMaxResults(1)->getOneOrNullResult();
 
         //exit(\Doctrine\Common\Util\Debug::dump($artykulacja));
         if($artykulacja) {
 
+            $position = 1;
 
             for($i = 1; $i <= 24; ++$i) {
 
                 $temp = $artykulacja->getValue('a',$i);
-                $text = str_split($temp);
+
+
 
                 for($j = 0; $j <= 4; ++$j) {
 
-                    if($text[$j]=='1') { $tablica[$i*($j+1)] = true; }
+                    $text = str_split($temp);
+                    if($text[$j]=='1') {
+                        $tablica[$position] = 1;
+                        $position += 1;
+                    }
 
                     else {
-                        $tablica[$i*($j+1)] = false;
+                        $tablica[$position] = 0;
+                        $position += 1;
                     }
                 }
             }

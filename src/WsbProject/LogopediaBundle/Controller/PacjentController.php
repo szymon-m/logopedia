@@ -161,7 +161,7 @@ class PacjentController extends Controller
         $query = $em->createQuery(
                 'SELECT w
                  FROM LogopediaBundle:Wywiad w
-                 WHERE w.idPacjenta = :id_pacjenta')
+                 WHERE w.pacjent = :id_pacjenta')
             ->setParameter('id_pacjenta', $id_pacjenta);
 
         $wywiad = $query->getSingleResult();

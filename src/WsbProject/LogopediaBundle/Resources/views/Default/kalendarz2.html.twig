@@ -5,14 +5,7 @@
     {%  include 'LogopediaBundle:Default:menu.html.twig' %}
 
     <script>
-
-
         $(document).ready(function() {
-
-            $( "#create-user").on( "click", function() {
-                dialog.dialog( "open" );
-            });
-
             $('.tabs .tab-links a').on('click', function(e)  {
                 var currentAttrValue = jQuery(this).attr('href');
 
@@ -24,36 +17,30 @@
 
                 e.preventDefault();
             });
-
-
         });
-
-
-
-
-
-
-
-
 
     </script>
 
-    <div id="dodaj_nowe_spotkanie" title="Dodaj nowe spotkanie" style="display:none;">
-
-        <label for="pacjent">Wybierz pacjenta</label>
-        <select name="pacjent" id="pacjent">
-
-        </select><br><br>
-        <input id="uwagi" type="text" value="Uwagi"><br>
-        Od: <span id="startTime"></span><br>
-        Do: <span id="endTime"></span><br><br>
-        <span id="komunikat"></span>
-
-    </div>
-
-
     <div class="section group">
-                   {% include 'LogopediaBundle:Default:calendar.html.twig' %}
+
+        <div class="tabs">
+            <ul class="tab-links">
+                <li class="active"><a href="#kalendarz">Kalendarz</a></li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div id="kalendarz" class="tab active">
+                    {% include 'LogopediaBundle:Default:calendar.html.twig' %}
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
     </div>
 
 

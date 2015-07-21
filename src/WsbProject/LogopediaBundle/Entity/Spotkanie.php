@@ -2,6 +2,7 @@
 
 namespace WsbProject\LogopediaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +51,28 @@ class Spotkanie
     private $first;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="done", type="boolean")
+     */
+    private $done;
+
+    /**
+     * @return boolean
+     */
+    public function isDone()
+    {
+        return $this->done;
+    }
+
+    /**
+     * @param boolean $done
+     */
+    public function setDone($done)
+    {
+        $this->done = $done;
+    }
+    /**
      * @var string
      *
      * @ORM\Column(name="uwagi", type="string", length=255)
@@ -59,7 +82,7 @@ class Spotkanie
     /**
      * @var string
      *
-     * @ORM\Column(name="zalecenia", type="string", length=255)
+     * @ORM\Column(name="zalecenia", type="string", length=255, nullable=true)
      */
     private $zalecenia;
 
@@ -101,7 +124,7 @@ class Spotkanie
      */
     public function setPacjent($pacjent)
     {
-        $pacjent->setSpotkania($this);
+        //$pacjent->setSpotkania($this);
         $this->pacjent = $pacjent;
     }
 
@@ -142,6 +165,7 @@ class Spotkanie
         $this->artykulacje = new ArrayCollection();
         $this->obrazki = new ArrayCollection();
     }
+
 
     /**
      * @return Artykulacja[]

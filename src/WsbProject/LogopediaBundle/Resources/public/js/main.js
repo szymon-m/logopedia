@@ -1,7 +1,50 @@
 /**
  * Created by szymon on 06.07.15.
  */
+function DodajSpotkanie () {
 
+
+
+    $(function () {
+
+
+        var dane = { imie: 'nieznane' };
+
+        $.ajax({
+
+            url: Routing.generate('pobierz_pacjentow'),
+            type: "POST",
+            data: dane,
+            success: function(dane) {
+
+                $('select#pacjent').html(dane);
+
+                $("#startTime").html(moment(this.start).format('D MMMM YYYY HH:mm'));
+                $("#endTime").html(moment(this.end).format('dd MMMM YYYY HH:mm'));
+            }
+
+
+        });
+
+
+
+
+        $("#dodaj_nowe_spotkanie").dialog({
+            height: 300,
+            width: 350,
+            modal: true });
+
+
+
+
+        // działajace /*
+        /*$('select#pacjent').on('click',  function () {
+
+            console.log("zmiana");
+        }); */
+
+    });
+}
 
 function WyslijDane () {
 

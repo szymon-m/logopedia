@@ -130,6 +130,8 @@
 
                 dane = { 'id_pacjenta': id_pacjenta};
 
+
+
                 $.ajax({
                     url : Routing.generate('pobierz_ostatnia_artykulacje'),
                     type: "POST",
@@ -143,21 +145,37 @@
                         //$('#pobierz').append(dane);
                         for (var k in dane){
                             if (dane.hasOwnProperty(k)) {
-
-                                $('#'+k).prop('checked', dane[k]);
-
+                                if(dane[k]==1) {
+                                    $('#'+k).prop('checked', true);
+                                }
+                                if(dane[k]==0) {
+                                    $('#'+k).prop('checked', false)
+                                }
+                                console.log(dane[k]);
                             }
                         }
 
 
 
-                        //for (var num = 1; num <= 120; num++) {
 
+
+
+
+                        /*for (var num = 1; num <= 120; num++){
+
+                                if(dane[num]==1) {
+                                    $('#'+num).checked(true);
+                                }
+                                if(dane[num]==0) {
+                                    $('#'+num).checked(false);
+                                }
+                            //$('#'+num).prop('checked', dane[num]);
+                            //console.log(dane[num]);
                             //$('#'+num).checked = dane[num];
                             //$('#'+num).prop('checked', dane[num]);
                             //$('#'+num).button( "option", "disabled", true );
                             //$('#'+num+'.ui-state-disabled').css('opacity','.60');
-                        //}
+                        }*/
 
 
                         console.log(dane[1]);
@@ -192,201 +210,201 @@
         <div id="samogloski" class="tab active">
 
             <div id="group-1">
-                <div class="ck-button"><label><input type="checkbox" id="a" name="a" value="1" disabled="disabled"><span><b>A</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="a" name="a" value="a" disabled="disabled"><span><b>A</b></span></label></div>
                 <div class="ck-button"><label><input type="checkbox" id="1" name="a2" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="2" name="a3" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="3" name="a4" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="4" name="a5" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="5" name="a6" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="2" name="a3" value="2"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="3" name="a4" value="3"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="4" name="a5" value="4"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="5" name="a6" value="5"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-2">
-                <div class="ck-button"><label><input type="checkbox" id="e" name="e" value="1" disabled="disabled"><span><b>E</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="6" name="e1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="7" name="e2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="8" name="e3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="9" name="e4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="10" name="e5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="e" name="e" value="e" disabled="disabled"><span><b>E</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="6" name="e1" value="6"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="7" name="e2" value="7"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="8" name="e3" value="8"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="9" name="e4" value="9"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="10" name="e5" value="10"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-3">
-                <div class="ck-button"><label><input type="checkbox" id="o" name="o" value="1" disabled="disabled"><span><b>O</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="11" name="o1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="12" name="o2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="13" name="o3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="14" name="o4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="15" name="o5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="o" name="o" value="o" disabled="disabled"><span><b>O</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="11" name="o1" value="11"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="12" name="o2" value="12"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="13" name="o3" value="13"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="14" name="o4" value="14"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="15" name="o5" value="15"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-4">
-                <div class="ck-button"><label><input type="checkbox" id="u" name="u" value="1" disabled="disabled"><span><b>U</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="16" name="u1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="17" name="u2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="18" name="u3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="19" name="u4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="20" name="u5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="u" name="u" value="u" disabled="disabled"><span><b>U</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="16" name="u1" value="16"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="17" name="u2" value="17"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="18" name="u3" value="18"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="19" name="u4" value="19"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="20" name="u5" value="20"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-5">
-                <div class="ck-button"><label><input type="checkbox" id="i" name="i" value="1" disabled="disabled"><span><b>I</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="21" name="i1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="22" name="i2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="23" name="i3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="24" name="i4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="25" name="i5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="i" name="i" value="i" disabled="disabled"><span><b>I</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="21" name="i1" value="21"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="22" name="i2" value="22"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="23" name="i3" value="23"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="24" name="i4" value="24"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="25" name="i5" value="25"><span>Grupa</span></label></div><br>
             </div><br>
-            <div id="group-6">
-                <div class="ck-button"><label><input type="checkbox" id="ae" name="ae" value="1" disabled="disabled"><span><b>Ą Ę</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="26" name="ae1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="27" name="ae2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="28" name="ae3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="29" name="ae4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="30" name="ae5" value="1"><span>Grupa</span></label></div><br>
+            <div id="group-5">
+                <div class="ck-button"><label><input type="checkbox" id="ae" name="ae" value="ae" disabled="disabled"><span><b>Ą Ę</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="26" name="ae1" value="26"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="27" name="ae2" value="27"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="28" name="ae3" value="28"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="29" name="ae4" value="29"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="30" name="ae5" value="30"><span>Grupa</span></label></div><br>
             </div><br><br>
         </div>
 
         <div id="spolgloski" class="tab">
             <div id="group-7">
-                <div class="ck-button"><label><input type="checkbox" id="l" name="l" value="1" disabled="disabled"><span><b>L Ł</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="31" name="l1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="32" name="l2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="33" name="l3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="34" name="l4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="35" name="l5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="l" name="l" value="l" disabled="disabled"><span><b>L Ł</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="31" name="l1" value="31"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="32" name="l2" value="32"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="33" name="l3" value="33"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="34" name="l4" value="34"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="35" name="l5" value="35"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-8">
-                <div class="ck-button"><label><input type="checkbox" id="r" name="r" value="1" disabled="disabled"><span><b>R</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="36" name="r1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="37" name="r2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="38" name="r3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="39" name="r4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="40" name="r5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="r" name="r" value="r" disabled="disabled"><span><b>R</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="36" name="r1" value="36"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="37" name="r2" value="37"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="38" name="r3" value="38"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="39" name="r4" value="39"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="40" name="r5" value="40"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-9">
-                <div class="ck-button"><label><input type="checkbox" id="m" name="m" value="1" disabled="disabled"><span><b>M</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="41" name="m1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="42" name="m2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="43" name="m3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="44" name="m4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="45" name="m5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="m" name="m" value="m" disabled="disabled"><span><b>M</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="41" name="m1" value="41"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="42" name="m2" value="42"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="43" name="m3" value="43"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="44" name="m4" value="44"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="45" name="m5" value="45"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-10">
-                <div class="ck-button"><label><input type="checkbox" id="n" name="n" value="1" disabled="disabled"><span><b>N</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="46" name="n1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="47" name="n2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="48" name="n3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="49" name="n4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="50" name="n5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="n" name="n" value="n" disabled="disabled"><span><b>N</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="46" name="n1" value="46"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="47" name="n2" value="47"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="48" name="n3" value="48"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="49" name="n4" value="49"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="50" name="n5" value="50"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-11">
-                <div class="ck-button"><label><input type="checkbox" id="ni" name="ni" value="1" disabled="disabled"><span><b>Ń</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="51" name="ni1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="52" name="ni2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="53" name="ni3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="54" name="ni4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="55" name="ni5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="ni" name="ni" value="ni" disabled="disabled"><span><b>Ń</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="51" name="ni1" value="51"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="52" name="ni2" value="52"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="53" name="ni3" value="53"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="54" name="ni4" value="54"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="55" name="ni5" value="55"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-12">
-                <div class="ck-button"><label><input type="checkbox" id="w" name="w" value="1" disabled="disabled"><span><b>W</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="56" name="w1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="57" name="w2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="58" name="w3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="59" name="w4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="60" name="w5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="w" name="w" value="w" disabled="disabled"><span><b>W</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="56" name="w1" value="56"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="57" name="w2" value="57"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="58" name="w3" value="58"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="59" name="w4" value="59"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="60" name="w5" value="60"><span>Grupa</span></label></div><br>
             </div><br>
             <div id="group-13">
-                <div class="ck-button"><label><input type="checkbox" id="j" name="j" value="1" disabled="disabled"><span><b>J</b></span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="61" name="j1" value="1"><span>Nie</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="62" name="j2" value="1"><span>Nagłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="63" name="j3" value="1"><span>Śródgłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="64" name="j4" value="1"><span>Wygłos</span></label></div>
-                <div class="ck-button"><label><input type="checkbox" id="65" name="j5" value="1"><span>Grupa</span></label></div><br>
+                <div class="ck-button"><label><input type="checkbox" id="j" name="j" value="j" disabled="disabled"><span><b>J</b></span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="61" name="j1" value="61"><span>Nie</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="62" name="j2" value="62"><span>Nagłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="63" name="j3" value="63"><span>Śródgłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="64" name="j4" value="64"><span>Wygłos</span></label></div>
+                <div class="ck-button"><label><input type="checkbox" id="65" name="j5" value="65"><span>Grupa</span></label></div><br>
             </div><br><br>
         </div>
         <div id="inne" class="tab">
                 <div id="group-14">
-                    <div class="ck-button"><label><input type="checkbox" id="kg" name="kg" value="1" disabled="disabled"><span><b>K : G</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="66" name="kg1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="67" name="kg2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="68" name="kg3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="69" name="kg4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="70" name="kg5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="kg" name="kg" value="kg" disabled="disabled"><span><b>K : G</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="66" name="kg1" value="66"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="67" name="kg2" value="67"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="68" name="kg3" value="68"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="69" name="kg4" value="69"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="70" name="kg5" value="70"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-15">
-                    <div class="ck-button"><label><input type="checkbox" id="t" name="t" value="1" disabled="disabled"><span><b>T : D</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="71" name="t1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="72" name="t2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="73" name="t3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="74" name="t4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="75" name="t5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="t" name="t" value="t" disabled="disabled"><span><b>T : D</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="71" name="t1" value="71"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="72" name="t2" value="72"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="73" name="t3" value="73"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="74" name="t4" value="74"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="75" name="t5" value="75"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-16">
-                    <div class="ck-button"><label><input type="checkbox" id="pb" name="pb" value="1" disabled="disabled"><span><b>P : B</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="76" name="pb1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="77" name="pb2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="78" name="pb3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="79" name="pb4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="80" name="pb5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="pb" name="pb" value="pb" disabled="disabled"><span><b>P : B</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="76" name="pb1" value="76"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="77" name="pb2" value="77"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="78" name="pb3" value="78"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="79" name="pb4" value="79"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="80" name="pb5" value="80"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-17">
-                    <div class="ck-button"><label><input type="checkbox" id="sz" name="sz" value="1" disabled="disabled"><span><b>S : Z</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="81" name="sz1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="82" name="sz2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="83" name="sz3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="84" name="sz4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="85" name="sz5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="sz" name="sz" value="sz" disabled="disabled"><span><b>S : Z</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="81" name="sz1" value="81"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="82" name="sz2" value="82"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="83" name="sz3" value="83"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="84" name="sz4" value="84"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="85" name="sz5" value="85"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-18">
-                    <div class="ck-button"><label><input type="checkbox" id="cz" name="cz" value="1" disabled="disabled"><span><b>C : Z</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="86" name="cz1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="87" name="cz2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="88" name="cz3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="89" name="cz4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="90" name="cz5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="cz" name="cz" value="cz" disabled="disabled"><span><b>C : Z</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="86" name="cz1" value="86"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="87" name="cz2" value="87"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="88" name="cz3" value="88"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="89" name="cz4" value="89"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="90" name="cz5" value="90"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-19">
-                    <div class="ck-button"><label><input type="checkbox" id="szzy" name="szzy" value="1" disabled="disabled"><span><b>SZ : Ż</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="91" name="szzy1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="92" name="szzy2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="93" name="szzy3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="94" name="szzy4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="95" name="szzy5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="szzy" name="szzy" value="szzy" disabled="disabled"><span><b>SZ : Ż</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="91" name="szzy1" value="91"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="92" name="szzy2" value="92"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="93" name="szzy3" value="93"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="94" name="szzy4" value="94"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="95" name="szzy5" value="95"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-20">
-                    <div class="ck-button"><label><input type="checkbox" id="czzy" name="czzy" value="1" disabled="disabled"><span><b>CZ : Ż</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="96" name="czzy1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="97" name="czzy2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="98" name="czzy3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="99" name="czzy4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="100" name="czzy5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="czzy" name="czzy" value="czzy" disabled="disabled"><span><b>CZ : Ż</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="96" name="czzy1" value="96"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="97" name="czzy2" value="97"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="98" name="czzy3" value="98"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="99" name="czzy4" value="99"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="100" name="czzy5" value="100"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-21">
-                    <div class="ck-button"><label><input type="checkbox" id="cizi" name="cizi" value="1" disabled="disabled"><span><b>Ć : Ź</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="101" name="cizi1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="102" name="cizi2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="103" name="cizi3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="104" name="cizi4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="105" name="cizi5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="cizi" name="cizi" value="cizi" disabled="disabled"><span><b>Ć : Ź</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="101" name="cizi1" value="101"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="102" name="cizi2" value="102"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="103" name="cizi3" value="103"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="104" name="cizi4" value="104"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="105" name="cizi5" value="105"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-22">
-                    <div class="ck-button"><label><input type="checkbox" id="sizi" name="sizi" value="1" disabled="disabled"><span><b>Ś : Ź</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="106" name="sizi1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="107" name="sizi2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="108" name="sizi3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="109" name="sizi4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="110" name="sizi5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="sizi" name="sizi" value="sizi" disabled="disabled"><span><b>Ś : Ź</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="106" name="sizi1" value="106"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="107" name="sizi2" value="107"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="108" name="sizi3" value="108"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="109" name="sizi4" value="109"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="110" name="sizi5" value="110"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-23">
-                    <div class="ck-button"><label><input type="checkbox" id="fw" name="fw" value="1" disabled="disabled"><span><b>F : W</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="111" name="fw1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="112" name="fw2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="113" name="fw3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="114" name="fw4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="115" name="fw5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="fw" name="fw" value="fw" disabled="disabled"><span><b>F : W</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="111" name="fw1" value="111"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="112" name="fw2" value="112"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="113" name="fw3" value="113"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="114" name="fw4" value="114"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="115" name="fw5" value="115"><span>Grupa</span></label></div><br>
                 </div><br>
                 <div id="group-24">
-                    <div class="ck-button"><label><input type="checkbox" id="h" name="h" value="1" disabled="disabled"><span><b>H</b></span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="116" name="h1" value="1"><span>Nie</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="117" name="h2" value="1"><span>Nagłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="118" name="h3" value="1"><span>Śródgłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="119" name="h4" value="1"><span>Wygłos</span></label></div>
-                    <div class="ck-button"><label><input type="checkbox" id="120" name="h5" value="1"><span>Grupa</span></label></div><br>
+                    <div class="ck-button"><label><input type="checkbox" id="h" name="h" value="h" disabled="disabled"><span><b>H</b></span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="116" name="h1" value="116"><span>Nie</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="117" name="h2" value="117"><span>Nagłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="118" name="h3" value="118"><span>Śródgłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="119" name="h4" value="119"><span>Wygłos</span></label></div>
+                    <div class="ck-button"><label><input type="checkbox" id="120" name="h5" value="120"><span>Grupa</span></label></div><br>
                 </div><br>
             </div>
         </div>
