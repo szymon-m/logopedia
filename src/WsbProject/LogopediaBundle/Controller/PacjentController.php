@@ -313,6 +313,7 @@ class PacjentController extends Controller
             ->find($id_pacjenta);
 
 
+
         $diagnoza = new Diagnoza();
         $diagnoza->setTresc($dane['tresc']);
         $diagnoza->setData(new \DateTime());
@@ -328,6 +329,63 @@ class PacjentController extends Controller
         $status = json_encode($status);
 
         return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+
+    }
+
+    /**
+     * @Route("/popraw_diagnoze", name="popraw_diagnoze", options={"expose"=true})
+     *
+     */
+    public function popraw_diagnozeAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_pacjenta = $dane['id_pacjenta'];
+
+
+        $pacjent = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Pacjent')
+            ->find($id_pacjenta);
+
+        $em = $this->getDoctrine()->getManager();
+        $diagnoza = $em->getRepository('LogopediaBundle:Diagnoza')
+            ->findOneBy(array('pacjent' => (int)$id_pacjenta));
+
+
+        $diagnoza->setTresc($dane['tresc']);
+        $diagnoza->setData(new \DateTime());
+        $diagnoza->setPacjent($pacjent);
+
+
+        $em->persist($diagnoza);
+        $em->flush();
+        $status = [];
+        $status[0] = 'done';
+
+        $status = json_encode($status);
+
+        return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+
+    }
+    /**
+     * @Route("/pobierz_diagnoze", name="pobierz_diagnoze", options={"expose"=true})
+     *
+     */
+    public function pobierz_diagnozeAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_pacjenta = $dane['id_pacjenta'];
+
+        $em = $this->getDoctrine()->getManager();
+        $diagnoza = $em->getRepository('LogopediaBundle:Diagnoza')
+            ->findOneBy(array('pacjent' => (int)$id_pacjenta));
+
+        $text = $diagnoza->getTresc();
+
+        return new Response($text, 200, array('Content-Type' => 'text/html'));
 
     }
 }

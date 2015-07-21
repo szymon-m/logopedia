@@ -11,6 +11,26 @@
 
             e.preventDefault();
         });
+
+        var id_pacjenta = {{ app.request.get('id')}};
+
+        var dane = {
+            'id_pacjenta': id_pacjenta
+
+        };
+
+        $.ajax({
+            url :Routing.generate('pobierz_diagnoze'),
+            type: "POST",
+            data : dane,
+            success: function(dane) {
+
+                $('#tresc').val(dane);
+            }
+        });
+
+
+
         var id_pacjenta = {{ app.request.get('id')}};
 
         $("#zapisz_diagnoze").click( function () {
@@ -37,7 +57,23 @@
 
         $("#popraw_diagnoze").on('click', function () {
 
-            alert('Popraw');
+            var tresc = $('#tresc').val();
+
+            var dane = {
+                'id_pacjenta': id_pacjenta,
+                'tresc': tresc
+            };
+
+            $.ajax({
+                url :Routing.generate('popraw_diagnoze'),
+                type: "POST",
+                data : dane,
+                success: function(dane) {
+
+                    alert('Poprawiono diagnoze');
+                }
+            });
+
         });
     });
 
