@@ -42,18 +42,24 @@ class CalendarEventListener
         // from your own entities/database values.
         foreach($companyEvents as $companyEvent) {
             // create an event with a start/end time, or an all day event
+            $nazwa = $companyEvent->getPacjent()->getImie().' '.$companyEvent->getPacjent()->getNazwisko();
+
+
             if ($companyEvent->getAllday() === false) {
-                $eventEntity = new EventEntity($companyEvent->getPacjent()->getImie(), $companyEvent->getStart(), $companyEvent->getEnd());
+                $eventEntity = new EventEntity($nazwa, $companyEvent->getStart(), $companyEvent->getEnd());
             } else {
-                $eventEntity = new EventEntity($companyEvent->getUwagi(), $companyEvent->getStart(), null, true);
+                $eventEntity = new EventEntity($nazwa, $companyEvent->getStart(), null, true);
             }
             //optional calendar event settings
             //$eventEntity->setAllDay(true); // default is false, set to true if this is an all day event
 
+            $eventEntity->addField('id_spotkania', $companyEvent->getId());
             if($companyEvent->isDone()) {
+                $eventEntity->addField('done', true);
                 $eventEntity->setBgColor('#FF0000'); //set the background color of the event's label
                 $eventEntity->setFgColor('#FFFFFF'); //set the foreground color of the event's label
             } else {
+                $eventEntity->addField('done', false);
                 $eventEntity->setBgColor('#00FF00'); //set the background color of the event's label
                 $eventEntity->setFgColor('#FFFFFF'); //set the foreground color of the event's label
             }

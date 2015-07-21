@@ -6,8 +6,8 @@ $(function () {
 
     var pierwsze =  {
 
-        start: '15:00', // a start time (10am in this example)
-        end: '18:00', // an end time (6pm in this example)
+        start: '15:00:00', // a start time (10am in this example)
+        end: '18:00:00', // an end time (6pm in this example)
 
         dow: [ 3, 4 ]
         // days of week. an array of zero-based day of week integers (0=Sunday)
@@ -42,6 +42,8 @@ $(function () {
         maxTime: czasDo,
         slotDuration: '00:15:00',
         editable: true,
+        defaultEventDurationTime: '01:00:00',
+        eventDurationEditable: false,
         eventLimit: true,
         businessHours:[
 
@@ -58,18 +60,137 @@ $(function () {
             }
 
         ],
-        eventClick: function(event, element) {
+        eventDragStart : function( event, jsEvent, ui, view ) {
+        },
+        eventDragStop: function( event, jsEvent, ui, view ) {
+        },
+
+
+        eventDrop : function( zdarzenie, delta, revertFunc, jsEvent, ui, view ) {
+
+            if(zdarzenie.done == true) {
+                alert('Nie możesz przenosić zdarzeń już wykonanych');
+                $('#zrobione').html('Zakończone');
+            } else {
+                $('#zrobione').html('Do wykonania');
+            }
+            var id_spotkania = zdarzenie.id_spotkania;
+
+            $("#id_spotkania").html(id_spotkania);
+            $("#poczatek").html(moment(zdarzenie.start).format('D MMMM YYYY HH:mm'));
+            $("#koniec").html(moment(zdarzenie.end).format('D MMMM YYYY HH:mm'));
+            $('#imie_i_nazwisko').html(zdarzenie.title);
+
+
+            if(zdarzenie.done == true) {
+                $('#zrobione').html('Zakończone');
+            } else {
+                $('#zrobione').html('Do wykonania');
+            }
+
+            if(delta) {
+                $('#delta1').html(delta);
+            }
+
+            //$('#delta').html(moment(delta).format('D MMMM YYYY HH:mm'));
+
+
+
+            $("#edytuj_spotkanie").dialog({
+                height: 300,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Zapisz spotkanie": zapiszSpotkanie,
+                    "Anuluj" : function() {
+                        $("#edytuj_spotkanie").dialog( "close" );
+                    }
+                }});
+
+
+
+
+            function zapiszSpotkanie () {
+
+                var dane = {};
+
+                var startTime = moment(zdarzenie.start).format('YYYY-MM-DD\THH:MM:SS');
+                var endTime = moment(zdarzenie.end).format('YYYY-MM-DD\THH:MM:SS');
+
+                var dane = {
+                    start: zdarzenie.start.format(),
+                    end: zdarzenie.end.format(),
+                    id_spotkania: id_spotkania
+                };
+
+
+                $.ajax({
+                    url: Routing.generate('popraw_zdarzenie'),
+
+                    data: dane,
+                    type: "POST",
+                    success: function(json) {
+                        alert('Added Successfully');
+
+                        $("#edytuj_spotkanie").dialog( "close" );
+
+                        $('#calendar-holder').fullCalendar('renderEvent',
+                            {
+                                title: zdarzenie.title,
+                                start: start.format(),
+                                end: end.format(),
+                                alldayevent: json.alldayevent,
+                                backgroundColor: json.backgroundColor,
+                            },
+                            true // make the event "stick"
+                        );
+
+                        $('#calendar-holder').fullCalendar('updateEvent', zdarzenie);
+
+
+
+                    }
+                });
+
+            };
+
+
+
+
+        },
+
+        eventClick: function(event, jsEvent, view ) {
+
 
             $("#startTime").html(moment(event.start).format('D MMMM YYYY HH:mm'));
-            $("#endTime").html(moment(event.end).format('dd MMMM YYYY HH:mm'));
-            $("#eventInfo").html(event.description);
-            $("#eventLink").attr('href', event.url);
-            $("#eventContent").dialog({ modal: true, title: event.title, width:350})
+            $("#endTime").html(moment(event.end).format('D MMMM YYYY HH:mm'));
+            $('#imie_nazwisko').html(event.title);
+            if(event.done == true) {
+                $('#done').html('Zakończone');
+            } else {
+                $('#done').html('Do wykonania');
+            }
 
 
-            event.title = "CLICKED!";
+            $("#szczegoly_spotkania").dialog({
+                height: 300,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Zapisz spotkanie": zapiszSpotkanie,
+                    "Anuluj" : function() {
+                        $("#szczegoly_spotkania").dialog( "close" );
+                    }
+                }});
+
 
             $('#calendar').fullCalendar('updateEvent', event);
+
+            function zapiszSpotkanie () {
+
+
+
+            };
 
         },
         selectable: true,
@@ -78,6 +199,15 @@ $(function () {
 
         ////////////////////////////////////////////////
         select: function(start, end, jsEvent, view) {
+
+            if(moment(start).isBefore(moment().format('D MMMM YYYY 00:00'))) {
+                alert('Nie możesz dodawać zdarzeń przed dniem dzisiejszym');
+                var done ='1';
+            } else {
+
+                var done ='0';
+            }
+
 
             var dane = { imie: "nieznane"};
             $.ajax({
@@ -88,13 +218,17 @@ $(function () {
                 success: function(dane) {
 
                     $('select#pacjent').html(dane);
+                    $('select#pacjent').append( '<option value="0">---Dodaj nowego pacjenta---</option>');
 
                 }
 
 
             });
-            $("#startTime").html(moment(start).format('D MMMM YYYY HH:mm'));
-            $("#endTime").html(moment(end).format('dd MMMM YYYY HH:mm'));
+            var godzinka = 0.75,
+            end = moment(start).add(godzinka, 'hour');
+
+            $("#startTime2").html(moment(start).format('D MMMM YYYY HH:mm'));
+            $("#endTime2").html(moment(end).format('dd MMMM YYYY HH:mm'));
 
 
             $("#dodaj_nowe_spotkanie").dialog({
@@ -127,7 +261,7 @@ $(function () {
 
 
                 var allday = '0';
-                var done ='1';
+
                 var id_pacjenta = $('select#pacjent').val();
                 var wybrany = $('#pacjent option:selected').text();
                 var uwagi = $('#uwagi').val();
@@ -150,21 +284,27 @@ $(function () {
                     type: "POST",
                     success: function(json) {
                         alert('Added Successfully');
+
+                        $("#dodaj_nowe_spotkanie").dialog( "close" );
+
+                        $('#calendar-holder').fullCalendar('renderEvent',
+                            {
+                                title: wybrany,
+                                start: start.format(),
+                                end: end.format(),
+                                alldayevent: json.alldayevent,
+                                backgroundColor: json.backgroundColor,
+                            },
+                            true // make the event "stick"
+                        );
+
+                        $('#calendar-holder').fullCalendar('unselect');
+
+
+
                     }
                 });
-                $("#dodaj_nowe_spotkanie").dialog( "close" );
 
-                $('#calendar-holder').fullCalendar('renderEvent',
-                    {
-                        title: wybrany,
-                        start: start.format(),
-                        end: end.format(),
-                        alldayevent: dane.alldayevent
-                    },
-                    true // make the event "stick"
-                );
-
-                $('#calendar-holder').fullCalendar('unselect');
             };
 
 

@@ -45,13 +45,32 @@
 
         </select><br><br>
         <input id="uwagi" type="text" value="Uwagi"><br>
-        Od: <span id="startTime"></span><br>
-        Do: <span id="endTime"></span><br><br>
-        <span id="komunikat"></span>
+        Od: <span id="startTime2"></span><br>
+        Do: <span id="endTime2"></span><br><br>
+
+
+    </div>
+    <div id="szczegoly_spotkania" title="Szczegóły spotkania" style="display:none;">
+
+
+        Imię i nazwisko : <span id="imie_nazwisko"></span><br>
+        Początek: <span id="startTime"></span><br>
+        Koniec: <span id="endTime"></span><br><br>
+        Zakończone: <span id="done"></span><br>
+        Delta: <span id="delta"></span>
 
     </div>
 
+    <div id="edytuj_spotkanie" title="Edytuj spotkanie" style="display:none;">
 
+        Numer : <span id="id_spotkania"></span><br>
+        Imię i nazwisko : <span id="imie_i_nazwisko"></span><br>
+        Początek: <span id="poczatek"></span><br>
+        Koniec: <span id="koniec"></span><br><br>
+        Zakończone: <span id="zrobione"></span><br>
+        Delta: <span id="delta1"></span>
+
+    </div>
     <div class="section group">
                    {% include 'LogopediaBundle:Default:calendar.html.twig' %}
     </div>

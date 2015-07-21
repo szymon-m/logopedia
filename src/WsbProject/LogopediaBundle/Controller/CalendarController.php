@@ -130,5 +130,45 @@ class CalendarController extends Controller
 
     }
 
+    /**
+     * @Route("/popraw_zdarzenie", name="popraw_zdarzenie", options={"expose"=true})
+     * @param Request $request
+     * @return Response
+     */
+    public function popraw_zdarzenieAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+        $time_zone = new \DateTimeZone('UTC');
+        $time_zone->getName();
+
+        $start = new \DateTime($request->request->get('start'));
+        //$start->createFromFormat('ATOM', $request->get('start'),$time_zone);
+
+        $end = new \DateTime($request->request->get('end'));
+        //$end->createFromFormat('ATOM', $request->get('end'),$time_z
+
+        $id_spotkania = $dane['id_spotkania'];
+        //$start = $dane['start'];
+        //$end = $dane['end'];
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+        $spotkanie->setStart($start);
+        $spotkanie->setEnd($end);
+
+        $em->flush();
+
+        $dane = json_encode($dane);
+
+        return new Response($dane, 200, array('Content-Type' => 'application/json'));
+
+
+
+    }
 
 }
