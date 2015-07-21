@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
+use WsbProject\LogopediaBundle\Entity\Diagnoza;
 use WsbProject\LogopediaBundle\Entity\Pacjent;
 use WsbProject\LogopediaBundle\Entity\Wywiad;
 use WsbProject\LogopediaBundle\Form\Type\DodajPacjentaType;
@@ -24,10 +25,11 @@ class PacjentController extends Controller
             'action' => $this->generateUrl('dodany_pacjent'),
         ));
 
-        $this->addFlash('notice', 'Zapisano nowego pacjenta');
+        //$this->addFlash('notice', 'Zapisano nowego pacjenta');
         return array('form' => $form->createView());
 
     }
+
     /**
      * @Route("/dodany_pacjent", name="dodany_pacjent", options={"expose"=true})
      * @Template("LogopediaBundle:Pacjent:dodano_pacjenta.html.twig")
@@ -37,9 +39,9 @@ class PacjentController extends Controller
         $pacjent = new Pacjent();
         $form = $this->createForm(new DodajPacjentaType(), $pacjent);
 
-        $form -> handleRequest($request);
-        $form ->createView();
-        if($form->isSubmitted()) {
+        $form->handleRequest($request);
+        $form->createView();
+        if ($form->isSubmitted()) {
 
             $em = $this->getDoctrine()->getManager();
             $nowy_pacjent = $form->getData();
@@ -50,7 +52,7 @@ class PacjentController extends Controller
             $em->flush();
 
 
-            return array('nowy_pacjent'=> $nowy_pacjent);
+            return array('nowy_pacjent' => $nowy_pacjent);
 
         } else {
             return $this->redirectToRoute('dodaj_pacjenta');
@@ -58,6 +60,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/usun_pacjenta", name="usun_pacjenta", options={"expose"=true})
      * @Template("LogopediaBundle:Pacjent:usun_pacjenta.html.twig")
@@ -67,9 +70,9 @@ class PacjentController extends Controller
         $pacjent = new Pacjent();
         $form = $this->createForm(new DodajPacjentaType(), $pacjent);
 
-        $form -> handleRequest($request);
-        $form ->createView();
-        if($form->isSubmitted()) {
+        $form->handleRequest($request);
+        $form->createView();
+        if ($form->isSubmitted()) {
 
             $em = $this->getDoctrine()->getManager();
             $nowy_pacjent = $form->getData();
@@ -80,7 +83,7 @@ class PacjentController extends Controller
             $em->flush();
 
 
-            return array('nowy_pacjent'=> $nowy_pacjent);
+            return array('nowy_pacjent' => $nowy_pacjent);
 
         } else {
             return $this->redirectToRoute('dodaj_pacjenta');
@@ -88,6 +91,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/przegladaj_pacjentow", name="przegladaj_pacjentow", options={"expose"=true})
      * @Template("LogopediaBundle:Pacjent:przegladaj_pacjentow.html.twig")
@@ -96,15 +100,13 @@ class PacjentController extends Controller
     {
 
 
-
-
         $pacjenci = $this->getDoctrine()->getRepository('LogopediaBundle:Pacjent')
             ->findAll();
 
 
-        if($pacjenci) {
+        if ($pacjenci) {
 
-            return array('pacjenci'=> $pacjenci);
+            return array('pacjenci' => $pacjenci);
 
         } else {
             return new Response('Nie znaleziono żadnych pacjentów!');
@@ -112,6 +114,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/pacjent/{id}", name="pacjent", options={"expose"=true})
      * @Template("LogopediaBundle:Pacjent:pacjent.html.twig")
@@ -120,13 +123,11 @@ class PacjentController extends Controller
     {
 
 
-
-
         $pacjent = $this->getDoctrine()->getRepository('LogopediaBundle:Pacjent')
             ->find($id);
 
 
-        if($pacjent) {
+        if ($pacjent) {
 
 
             $diagnoza = $this->getDoctrine()->getRepository('LogopediaBundle:Diagnoza')
@@ -135,7 +136,7 @@ class PacjentController extends Controller
             $wywiad = $this->getDoctrine()->getRepository('LogopediaBundle:Wywiad')
                 ->findOneBy(array('pacjent' => $id));
 
-            return array('pacjent'=> $pacjent, 'diagnoza'=> $diagnoza, 'wywiad' => $wywiad);
+            return array('pacjent' => $pacjent, 'diagnoza' => $diagnoza, 'wywiad' => $wywiad);
 
         } else {
 
@@ -146,6 +147,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/pobierz_wywiad", name="pobierz_wywiad", options={"expose"=true})
      *
@@ -159,7 +161,7 @@ class PacjentController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery(
-                'SELECT w
+            'SELECT w
                  FROM LogopediaBundle:Wywiad w
                  WHERE w.pacjent = :id_pacjenta')
             ->setParameter('id_pacjenta', $id_pacjenta);
@@ -169,9 +171,9 @@ class PacjentController extends Controller
 
         $tablica = [];
 
-        for($i = 1; $i <= 21; ++$i) {
+        for ($i = 1; $i <= 21; ++$i) {
 
-            $temp = $wywiad->getValue('b',$i);
+            $temp = $wywiad->getValue('b', $i);
 
             $tablica[$i] = $temp;
 
@@ -185,6 +187,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/zapisz_wywiad", name="zapisz_wywiad", options={"expose"=true})
      *
@@ -204,23 +207,22 @@ class PacjentController extends Controller
 
         $wywiad = new Wywiad();
 
-        for($i = 1; $i <= 17; ++$i) {
+        for ($i = 1; $i <= 17; ++$i) {
 
             $dane[$i] = (int)$dane[$i];
 
         }
 
-        foreach($dane as $key => $value) {
+        foreach ($dane as $key => $value) {
 
-            if($key == '0') {
+            if ($key == '0') {
                 continue;
             }
 
-            if($key != '0') {
+            if ($key != '0') {
 
 
-
-            $wywiad->setValue('b',$key, $value);
+                $wywiad->setValue('b', $key, $value);
 
             }
 
@@ -240,6 +242,7 @@ class PacjentController extends Controller
 
 
     }
+
     /**
      * @Route("/popraw_wywiad", name="popraw_wywiad", options={"expose"=true})
      *
@@ -252,34 +255,32 @@ class PacjentController extends Controller
         $id_pacjenta = $dane['0'];
 
 
-
         $pacjent = $this->getDoctrine()
             ->getRepository('LogopediaBundle:Pacjent')
             ->find($id_pacjenta);
 
         $em = $this->getDoctrine()->getManager();
         $wywiad = $em->getRepository('LogopediaBundle:Wywiad')
-            ->findOneBy(array('pacjent'=>(int)$id_pacjenta));
+            ->findOneBy(array('pacjent' => (int)$id_pacjenta));
 
-        for($i = 1; $i <= 17; ++$i) {
+        for ($i = 1; $i <= 17; ++$i) {
 
             $dane[$i] = (int)$dane[$i];
 
         }
 
 
-        foreach($dane as $key => $value) {
+        foreach ($dane as $key => $value) {
 
-            if($key == '0') {
+            if ($key == '0') {
 
                 continue;
             }
 
-            if($key != '0') {
+            if ($key != '0') {
 
 
-
-                $wywiad->setValue('b',$key,$value);
+                $wywiad->setValue('b', $key, $value);
 
             }
 
@@ -295,6 +296,38 @@ class PacjentController extends Controller
 
     }
 
+    /**
+     * @Route("/zapisz_diagnoze", name="zapisz_diagnoze", options={"expose"=true})
+     *
+     */
+    public function zapisz_diagnozeAction(Request $request)
+    {
+        $dane = $request->request->all();
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $id_pacjenta = $dane['id_pacjenta'];
 
 
+        $pacjent = $this->getDoctrine()
+            ->getRepository('LogopediaBundle:Pacjent')
+            ->find($id_pacjenta);
+
+
+        $diagnoza = new Diagnoza();
+        $diagnoza->setTresc($dane['tresc']);
+        $diagnoza->setData(new \DateTime());
+        $diagnoza->setPacjent($pacjent);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($diagnoza);
+        $em->flush();
+        $status = [];
+        $status[0] = 'done';
+
+        $status = json_encode($status);
+
+        return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+
+    }
 }

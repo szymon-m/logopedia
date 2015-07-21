@@ -55,12 +55,12 @@
                                 {% if not diagnoza %}
 
                                     <i>Niestety nie wprowadzono jeszcze diagnozy dla tego pacjenta</i>
+                                    {% include 'LogopediaBundle:Pacjent:diagnoza.html.twig' %}
 
                                 {%  else %}
 
 
-                                    <h3>Diagnoza:</h3><br>
-                                    <p>{{ diagnoza.tresc }}</p>
+                                    {% include 'LogopediaBundle:Pacjent:diagnoza.html.twig' %}
 
                                 {% endif %}
 

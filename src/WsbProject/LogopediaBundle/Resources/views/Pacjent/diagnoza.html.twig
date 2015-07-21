@@ -1,0 +1,65 @@
+<script>
+    $(document).ready(function() {
+        $('.tabs .tab-links a').on('click', function(e)  {
+            var currentAttrValue = jQuery(this).attr('href');
+
+            // Show/Hide Tabs
+            $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+            // Change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            e.preventDefault();
+        });
+        var id_pacjenta = {{ app.request.get('id')}};
+
+        $("#zapisz_diagnoze").click( function () {
+
+
+            var tresc = $('#tresc').val();
+
+            var dane = {
+                'id_pacjenta': id_pacjenta,
+                'tresc': tresc
+            };
+
+            $.ajax({
+                url :Routing.generate('zapisz_diagnoze'),
+                type: "POST",
+                data : dane,
+                success: function(dane) {
+
+                    alert('Dodano diagnoze');
+                }
+                });
+
+        });
+
+        $("#popraw_diagnoze").on('click', function () {
+
+            alert('Popraw');
+        });
+    });
+
+
+
+
+
+</script>
+<div class="section group">
+    <div class="col span_1_of_3">
+        {%  if not diagnoza %} <button id="zapisz_diagnoze">Zapisz diagnozę</button> {% endif %}
+        {%  if diagnoza %} <button id="popraw_diagnoze">Zapisz poprawiony wersję diagnozy</button> {% endif %}
+    </div>
+</div>
+
+<div class="section group">
+    <div class="col span_1_of_3">
+        <textarea id="tresc" rows="4" cols="50">
+
+        </textarea>
+    </div>
+</div>
+
+
+

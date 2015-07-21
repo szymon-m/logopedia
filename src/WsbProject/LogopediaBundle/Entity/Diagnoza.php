@@ -28,6 +28,23 @@ class Diagnoza
     protected $pacjent;
 
     /**
+     * @return \WsbProject\LogopediaBundle\Entity\Pacjent
+     */
+    public function getPacjent()
+    {
+        return $this->pacjent;
+    }
+
+    /**
+     * @param \WsbProject\LogopediaBundle\Entity\Pacjent $pacjent
+     * return Diagnoza
+     */
+    public function setPacjent($pacjent)
+    {
+        $pacjent->setDiagnozy($this);
+        $this->pacjent = $pacjent;
+    }
+    /**
      * @var string
      *
      * @ORM\Column(name="tresc", type="string", length=255)

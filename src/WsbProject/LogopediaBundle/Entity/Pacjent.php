@@ -79,7 +79,6 @@ class Pacjent
     protected $diagnozy = null;
 
 
-
     public function __construct()
     {
         $this->spotkania = new ArrayCollection();
@@ -101,6 +100,21 @@ class Pacjent
     public function setSpotkania($spotkania)
     {
         $this->spotkania[] = $spotkania;
+    }
+    /**
+     * @return Diagnozy[]
+     */
+    public function getDiagnozy()
+    {
+        return $this->diagnozy;
+    }
+
+    /**
+     * @param Diagnozy[] $diagnozy
+     */
+    public function setDiagnozy($diagnozy)
+    {
+        $this->diagnozy[] = $diagnozy;
     }
 
     /**
