@@ -55,7 +55,7 @@ class CalendarController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function dodajZdarzenieAction(Request $request)
+    public function dodaj_zdarzenieAction(Request $request)
     {
         $time_zone = new \DateTimeZone('UTC');
         $time_zone->getName();
@@ -170,5 +170,6 @@ class CalendarController extends Controller
 
 
     }
+
 
 }

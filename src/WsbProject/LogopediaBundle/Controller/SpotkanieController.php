@@ -46,13 +46,25 @@ class SpotkanieController extends Controller
 
     }
     /**
+     * @Route("/sptk/{id_spotkania}", name="sptk", options={"expose"=true})
+     *
+     */
+    public function sptkAction($id_spotkania) {
+
+        $spotkanie = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+        $id_pacjenta = $spotkanie->getPacjent()->getId();
+
+        return $this->redirectToRoute('spotkanie', array('id'=> $id_spotkania, 'id_pacjenta'=> $id_pacjenta));
+
+    }
+
+    /**
      * @Route("/spotkanie/{id}/{id_pacjenta}", name="spotkanie", options={"expose"=true})
      * @Template("LogopediaBundle:Spotkanie:spotkanie.html.twig")
      */
     public function spotkanieAction($id, $id_pacjenta) {
-
-
-
 
         $em = $this->getDoctrine()->getManager();
         /*
@@ -222,7 +234,6 @@ class SpotkanieController extends Controller
      *
      */
 
-
     public function pobierz_ostatnia_artykulacjeAction(Request $request) {
 
         $id_pacjenta = $request->request->get('id_pacjenta');
@@ -285,4 +296,40 @@ class SpotkanieController extends Controller
         return array('spotkanie'=> $spotkanie);
 
     }
+
+    /**
+     * @Route("/usun_spotkanie/{id_spotkania}", name="usun_spotkanie", options={"expose"=true})
+     */
+
+    public function usun_spotkanieAction($id_spotkania) {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $artykulacja = $em->getRepository('LogopediaBundle:Artykulacja')
+            ->find($id_spotkania);
+
+        if($artykulacja) {
+
+            $em->remove($artykulacja);
+            $em->flush();
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')->find($id_spotkania);
+
+
+        $em->remove($spotkanie);
+        $em->flush();
+
+        $status = [];
+        $status[0] = 'done';
+
+        $status = json_encode($status);
+
+        return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+
+
+    }
 }
+

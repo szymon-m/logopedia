@@ -71,29 +71,23 @@ $(function () {
             if(zdarzenie.done == true) {
                 alert('Nie możesz przenosić zdarzeń już wykonanych');
                 $('#zrobione').html('Zakończone');
+                revertFunc();
+                return;
             } else {
                 $('#zrobione').html('Do wykonania');
+            }
+            if(moment(zdarzenie.start).isBefore(moment().format('D MMMM YYYY HH:mm+2'))) {
+                alert('Nie możesz przesuwać zdarzeń przed dniem dzisiejszym');
+
+                revertFunc();
+                return;
             }
             var id_spotkania = zdarzenie.id_spotkania;
 
-            $("#id_spotkania").html(id_spotkania);
-            $("#poczatek").html(moment(zdarzenie.start).format('D MMMM YYYY HH:mm'));
-            $("#koniec").html(moment(zdarzenie.end).format('D MMMM YYYY HH:mm'));
+            $("#dzien1").html(moment(zdarzenie.start).format('D MMMM YYYY'));
+            $("#poczatek").html(moment(zdarzenie.start).format('HH:mm'));
+            $("#koniec").html(moment(zdarzenie.end).format('HH:mm'));
             $('#imie_i_nazwisko').html(zdarzenie.title);
-
-
-            if(zdarzenie.done == true) {
-                $('#zrobione').html('Zakończone');
-            } else {
-                $('#zrobione').html('Do wykonania');
-            }
-
-            if(delta) {
-                $('#delta1').html(delta);
-            }
-
-            //$('#delta').html(moment(delta).format('D MMMM YYYY HH:mm'));
-
 
 
             $("#edytuj_spotkanie").dialog({
@@ -101,7 +95,7 @@ $(function () {
                 width: 350,
                 modal: true,
                 buttons: {
-                    "Zapisz spotkanie": zapiszSpotkanie,
+                    "Zapisz zmiany": zapiszSpotkanie,
                     "Anuluj" : function() {
                         $("#edytuj_spotkanie").dialog( "close" );
                     }
@@ -130,7 +124,7 @@ $(function () {
                     data: dane,
                     type: "POST",
                     success: function(json) {
-                        alert('Added Successfully');
+                        alert('Zmieniono datę/czas spotkania.');
 
                         $("#edytuj_spotkanie").dialog( "close" );
 
@@ -139,8 +133,8 @@ $(function () {
                                 title: zdarzenie.title,
                                 start: start.format(),
                                 end: end.format(),
-                                alldayevent: json.alldayevent,
-                                backgroundColor: json.backgroundColor,
+                                alldayevent: json[alldayevent],
+                                backgroundColor: json[backgroundColor],
                             },
                             true // make the event "stick"
                         );
@@ -161,9 +155,9 @@ $(function () {
 
         eventClick: function(event, jsEvent, view ) {
 
-
-            $("#startTime").html(moment(event.start).format('D MMMM YYYY HH:mm'));
-            $("#endTime").html(moment(event.end).format('D MMMM YYYY HH:mm'));
+            $("#dzien").html(moment(event.start).format('D MMMM YYYY'));
+            $("#startTime").html(moment(event.start).format('HH:mm'));
+            $("#endTime").html(moment(event.end).format('HH:mm'));
             $('#imie_nazwisko').html(event.title);
             if(event.done == true) {
                 $('#done').html('Zakończone');
@@ -171,13 +165,15 @@ $(function () {
                 $('#done').html('Do wykonania');
             }
 
+            var id_spotkania = event.id_spotkania;
 
             $("#szczegoly_spotkania").dialog({
                 height: 300,
                 width: 350,
                 modal: true,
                 buttons: {
-                    "Zapisz spotkanie": zapiszSpotkanie,
+                    "Wybierz/Przejdź do": wybierzSpotkanie,
+                    "Usuń": usunSpotkanie,
                     "Anuluj" : function() {
                         $("#szczegoly_spotkania").dialog( "close" );
                     }
@@ -186,8 +182,30 @@ $(function () {
 
             $('#calendar').fullCalendar('updateEvent', event);
 
-            function zapiszSpotkanie () {
+            function usunSpotkanie () {
 
+                var dane = { 'id_spotkania' : id_spotkania};
+
+                $.ajax({
+
+                    url: Routing.generate('usun_spotkanie', dane),
+                    type: "GET",
+                    success: function(dane) {
+
+                        alert('Usunięto zaplanowane spotkanie z kalendarza!')
+                        $("#szczegoly_spotkania").dialog( "close" );
+                    }
+
+
+                });
+
+
+            };
+            function wybierzSpotkanie () {
+
+                var dane = { 'id_spotkania' : id_spotkania};
+
+                window.location.href = Routing.generate('sptk', dane);
 
 
             };
@@ -200,9 +218,10 @@ $(function () {
         ////////////////////////////////////////////////
         select: function(start, end, jsEvent, view) {
 
-            if(moment(start).isBefore(moment().format('D MMMM YYYY 00:00'))) {
+            if(moment(start).isBefore(moment().format('D MMMM YYYY HH:mm'))) {
                 alert('Nie możesz dodawać zdarzeń przed dniem dzisiejszym');
                 var done ='1';
+                return;
             } else {
 
                 var done ='0';
@@ -218,7 +237,7 @@ $(function () {
                 success: function(dane) {
 
                     $('select#pacjent').html(dane);
-                    $('select#pacjent').append( '<option value="0">---Dodaj nowego pacjenta---</option>');
+                    //$('select#pacjent').append( '<option value="0">---Dodaj nowego pacjenta---</option>');
 
                 }
 

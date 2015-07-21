@@ -30,7 +30,7 @@
             <div class="tabs">
                 <ul class="tab-links">
                     <li class="active"><a href="#artykulacja">Formularz artykulacji</a></li>
-                    <li><a href="#artykulacja">Zalecenia</a></li>
+                    <li><a href="#zalecenia">Zalecenia</a></li>
                     <li><a href="#obrazki">Zestawy obrazków</a></li>
                 </ul>
 
@@ -46,8 +46,9 @@
                                 <td>{{ spotkanie.zalecenia }}</td>
 
                             </tr>
-                            {%  include 'LogopediaBundle:Default:artykulacja.html.twig' %}
+
                         {% endfor %}
+                        {%  include 'LogopediaBundle:Default:artykulacja.html.twig' %}
                     </div>
 
                     <div id="zalecenia" class="tab">
