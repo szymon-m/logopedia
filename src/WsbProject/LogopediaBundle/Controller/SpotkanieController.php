@@ -101,26 +101,23 @@ class SpotkanieController extends Controller
 
         //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
 
-        /*$query = $em->createQuery(
-            'SELECT o, s
+        $query = $em->createQuery(
+            'SELECT o
               FROM LogopediaBundle:Obrazki o
-              JOIN o.spotkanie s
-              WHERE s.id NOT IN
-                (SELECT DISTINCT o, s
-                  FROM LogopediaBundle:Obrazki o
-                  JOIN o spotkanie s
-                  WHERE s.id = :id_spotkania)
-              ORDER BY o.id ASC')
-            ->setParameter('id_spotkania', $id);
+              WHERE o.id NOT IN
+              (SELECT p
+               FROM LogopediaBundle:Obrazki p
+               JOIN p.spotkanie s)');
 
-        */
+
+        /*
         $query = $em->createQuery(
             'SELECT o, s
                  FROM LogopediaBundle:Obrazki o
                  JOIN o.spotkanie s
                  WHERE s.id = :id_spotkania')
             ->setParameter('id_spotkania',$id);
-
+        */
         $dostepne = $query->getResult();
 
         //=================== działajace
