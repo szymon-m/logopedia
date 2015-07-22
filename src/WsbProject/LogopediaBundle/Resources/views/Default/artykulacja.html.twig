@@ -90,6 +90,7 @@
             $("#wyslij").click(function (){
 
                 wynik[0] = id_spotkania;
+                var zalecenia = $('#121').val();
                 var tmp = '';
                 for (var num = 1; num <= 120; num++) {
 
@@ -144,6 +145,33 @@
 
                 });
 
+                var dane = { 'id_spotkania': id_spotkania, 'zalecenia': zalecenia};
+                $.ajax({
+                    url : Routing.generate('zapisz_zalecenia'),
+                    type: "POST",
+                    data : dane,
+                    success: function(dane) {
+                        // Replace current position field ...
+
+
+                        // $('#aktorzy').empty();
+                        // $('#aktorzy').append(html);
+
+
+                        // is working !! $("#odpowiedz").append(dane);
+
+                        //var result = $('<div />').append(dane).find('#aktorzy').html();
+                        //$('#aktorzy').html(result);
+                        //$('#aktorzy').replaceWith
+                        //($(dane).find('#aktorzy'));
+                        //$('#aktorzy').replaceWith(
+                        // ... with the returned one from the AJAX response.
+                        //      $(html).find('aktorzy')
+                        // Position field now displays the appropriate positions.
+                    }
+
+                });
+
             });
             /* ========================================================
 
@@ -154,7 +182,9 @@
 
             $("#zapytaj").click(function () {
 
-                dane = { 'id_pacjenta': id_pacjenta};
+                dane = { 'id_pacjenta': id_pacjenta,
+                    'id_spotkania': id_spotkania
+                };
 
 
 

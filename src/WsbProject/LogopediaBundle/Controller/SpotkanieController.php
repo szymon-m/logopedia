@@ -254,6 +254,7 @@ class SpotkanieController extends Controller
     public function pobierz_ostatnia_artykulacjeAction(Request $request) {
 
         $id_pacjenta = (int)$request->request->get('id_pacjenta');
+        $id_spotkania = (int)$request->request->get('id_spotkania');
         //exit (\Doctrine\Common\Util\Debug::dump($id_pacjenta));
 
         $time_zone = new \DateTimeZone('UTC');
@@ -261,7 +262,18 @@ class SpotkanieController extends Controller
 
         // definiujemy dzisiejszy dzień
 
-        $poczatek = new \DateTime();
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT s
+                 FROM LogopediaBundle:Spotkanie s
+                  WHERE s.id = :id_spotkania
+                  ')
+            ->setParameter('id_spotkania', $id_spotkania);
+
+        $spotkanie = $query->setMaxResults(1)->getOneOrNullResult();
+
+        $poczatek = $spotkanie->getStart();
+        //$poczatek = new \DateTime();
         //$poczatek->setTime(00,00,00);
 
         $em = $this->getDoctrine()->getManager();
@@ -481,6 +493,47 @@ class SpotkanieController extends Controller
 
 
         $odpowiedz = json_encode($odpowiedz);
+
+        //exit(\Doctrine\Common\Util\Debug::dump($odpowiedz));
+        return new Response($odpowiedz, 200, array('Content-Type' => 'aplication/json'));
+
+
+    }
+    /**
+     * @Route("/zapis_zalecenia", name="zapisz_zalecenia", options={ "expose" = true })
+     *
+     */
+    public function zapisz_zaleceniaAction(Request $request) {
+
+
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+        $id_spotkania = (int)$request->request->get('id_spotkania');
+        $zalecenia = $request->request->get('zalecenia');
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT s
+                 FROM LogopediaBundle:Spotkanie s
+                  WHERE s.id = :id_spotkania
+                  ')
+            ->setParameter('id_spotkania',$id_spotkania);
+
+        $spotkanie = $query->setMaxResults(1)->getOneOrNullResult();
+
+        $spotkanie->setZalecenia($zalecenia);
+        $spotkanie->setDone(1);
+
+        $em->persist($spotkanie);
+        $em->flush();
+
+
+
+        $odpowiedz[0] = $spotkanie->getZalecenia();
+        $odpowiedz[1] = $spotkanie->isDone();
+
+
+        $odpowiedz = json_encode($odpowiedz);
+
 
         //exit(\Doctrine\Common\Util\Debug::dump($odpowiedz));
         return new Response($odpowiedz, 200, array('Content-Type' => 'aplication/json'));
