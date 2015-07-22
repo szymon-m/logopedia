@@ -1,2 +1,2 @@
-var czasOd = '07:00:00';
-var czasDo = '24:00:00';
+var czasOd = '15:00:00';
+var czasDo = '20:00:00';

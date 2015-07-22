@@ -42,6 +42,7 @@ $(function () {
         maxTime: czasDo,
         slotDuration: '00:15:00',
         editable: true,
+        eventOverlap: false,
         defaultEventDurationTime: '01:00:00',
         eventDurationEditable: false,
         eventLimit: true,
@@ -302,28 +303,19 @@ $(function () {
                     data: dane,
                     type: "POST",
                     success: function(json) {
-                        alert('Added Successfully');
+                        alert('Dodano zdarzenie');
 
                         $("#dodaj_nowe_spotkanie").dialog( "close" );
 
-                        $('#calendar-holder').fullCalendar('renderEvent',
-                            {
-                                title: wybrany,
-                                start: start.format(),
-                                end: end.format(),
-                                alldayevent: json.alldayevent,
-                                backgroundColor: json.backgroundColor,
-                            },
-                            true // make the event "stick"
-                        );
 
-                        $('#calendar-holder').fullCalendar('unselect');
+
+
 
 
 
                     }
                 });
-
+                $('#calendar-holder').fullCalendar('refetchEvents');
             };
 
 

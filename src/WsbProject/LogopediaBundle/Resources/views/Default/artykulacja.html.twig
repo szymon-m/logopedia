@@ -89,6 +89,7 @@
              */
             $("#wyslij").click(function (){
 
+
                 wynik[0] = id_spotkania;
                 var zalecenia = $('#121').val();
                 var tmp = '';
@@ -129,7 +130,7 @@
 
                         // $('#aktorzy').empty();
                         // $('#aktorzy').append(html);
-                        allert("Dodano formularz");
+
 
                         // is working !! $("#odpowiedz").append(dane);
 
@@ -171,7 +172,7 @@
                     }
 
                 });
-
+            alert('Zatwierdzono spotkanie');
             });
             /* ========================================================
 
@@ -209,7 +210,8 @@
                                 }
                                 if(k==121) {
 
-                                    $('#zalecenia>p').val('');
+                                    $('#zal1').html('Zalecenia:');
+                                    $('#zal2').html('Zalecenia:');
                                     $("#121").val(dane[k]);
 
                                 }
@@ -259,8 +261,8 @@
 
     </script>
 
-    <div id="wyslij"><button type="button" id="wyslij" name="wyslij">Wyślij</button></div>
-    <div id="zapytaj"><button type="button" id="zapytaj" name="zapytaj">Zapytaj</button></div>
+
+
 <div class="tabs">
 
     <ul class="tab-links">

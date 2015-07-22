@@ -27,6 +27,7 @@
     <script>
 
     </script>
+    <div id="zapytaj"><button type="button" id="zapytaj" name="zapytaj">Pobierz dane z ostatniego spotkania</button></div>
     <div class="section group">
 
 
@@ -53,7 +54,7 @@
 
                           {% if spotkanie.zalecenia %}
 
-                              <i>Zalecenia do spotkania:</i>
+                              <div id="zal1"><i>Zalecenia do spotkania:</i></div>
 
                               {% include 'LogopediaBundle:Spotkanie:zalecenia.html.twig' %}
 
@@ -61,7 +62,7 @@
 
                         {% if not spotkanie.zalecenia %}
 
-                           <p><i>Niestety nie znaleziono zapisanych zaleceń</i><br></p>
+                           <div id="zal2"><p><i>Niestety nie znaleziono zapisanych zaleceń</i><br></p></div>
                             <b>Proszę uzupełnić przed ostatecznym zatwierdzeniem spotkania</b><br>
                             {% include 'LogopediaBundle:Spotkanie:zalecenia.html.twig' %}
 
@@ -75,6 +76,7 @@
                     </div>
 
                     <div id="obrazki" class="tab">
+                        <i>Proszę odnotować oddanie zestawu poprzez usunięcie przypisanych!</i><br><br>
                         <div class="section group">
 
                             <div class="col span_1_of_2">
@@ -134,6 +136,9 @@
 
                         {% if spotkanie.done == 0 %}
                         <br>Status spotkania:<br> <b>Otwarte</b> <br>
+
+                            <br><i>Gdy wypełniono wszystkie pola zakończ spotkanie</i>
+                            <div id="wyslij"><button type="button" id="wyslij" name="wyslij">Zatwierdź spotkanie</button></div>
                         {% endif %}
 
 
