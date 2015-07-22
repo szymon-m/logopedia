@@ -138,12 +138,12 @@ class Spotkanie
     protected $artykulacje = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Obrazki", mappedBy="spotkanie", cascade={"detach"})
-     * @JoinTable(name="obrazki_do_spotkania")
+     * @ORM\ManyToMany(targetEntity="Obrazki", inversedBy="spotkanie")
+     * @JoinTable(name="spotkaniaobrazki")
      * @var Obrazki[]
      */
 
-    protected $obrazki = null;
+    protected $obrazki;
 
     /**
      * @return Obrazki[]

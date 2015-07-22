@@ -66,7 +66,36 @@ class ObrazkiController extends Controller
         $obrazki = $this->getDoctrine()->getRepository('LogopediaBundle:Obrazki')
             ->findAll();
 
+        $em = $this->getDoctrine()->getManager();
+
+        /*dodajemy
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
+            ->find(51);
+
+        $zestaw = $this->getDoctrine()->getRepository('LogopediaBundle:Obrazki')
+            ->find(9);
+
+
+        $spotkanie->setObrazki($zestaw);
+
+        $em->persist($spotkanie);
+        $em->flush();*/
+
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
+            ->find(51);
+
+        $zestaw = $em->getRepository('LogopediaBundle:Obrazki')
+            ->find(9);
+
+
+        $spotkanie->getObrazki()->removeElement($zestaw);
+        $zestaw->setSpotkanie(null);
+        $em->flush();
+
         return array('obrazki' => $obrazki);
+
+
+
     }
 
     /**

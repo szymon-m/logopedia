@@ -38,8 +38,8 @@ class Obrazki
     private $opis;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Spotkanie", inversedBy="obrazki", cascade={"detach"})
-     * @JoinTable("obrazki_do_spotkania")
+     * @ORM\ManyToMany(targetEntity="Spotkanie", mappedBy="obrazki")
+     *
      */
 
     protected $spotkanie;
@@ -58,7 +58,7 @@ class Obrazki
      */
     public function setSpotkanie($spotkanie)
     {
-        $spotkanie->setObrazki($this);
+        //$spotkanie->setObrazki($this);
         $this->spotkanie = $spotkanie;
     }
 
