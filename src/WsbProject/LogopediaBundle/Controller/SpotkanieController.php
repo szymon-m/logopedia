@@ -122,17 +122,17 @@ class SpotkanieController extends Controller
 
         //=================== działajace
         $query = $em->createQuery(
-            'SELECT s, p, o
+            'SELECT s
                  FROM LogopediaBundle:Spotkanie s
-                 JOIN s.pacjent p
-                 JOIN s.obrazki o
-                WHERE p.id = :id_pacjenta
-                AND s.id = :id_spotkania')
-            ->setParameters(array('id_pacjenta'=> $id_pacjenta, 'id_spotkania' => $id));
+                WHERE s.id = :id_spotkania')
+            ->setParameter('id_spotkania',$id);
 
         $spotkanie = $query->getResult();
 
-        //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
+
+
+
+        //exit(\Doctrine\Common\Util\Debug::dump($spotkanie));
         return array('spotkanie' => $spotkanie, 'obrazki'=> $obrazki, 'dostepne' => $dostepne);
 
 
@@ -253,8 +253,8 @@ class SpotkanieController extends Controller
 
     public function pobierz_ostatnia_artykulacjeAction(Request $request) {
 
-        $id_pacjenta = $request->request->get('id_pacjenta');
-        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+        $id_pacjenta = (int)$request->request->get('id_pacjenta');
+        //exit (\Doctrine\Common\Util\Debug::dump($id_pacjenta));
 
         $time_zone = new \DateTimeZone('UTC');
         $time_zone->getName();
@@ -275,8 +275,152 @@ class SpotkanieController extends Controller
                   ORDER BY s.id DESC')
             ->setParameters(array('id_pacjenta'=> $id_pacjenta,'poczatek'=> $poczatek));
 
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
 
 
+        $artykulacja = $query->setMaxResults(1)->getOneOrNullResult();
+
+
+
+        //exit(\Doctrine\Common\Util\Debug::dump($artykulacja));
+        if($artykulacja) {
+
+            $position = 1;
+
+            for($i = 1; $i <= 24; ++$i) {
+
+                $temp = $artykulacja->getValue('a',$i);
+
+
+
+                for($j = 0; $j <= 4; ++$j) {
+
+                    $text = str_split($temp);
+                    if($text[$j]=='1') {
+                        $tablica[$position] = 1;
+                        $position += 1;
+                    }
+
+                    else {
+                        $tablica[$position] = 0;
+                        $position += 1;
+                    }
+                }
+            }
+            $tablica[121] = $artykulacja->getSpotkanie()->getZalecenia();
+
+            //exit(\Doctrine\Common\Util\Debug::dump($tablica));
+            $tablica = json_encode($tablica);
+            return new Response($tablica, 200, array('Content-Type' => 'aplication/json'));
+
+        }
+        return array('artykulacja'=> $artykulacja);
+
+    }
+
+    /**
+     * @Route("/usun_spotkanie/{id_spotkania}", name="usun_spotkanie", options={"expose"=true})
+     */
+
+    public function usun_spotkanieAction($id_spotkania) {
+
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a
+                 FROM LogopediaBundle:Artykulacja a
+                  WHERE a.spotkanie = :id_spotkania
+              ')
+            ->setParameter('id_spotkania', $id_spotkania);
+
+
+        $artykulacja = $query->setMaxResults(1)->getOneOrNullResult();
+
+
+
+        if($artykulacja) {
+
+            $em->remove($artykulacja);
+            $em->flush();
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')->find($id_spotkania);
+
+
+
+        $em->remove($spotkanie);
+        $em->flush();
+
+        //===================
+        /*$spotkanie = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+
+        if($spotkanie->getDone() == 1) {
+
+
+        }
+
+        if($spotkanie->getDone() == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                'SELECT a
+                 FROM LogopediaBundle:Artykulacja a
+                  WHERE a.spotkanie = :id_spotkania')
+                ->setParameter('id_spotkania',$id_spotkania);
+
+            $artykulacje = $query->getResult();
+
+            foreach($artykulacje as $artykulacja) {
+
+                $spotkanie->getArtykulacje()->removeElement($artykulacja);
+                $artykulacja->setSpotkanie(null);
+
+            }
+
+            $em->flush();
+        //}
+
+
+
+        /*
+
+        $spotkanie->getObrazki()->removeElement($zestaw);
+        $zestaw->setSpotkanie(null);
+        $em->flush(); */
+
+        $status = [];
+        $status[0] = 'done';
+
+        $status = json_encode($status);
+
+        return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+
+
+    }
+    /**
+     * @Route("/pobierz_artykulacje_do_spotkania", name="pobierz_artykulacje_do_spotkania", options={"expose"=true})
+     *
+     */
+
+    public function pobierz_artykulacje_do_spotkaniaAction(Request $request) {
+
+        $id_spotkania = $request->request->get('id_spotkania');
+        //exit (\Doctrine\Common\Util\Debug::dump($dane));
+
+        $time_zone = new \DateTimeZone('UTC');
+        $time_zone->getName();
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a, s
+                 FROM LogopediaBundle:Artykulacja a
+                  JOIN a.spotkanie s
+                  WHERE s.id = :id_spotkania
+                  ORDER BY s.id DESC')
+            ->setParameter('id_spotkania',$id_spotkania);
 
         $artykulacja = $query->setMaxResults(1)->getOneOrNullResult();
 
@@ -310,41 +454,36 @@ class SpotkanieController extends Controller
             return new Response($tablica, 200, array('Content-Type' => 'aplication/json'));
 
         }
-        return array('spotkanie'=> $spotkanie);
+        return null;
 
     }
-
     /**
-     * @Route("/usun_spotkanie/{id_spotkania}", name="usun_spotkanie", options={"expose"=true})
+     * @Route("/pobierz_zalecenia", name="pobierz_zalecenia", options={ "expose" = true })
+     *
      */
+    public function pobierz_zaleceniaAction(Request $request) {
 
-    public function usun_spotkanieAction($id_spotkania) {
-
-
-        $em = $this->getDoctrine()->getManager();
-        $artykulacja = $em->getRepository('LogopediaBundle:Artykulacja')
-            ->find($id_spotkania);
-
-        if($artykulacja) {
-
-            $em->remove($artykulacja);
-            $em->flush();
-
-        }
+        $id_spotkania = (int)$request->request->get('id_spotkania');
 
         $em = $this->getDoctrine()->getManager();
-        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')->find($id_spotkania);
+        $query = $em->createQuery(
+            'SELECT s
+                 FROM LogopediaBundle:Spotkanie s
+                  WHERE s.id = :id_spotkania
+                  ')
+            ->setParameter('id_spotkania',$id_spotkania);
+
+        $spotkanie = $query->setMaxResults(1)->getOneOrNullResult();
+
+        $odpowiedz = [];
+
+        $odpowiedz[0] = $spotkanie->getZalecenia();
 
 
-        $em->remove($spotkanie);
-        $em->flush();
+        $odpowiedz = json_encode($odpowiedz);
 
-        $status = [];
-        $status[0] = 'done';
-
-        $status = json_encode($status);
-
-        return new Response($status, 200, array('Content-Type' => 'aplication/json'));
+        //exit(\Doctrine\Common\Util\Debug::dump($odpowiedz));
+        return new Response($odpowiedz, 200, array('Content-Type' => 'aplication/json'));
 
 
     }

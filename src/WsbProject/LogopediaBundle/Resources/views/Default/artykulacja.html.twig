@@ -19,6 +19,32 @@
                 e.preventDefault();
             });
 
+            $.ajax({
+                url : Routing.generate('pobierz_artykulacje_do_spotkania'),
+                type: "POST",
+                data : { 'id_spotkania': id_spotkania},
+                success: function(dane) {
+                    // Replace current position field ...
+
+
+                    // $('#aktorzy').empty();
+                    // $('#aktorzy').append(html);
+                    //$('#pobierz').append(dane);
+                    for (var k in dane){
+                        if (dane.hasOwnProperty(k)) {
+                            if(dane[k]==1) {
+                                $('#'+k).prop('checked', true);
+                            }
+                            if(dane[k]==0) {
+                                $('#'+k).prop('checked', false)
+                            }
+                            console.log(dane[k]);
+                        }
+                    }
+
+                }});
+
+
             $(":input").change( function () {
 
                 // sprawdzamy czy nacieśnieto 'Nie' jeżeli tak wylaczamy pozostale cztery opcje
@@ -139,7 +165,7 @@
                     success: function(dane) {
                         // Replace current position field ...
 
-
+                        $("#zalecenia-text").val("Nowa tresc");
                         // $('#aktorzy').empty();
                         // $('#aktorzy').append(html);
                         //$('#pobierz').append(dane);
@@ -151,9 +177,17 @@
                                 if(dane[k]==0) {
                                     $('#'+k).prop('checked', false)
                                 }
+                                if(k==121) {
+
+                                    $('#zalecenia>p').val('');
+                                    $("#121").val(dane[k]);
+
+                                }
                                 console.log(dane[k]);
                             }
                         }
+
+
 
 
 

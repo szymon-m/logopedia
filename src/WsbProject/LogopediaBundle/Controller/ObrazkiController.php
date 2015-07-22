@@ -81,6 +81,7 @@ class ObrazkiController extends Controller
         $em->persist($spotkanie);
         $em->flush();*/
 
+        /* usuwamy
         $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
             ->find(51);
 
@@ -90,7 +91,7 @@ class ObrazkiController extends Controller
 
         $spotkanie->getObrazki()->removeElement($zestaw);
         $zestaw->setSpotkanie(null);
-        $em->flush();
+        $em->flush(); */
 
         return array('obrazki' => $obrazki);
 
@@ -117,5 +118,61 @@ class ObrazkiController extends Controller
 
 
         return array('obrazki' => $obrazki);
+    }
+    /**
+     * @Route("/dodaj_dostepny/{id_spotkania}/{id_obrazka}", name="dodaj_dostepny", options={"expose"=true})
+     *
+     */
+
+    public function dodaj_dostepnyAction($id_spotkania, $id_obrazka)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //dodajemy
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+        $zestaw = $this->getDoctrine()->getRepository('LogopediaBundle:Obrazki')
+            ->find($id_obrazka);
+
+
+        $spotkanie->setObrazki($zestaw);
+
+        $em->persist($spotkanie);
+        $em->flush();
+
+
+        return $this->redirectToRoute('przegladaj_obrazki');
+
+
+
+    }
+    /**
+     * @Route("/usun_przypisany/{id_spotkania}/{id_obrazka}", name="usun_przypisany", options={"expose"=true})
+     *
+     */
+
+    public function usun_przypisanyAction($id_spotkania, $id_obrazka)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //usuwamy
+        $spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+        $zestaw = $em->getRepository('LogopediaBundle:Obrazki')
+            ->find($id_obrazka);
+
+
+        $spotkanie->getObrazki()->removeElement($zestaw);
+        $zestaw->setSpotkanie(null);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('przegladaj_obrazki');
+
+
+
     }
 }

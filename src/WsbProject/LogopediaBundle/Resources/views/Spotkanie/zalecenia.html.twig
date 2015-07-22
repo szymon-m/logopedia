@@ -1,0 +1,59 @@
+<script>
+    $(document).ready(function() {
+        $('.tabs .tab-links a').on('click', function(e)  {
+            var currentAttrValue = jQuery(this).attr('href');
+
+            // Show/Hide Tabs
+            $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+            // Change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            e.preventDefault();
+        });
+
+        var id_spotkania = {{  app.request.get('id')}};
+
+
+        $.ajax({
+            url : Routing.generate('pobierz_zalecenia'),
+            type: "POST",
+            data : { 'id_spotkania': id_spotkania},
+            success: function(dane) {
+                // Replace current position field ...
+
+
+                // $('#aktorzy').empty();
+                // $('#aktorzy').append(html);
+                //$('#pobierz').append(dane);
+
+                for (var k in dane){
+                    if (dane.hasOwnProperty(k)) {
+
+                        $("#121").val(dane[k]);
+
+                    }
+                }
+
+            }});
+
+
+    });
+
+</script>
+<div class="section group">
+    <div class="col span_1_of_3">
+
+    </div>
+</div>
+
+<div class="section group">
+    <div class="col span_1_of_3">
+        <textarea id="121" rows="4" cols="50">
+
+        </textarea>
+    </div>
+</div>
+
+
+

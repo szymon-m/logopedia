@@ -3,13 +3,7 @@
 {% block content %}
 
     {%  include 'LogopediaBundle:Default:menu.html.twig' %}
-    <style>
-        #feedback { font-size: 1.4em; }
-        #selectable .ui-selecting { background: #FECA40; }
-        #selectable .ui-selected { background: #F39814; color: white; }
-        #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-        #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
-    </style>
+
     <script>
         $(document).ready(function() {
             $('.tabs .tab-links a').on('click', function(e)  {
@@ -42,26 +36,39 @@
                     <li class="active"><a href="#artykulacja">Formularz artykulacji</a></li>
                     <li><a href="#zalecenia">Zalecenia</a></li>
                     <li><a href="#obrazki">Zestawy obrazków</a></li>
+
                 </ul>
 
                 <div class="tab-content">
                     <div id="artykulacja" class="tab active">
-                        {% for spotkanie in spotkanie %}
-                            <tr>
 
-                                <td>{{ spotkanie.pacjent.imie }} </td>
 
-                                <td>{{ spotkanie.pacjent.nazwisko }}</td>
 
-                                <td>{{ spotkanie.zalecenia }}</td>
-
-                            </tr>
-
-                        {% endfor %}
                         {%  include 'LogopediaBundle:Default:artykulacja.html.twig' %}
                     </div>
 
                     <div id="zalecenia" class="tab">
+
+                        {% for spotkanie in spotkanie %}
+
+                          {% if spotkanie.zalecenia %}
+
+                              <i>Zalecenia do spotkania:</i>
+
+                              {% include 'LogopediaBundle:Spotkanie:zalecenia.html.twig' %}
+
+                            {% endif %}
+
+                        {% if not spotkanie.zalecenia %}
+
+                           <p><i>Niestety nie znaleziono zapisanych zaleceń</i><br></p>
+                            <b>Proszę uzupełnić przed ostatecznym zatwierdzeniem spotkania</b><br>
+                            {% include 'LogopediaBundle:Spotkanie:zalecenia.html.twig' %}
+
+                        {% endif %}
+
+
+                        {% endfor %}
 
 
 
@@ -69,33 +76,26 @@
 
                     <div id="obrazki" class="tab">
                         <div class="section group">
+
                             <div class="col span_1_of_2">
-                                <b>Zestawy obrazków przypisane do spotkania:</b>
+                                <b>Zestawy obrazków przypisane do spotkania:</b><br>
+                                <i>Kliknij na link,aby usunąć przypisany zestaw</i><br>
+
                                 {% for obrazek in obrazki %}
-                                    <tr>
 
-                                        <td>{{ obrazek.id }} </td>
 
-                                        <td>{{ obrazek.nazwa }}</td>
-
-                                        <td>{{ obrazek.opis }}</td>
-
-                                    </tr>
+                                    <a href="{{ path('usun_przypisany',{'id_spotkania': app.request.get('id'), 'id_obrazka': obrazek.id}) }}"><br>{{ obrazek.nazwa }} - {{ obrazek.opis }}</a>
 
                                 {% endfor %}
                             </div>
                             <div class="col span_1_of_2">
-                                <b>Dostępne zestawy obrazków:</b>
+                                <b>Dostępne zestawy obrazków:</b><br>
+                                <i>Kliknij na link, aby dodać dostępny zestaw</i><br>
                                 {% for dostepny in dostepne %}
-                                    <tr>
 
-                                        <td>{{ dostepny.id }} </td>
+                                    <a href="{{ path('dodaj_dostepny',{'id_spotkania': app.request.get('id'), 'id_obrazka': dostepny.id}) }}"><br>{{ dostepny.nazwa }} - {{ dostepny.opis }}</a>
 
-                                        <td>{{ dostepny.nazwa }}</td>
 
-                                        <td>{{ dostepny.opis }}</td>
-
-                                    </tr>
 
                                 {% endfor %}
 
@@ -109,6 +109,7 @@
 
 
                     </div>
+
                 </div>
             </div>
         </div>
@@ -121,7 +122,23 @@
 
                 <div class="tab-content">
                     <div id="tab2" class="tab active">
+                        {% for spotkanie in spotkanie %}
 
+                        {{ spotkanie.pacjent.imie }}<br>
+
+                        <b>{{ spotkanie.pacjent.nazwisko }}</b><br>
+
+                        {% if spotkanie.done == 1 %}
+                        <br>Status spotkania:<br> <b>Zakończone</b> <br>
+                        {% endif %}
+
+                        {% if spotkanie.done == 0 %}
+                        <br>Status spotkania:<br> <b>Otwarte</b> <br>
+                        {% endif %}
+
+
+
+                        {% endfor %}
                     </div>
 
 
