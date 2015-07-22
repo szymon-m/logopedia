@@ -1,0 +1,95 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        $(document).ready(function() {
+            $('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    <br>
+    <br>
+
+    <div class="section group">
+
+
+
+        <div class="col span_3_of_4">
+
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Pacjenci</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab2" class="tab active">
+                        {% for flashMessage in app.session.flashbag.get('notice') %}
+                            <div class="flash-notice">{{ flashMessage }}</div>
+                        {% endfor %}
+
+                        <div class="CSSTableGenerator">
+                            <table>
+                                <tr>
+                                    <td>Nr</td>
+                                    <td>Nazwa</td>
+                                    <td>Opis</td>
+                                    <td>Usuń</td>
+
+                                </tr>
+                                {% for obrazek in obrazki %}
+                                <tr>
+                                    <td>{{ obrazek.id }}</td>
+                                    <td>{{ obrazek.nazwa }}</td>
+                                    <td>{{ obrazek.opis }}</td>
+                                    <td><a href="{{ path('usun_obrazki',{'id': obrazek.id}) }}"> Usuń</a></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        Zestawy obrazków znalezione w systemie
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+

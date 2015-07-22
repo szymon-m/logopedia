@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WsbProject\LogopediaBundle\Entity\Artykulacja;
+use Doctrine\ORM\Mapping as ORM;
 
 
 class SpotkanieController extends Controller
@@ -90,18 +91,37 @@ class SpotkanieController extends Controller
         // ============================= też działa
 
         $query = $em->createQuery(
-            'SELECT o, s, p
+            'SELECT o, s
                  FROM LogopediaBundle:Obrazki o
                  JOIN o.spotkanie s
-                 JOIN s.pacjent p
-                WHERE p.id = :id_pacjenta
-                AND s.id = :id_spotkania')
-            ->setParameters(array('id_pacjenta'=> $id_pacjenta, 'id_spotkania' => $id));
+                 WHERE s.id = :id_spotkania')
+            ->setParameter('id_spotkania',$id);
 
         $obrazki = $query->getResult();
 
         //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
 
+        /*$query = $em->createQuery(
+            'SELECT o, s
+              FROM LogopediaBundle:Obrazki o
+              JOIN o.spotkanie s
+              WHERE s.id NOT IN
+                (SELECT DISTINCT o, s
+                  FROM LogopediaBundle:Obrazki o
+                  JOIN o spotkanie s
+                  WHERE s.id = :id_spotkania)
+              ORDER BY o.id ASC')
+            ->setParameter('id_spotkania', $id);
+
+        */
+        $query = $em->createQuery(
+            'SELECT o, s
+                 FROM LogopediaBundle:Obrazki o
+                 JOIN o.spotkanie s
+                 WHERE s.id = :id_spotkania')
+            ->setParameter('id_spotkania',$id);
+
+        $dostepne = $query->getResult();
 
         //=================== działajace
         $query = $em->createQuery(
@@ -116,7 +136,7 @@ class SpotkanieController extends Controller
         $spotkanie = $query->getResult();
 
         //exit(\Doctrine\Common\Util\Debug::dump($obrazki));
-        return array('spotkanie' => $spotkanie, 'obrazki'=> $obrazki);
+        return array('spotkanie' => $spotkanie, 'obrazki'=> $obrazki, 'dostepne' => $dostepne);
 
 
         /*return array('spotkanie'=>$spotkanie);

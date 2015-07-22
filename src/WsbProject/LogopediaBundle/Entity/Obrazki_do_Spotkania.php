@@ -9,33 +9,25 @@ use Doctrine\ORM\Mapping\JoinTable;
 /**
  * Obrazki
  *
- * @ORM\Table("Obrazki")
+ * @ORM\Table("obrazki_do_spotkania")
  * @ORM\Entity
  */
 class Obrazki
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="nazwa", type="string", length=255)
+     *
+     * @ORM\Column(name="obrazki_id")
      */
-    private $nazwa;
+    private $obrazki_id;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="opis", type="string", length=255)
+     *
+     * @ORM\Column(name="spotkanie_id")
      */
-    private $opis;
+    private $spotkanie_id;
 
     /**
      * @ORM\ManyToMany(targetEntity="Spotkanie", inversedBy="obrazki", cascade={"detach"})

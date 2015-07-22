@@ -3,7 +3,13 @@
 {% block content %}
 
     {%  include 'LogopediaBundle:Default:menu.html.twig' %}
-
+    <style>
+        #feedback { font-size: 1.4em; }
+        #selectable .ui-selecting { background: #FECA40; }
+        #selectable .ui-selected { background: #F39814; color: white; }
+        #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    </style>
     <script>
         $(document).ready(function() {
             $('.tabs .tab-links a').on('click', function(e)  {
@@ -17,12 +23,16 @@
 
                 e.preventDefault();
             });
+
         });
 
     </script>
     <br>
     <br>
 
+    <script>
+
+    </script>
     <div class="section group">
 
 
@@ -58,13 +68,46 @@
                     </div>
 
                     <div id="obrazki" class="tab">
-                        {% for obrazki in obrazki %}
-                            {{ obrazki.id }}
-                            {{ obrazki.spotkanie.id }}
-                            {{ obrazki.spotkanie.pacjent.imie }}
+                        <div class="section group">
+                            <div class="col span_1_of_2">
+                                <b>Zestawy obrazków przypisane do spotkania:</b>
+                                {% for obrazek in obrazki %}
+                                    <tr>
+
+                                        <td>{{ obrazek.id }} </td>
+
+                                        <td>{{ obrazek.nazwa }}</td>
+
+                                        <td>{{ obrazek.opis }}</td>
+
+                                    </tr>
+
+                                {% endfor %}
+                            </div>
+                            <div class="col span_1_of_2">
+                                <b>Dostępne zestawy obrazków:</b>
+                                {% for dostepny in dostepne %}
+                                    <tr>
+
+                                        <td>{{ dostepny.id }} </td>
+
+                                        <td>{{ dostepny.nazwa }}</td>
+
+                                        <td>{{ dostepny.opis }}</td>
+
+                                    </tr>
+
+                                {% endfor %}
+
+                            </div>
 
 
-                        {% endfor %}
+
+                        </div>
+
+
+
+
                     </div>
                 </div>
             </div>
