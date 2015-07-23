@@ -19,7 +19,7 @@
 
             <ul class="logopedia">
                 {% image '@LogopediaBundle/Resources/public/images/logo-male.png' %}
-                <img src="{{ asset_url }}" alt="Logopedia" />
+                <a href="{{ path('dzisiaj')}}"><img src="{{ asset_url }}" alt="Logopedia" /></a>
                 {% endimage %}
 
         </div>
@@ -43,16 +43,16 @@
                         <a href="#">Spotkanie</a>
                         <ul>
                             <li><a href="{{ path('dzisiaj')}}">Dzisiaj</a></li>
-                            <li><a href="#">Szukaj</a></li>
+
 
                         </ul>
                     </li>
                     <li>
                         <a href="#">Administrator</a>
                         <ul>
-                            <li><a href="{{ path('dodaj_obrazki')}}">Dodaj zestaw obrazków</a></li>
-                            <li><a href="#">Usuń pacjenta</a></li>
-                            <li><a href="#">Ustawienia</a></li>
+                            <li><a href="{{ path('przegladaj_obrazki')}}">Zestawy obrazków</a></li>
+                            <li><a href="{{ path('konfiguracja')}}">Ustawienia</a></li>
+                            <li><a href="{{ path('logout') }}">Wyloguj</a></li>
 
                         </ul>
                     </li>

@@ -20,6 +20,12 @@ class PacjentController extends Controller
      */
     public function dodaj_pacjentaAction()
     {
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
+
         $pacjent = new Pacjent();
         $form = $this->createForm(new DodajPacjentaType(), $pacjent, array(
             'action' => $this->generateUrl('dodany_pacjent'),
@@ -62,33 +68,141 @@ class PacjentController extends Controller
     }
 
     /**
-     * @Route("/usun_pacjenta", name="usun_pacjenta", options={"expose"=true})
-     * @Template("LogopediaBundle:Pacjent:usun_pacjenta.html.twig")
+     * @Route("/usun_pacjenta/{id}", name="usun_pacjenta", options={"expose"=true})
+     *
      */
-    public function usun_pacjentaAction(Request $request)
+    public function usun_pacjentaAction($id)
     {
-        $pacjent = new Pacjent();
-        $form = $this->createForm(new DodajPacjentaType(), $pacjent);
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT d
+                 FROM LogopediaBundle:Diagnoza d
+                  WHERE d.pacjent = :id
+              ')
+            ->setParameter('id', $id);
 
-        $form->handleRequest($request);
-        $form->createView();
-        if ($form->isSubmitted()) {
+        $diagnoza = $query->setMaxResults(1)->getOneOrNullResult();
 
-            $em = $this->getDoctrine()->getManager();
-            $nowy_pacjent = $form->getData();
-            $nowy_pacjent->setIdWywiadu(0);
-            $nowy_pacjent->setIdDiagnozy(0);
 
-            $em->persist($nowy_pacjent);
+        if($diagnoza) {
+
+            $em->remove($diagnoza);
+            $em->flush();
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT w
+                 FROM LogopediaBundle:Wywiad w
+                  WHERE w.pacjent = :id
+              ')
+            ->setParameter('id', $id);
+
+        $wywiad = $query->setMaxResults(1)->getOneOrNullResult();
+
+
+        if($wywiad) {
+
+            $em->remove($wywiad);
+            $em->flush();
+
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT s
+                 FROM LogopediaBundle:Spotkanie s
+                 JOIN s.pacjent p
+                  WHERE p.id = :id
+              ')
+            ->setParameter('id', $id);
+
+        $spotkania = $query->getResult();
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+            'SELECT a
+                 FROM LogopediaBundle:Pacjent a
+                  WHERE a.id = :id
+              ')
+            ->setParameter('id', $id);
+
+
+        $pacjent = $query->setMaxResults(1)->getOneOrNullResult();
+
+
+        //exit(\Doctrine\Common\Util\Debug::dump($spotkania));
+        foreach($spotkania as $spotkanie) {
+
+            $pacjent->getSpotkania()->removeElement($spotkanie);
+            $spotkanie->setPacjent(null);
+            $em->flush();
+        }
+
+
+
+
+
+
+
+
+
+        if($pacjent) {
+
+            $em->remove($pacjent);
             $em->flush();
 
 
-            return array('nowy_pacjent' => $nowy_pacjent);
+            //$em = $this->getDoctrine()->getManager();
+            //$spotkanie = $em->getRepository('LogopediaBundle:Spotkanie')->find($id_spotkania);
 
-        } else {
-            return $this->redirectToRoute('dodaj_pacjenta');
+
+            $em->remove($pacjent);
+            $em->flush();
+
+
+        //===================
+        /*$spotkanie = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie')
+            ->find($id_spotkania);
+
+
+        if($spotkanie->getDone() == 1) {
+
+
         }
 
+        if($spotkanie->getDone() == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $query = $em->createQuery(
+                'SELECT a
+                 FROM LogopediaBundle:Artykulacja a
+                  WHERE a.spotkanie = :id_spotkania')
+                ->setParameter('id_spotkania',$id_spotkania);
+
+            $artykulacje = $query->getResult();
+
+            foreach($artykulacje as $artykulacja) {
+
+                $spotkanie->getArtykulacje()->removeElement($artykulacja);
+                $artykulacja->setSpotkanie(null);
+
+            }
+
+            $em->flush();
+        //}
+
+
+
+        /*
+
+        $spotkanie->getObrazki()->removeElement($zestaw);
+        $zestaw->setSpotkanie(null);
+        $em->flush(); */
+
+        }
+
+        return $this->redirectToRoute('przegladaj_pacjentow');
 
     }
 
@@ -121,10 +235,18 @@ class PacjentController extends Controller
      */
     public function pacjentAction($id)
     {
-
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
 
         $pacjent = $this->getDoctrine()->getRepository('LogopediaBundle:Pacjent')
             ->find($id);
+
+        $spotkanie = $this->getDoctrine()->getRepository('LogopediaBundle:Spotkanie')
+            ->findBy(array('pacjent'=>$id));
+
 
 
         if ($pacjent) {
@@ -136,7 +258,7 @@ class PacjentController extends Controller
             $wywiad = $this->getDoctrine()->getRepository('LogopediaBundle:Wywiad')
                 ->findOneBy(array('pacjent' => $id));
 
-            return array('pacjent' => $pacjent, 'diagnoza' => $diagnoza, 'wywiad' => $wywiad);
+            return array('pacjent' => $pacjent, 'diagnoza' => $diagnoza, 'wywiad' => $wywiad, 'spotkanie'=> $spotkanie);
 
         } else {
 

@@ -49,6 +49,7 @@
                                     <td>Adres i miejscowość</td>
                                     <td>Telefon</td>
                                     <td>Wybierz</td>
+                                    <td>Usuń</td>
                                 </tr>
                                 {% for pacjent in pacjenci %}
                                 <tr>
@@ -57,6 +58,7 @@
                                     <td>{{ pacjent.adres }} {{ pacjent.miejscowosc }}</td>
                                     <td>{{ pacjent.telefon }}</td>
                                     <td><a href="{{ path('pacjent',{'id': pacjent.id }) }}"> Wybierz</a></td>
+                                    <td><a href="{{ path('usun_pacjenta',{'id': pacjent.id }) }}"> Usuń</a></td>
                                 </tr>
                                 {% endfor %}
                             </table>

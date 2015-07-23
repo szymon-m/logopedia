@@ -20,6 +20,12 @@ class SpotkanieController extends Controller
      */
     public function dzisiajAction() {
 
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
+
         $time_zone = new \DateTimeZone('UTC');
         $time_zone->getName();
 
@@ -66,6 +72,12 @@ class SpotkanieController extends Controller
      * @Template("LogopediaBundle:Spotkanie:spotkanie.html.twig")
      */
     public function spotkanieAction($id, $id_pacjenta) {
+
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
 
         $em = $this->getDoctrine()->getManager();
         /*

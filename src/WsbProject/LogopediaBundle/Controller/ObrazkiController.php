@@ -18,6 +18,11 @@ class ObrazkiController extends Controller
 
     public function dodaj_obrazkiAction()
     {
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
         $obrazki = new Obrazki();
         $form = $this->createForm(new DodajObrazkiType(), $obrazki, array(
             'action' => $this->generateUrl('dodany_obrazek'),
@@ -63,6 +68,11 @@ class ObrazkiController extends Controller
 
     public function przegladaj_obrazkiAction()
     {
+        if(!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        } else {
+            $user = $this->getUser();
+        }
         $obrazki = $this->getDoctrine()->getRepository('LogopediaBundle:Obrazki')
             ->findAll();
 
@@ -142,7 +152,7 @@ class ObrazkiController extends Controller
         $em->flush();
 
 
-        return $this->redirectToRoute('przegladaj_obrazki');
+        return $this->redirectToRoute('sptk', array('id_spotkania' => $id_spotkania));
 
 
 
@@ -170,7 +180,7 @@ class ObrazkiController extends Controller
 
 
 
-        return $this->redirectToRoute('przegladaj_obrazki');
+        return $this->redirectToRoute('sptk', array('id_spotkania' => $id_spotkania));
 
 
 

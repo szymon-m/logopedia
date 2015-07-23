@@ -119,7 +119,7 @@
 
 
 
-                alert(wynik);
+
                 $.ajax({
                     url : Routing.generate('zapisz_artykulacje'),
                     type: "POST",
@@ -173,6 +173,9 @@
 
                 });
             alert('Zatwierdzono spotkanie');
+                var dane = { 'id_spotkania' : id_spotkania};
+
+                window.location.href = Routing.generate('sptk', dane);
             });
             /* ========================================================
 

@@ -4,6 +4,44 @@ $(function () {
     var m = date.getMonth();
     var y = date.getFullYear();
 
+    var godzinka = '';
+    var czasOd = '' ;
+    var czasDo = '';
+    var slot = '';
+
+
+        $.ajax({
+            url : Routing.generate('pobierz_konfiguracje'),
+            type: "POST",
+            async: false,
+            data : { 'id': 1 },
+            success: function(dane) {
+                // Replace current position field ...
+
+
+                godzinka = dane.godzinka;
+                czasOd = String(dane.czasOd);
+                czasDo = String(dane.czasDo);
+                slot = dane.slot;
+
+                return [godzinka,czasOd, czasDo, slot];
+
+                // $('#aktorzy').empty();
+                // $('#aktorzy').append(html);
+                //$('#pobierz').append(dane);
+
+
+            }});
+
+
+
+    console.log(godzinka);
+    console.log(czasOd);
+    console.log(czasDo);
+    console.log(slot);
+
+
+
     var pierwsze =  {
 
         start: '15:00:00', // a start time (10am in this example)
@@ -40,9 +78,11 @@ $(function () {
         defaultView: 'agendaWeek',
         minTime: czasOd,
         maxTime: czasDo,
-        slotDuration: '00:15:00',
+        //slotDuration: '00:15:00',
+        slotDuration: slot,
         editable: true,
         eventOverlap: false,
+        //defaultEventDurationTime: '01:00:00',
         defaultEventDurationTime: '01:00:00',
         eventDurationEditable: false,
         eventLimit: true,

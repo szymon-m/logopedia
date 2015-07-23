@@ -20,6 +20,31 @@
         });
 
     </script>
+    <style>
+        form label, form input {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        form label {
+            width: 30%;
+            float: left;
+            text-align: right;
+            padding: 0% 3% 0% 0%;
+            margin-top: 2%;
+        }
+
+        form input {
+            margin-top: 1%;
+            width: 70%;
+            float: right;
+        }
+        form button {
+            margin-top: 15%;
+
+        }
+    </style>
     <br>
     <br>
 
@@ -51,9 +76,19 @@
 
                 <div class="tab-content">
                     <div id="dodawanie" class="tab active">
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        {{ form_end(form) }}
+                        <div class="section group">
+                            <div class="cols span_1_of_2">
+
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                {{ form_end(form) }}
+
+                            </div>
+
+
+                        </div>
+
+
 
 
                     </div>

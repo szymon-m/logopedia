@@ -1,0 +1,190 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        $(document).ready(function() {
+            $('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                $('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+            $.ajax({
+                url : Routing.generate('pobierz_konfiguracje'),
+                type: "POST",
+                async: false,
+                data : { 'id': 1 },
+                success: function(dane) {
+                    // Replace current position field ...
+
+
+                    $('select#godzinka').val(dane.godzinka);
+                    $('select#czasod').val(dane.czasOd);
+                    $('select#czasdo').val(dane.czasDo);
+                    $('select#slot').val(dane.slot);
+
+
+
+                    // $('#aktorzy').empty();
+                    // $('#aktorzy').append(html);
+                    //$('#pobierz').append(dane);
+
+
+                }});
+            $('#wyslij').click( function () {
+
+
+                alert('Nacisnales');
+
+                var godzinka = $('select#godzinka').val();
+                var czasOd = $('select#czasod').val();
+                var czasDo = $('select#czasdo').val();
+                var slot = $('select#slot').val();
+
+
+                var dane = {
+                    godzinka: godzinka,
+                    czasOd: czasOd,
+                    czasDo: czasDo,
+                    slot: slot
+                };
+
+                        console.log(dane);
+
+                $.ajax({
+                    url: Routing.generate('popraw_konfiguracje'),
+
+                    data: dane,
+                    type: "POST",
+                    success: function(json) {
+                        alert('Poprawiono konfiguracje');
+
+                                          }
+                });
+
+                });
+
+
+
+
+        });
+
+    </script>
+    <style>
+        form label, form input {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        form label {
+            width: 30%;
+            float: left;
+            text-align: right;
+            padding: 0% 3% 0% 0%;
+            margin-top: 2%;
+        }
+
+        form input {
+            margin-top: 1%;
+            width: 70%;
+            float: right;
+        }
+        form button {
+            margin-top: 15%;
+
+        }
+    </style>
+    <br>
+    <br>
+
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#obrazki">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="obrazki" class="tab active">
+                      Tutaj ustawisz najważniejsze parametry
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col span_3_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#dodawanie">Ustawienia</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="dodawanie" class="tab active">
+                        <div class="section group">
+                            <div class="cols span_1_of_2">
+
+
+                                <select name="godzinka" id="godzinka">
+                                    <option value="0.50">30 minut</option>
+                                    <option value="0.75">45 minut</option>
+                                    <option value="1.00">60 minut</option>
+                                </select> <label for="godzinka">Domyślny czas trwania spotkania</label><br><br>
+
+                                <select name="czasod" id="czasod">
+                                    <option value="07:00:00">07:00:00</option>
+                                    <option value="09:00:00">09:00:00</option>
+                                    <option value="12:00:00">12:00:00</option>
+                                    <option value="15:00:00">15:00:00</option>
+                                </select>  <label for="czasod">Kalendarz wyświetla godziny od</label><br><br>
+
+                                <select name="czasdo" id="czasdo">
+                                    <option value="17:00:00">17:00:00</option>
+                                    <option value="19:00:00">19:00:00</option>
+                                    <option value="21:00:00">21:00:00</option>
+                                    <option value="23:00:00">21:00:00</option>
+                                </select> <label for="czasdo">Kalendarz wyświetla godziny do</label><br><br>
+
+                                <select name="slot" id="slot">
+                                    <option value="00:15:00">15 minut</option>
+                                    <option value="00:30:00">30 minut</option>
+                                    <option value="01:00:00">60 minut</option>
+                                </select>  <label for="slot">Kalendarz wyświetla pozycje w odstępie</label><br><br>
+
+                                <div id="zatwierdz"><button type="button" id="wyslij" name="wyslij">Zatwierdź</button></div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}
+

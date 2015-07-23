@@ -37,6 +37,7 @@
 
                 <div class="tab-content">
                     <div id="tab2" class="tab active">
+                        <a href="{{ path('dodaj_obrazki')}}">Dodaj zestaw obrazków</a><br><br>
                         {% for flashMessage in app.session.flashbag.get('notice') %}
                             <div class="flash-notice">{{ flashMessage }}</div>
                         {% endfor %}

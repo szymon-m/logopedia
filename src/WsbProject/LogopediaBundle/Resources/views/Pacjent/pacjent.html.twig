@@ -44,7 +44,7 @@
                 <ul class="tab-links">
                     <li class="active"><a href="#diagnoza">Diagnoza</a></li>
                     <li><a href="#wywiad">Wywiad</a></li>
-                    <li><a hreg="#spotkania">Spotkania</a></li>
+                    <li><a href="#spotkania">Spotkania</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -80,6 +80,51 @@
                                 {% endif %}
 
                             </div>
+
+                            <div id="spotkania" class="tab">
+
+
+                                {% if not spotkanie %}
+
+                                    <i>Niestety nie znaleziono spotkań tego pacjenta</i>
+
+
+                                {%  else %}
+
+                                    <i>Spotkania pacjenta</i>
+
+                                    <div class="CSSTableGenerator">
+                                        <table>
+                                            <tr>
+                                                <td>Nr</td>
+                                                <td>Data spotkania</td>
+                                                <td>Opis</td>
+                                                <td>Wybierz</td>
+
+                                            </tr>
+                                            {% for spotkanie in spotkanie %}
+                                                <tr>
+                                                    <td>{{ spotkanie.id }}</td>
+                                                    <td>{{ spotkanie.start |date ('d/m/y H:i')}}</td>
+                                                    <td>   {% if spotkanie.done == 1 %}
+                                                            <b>Zakończone</b>
+                                                        {% endif %}
+
+                                                        {% if spotkanie.done == 0 %}
+                                                        <b>Otwarte do edycji</b> </td>
+                                                    {% endif %}
+
+                                                    <td><a href="{{ path('spotkanie',{'id': spotkanie.id, 'id_pacjenta': app.request.get('id')}) }}"> Przejdź</a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+
+
+                                    </div>
+
+                                {% endif %}
+
+                    </div>
                 </div>
             </div>
         </div>

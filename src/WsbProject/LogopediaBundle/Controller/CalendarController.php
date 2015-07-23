@@ -96,7 +96,7 @@ class CalendarController extends Controller
         return $response;
     }
     /**
-     * @Route("/kalendarz", name="kalendarz", options={"expose"=true})
+     * @Route("/", name="kalendarz", options={"expose"=true})
      * @Template("LogopediaBundle:Default:kalendarz.html.twig")
      */
     public function kalendarzAction() {

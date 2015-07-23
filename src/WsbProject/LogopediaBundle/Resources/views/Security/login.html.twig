@@ -1,0 +1,125 @@
+{%  extends 'LogopediaBundle:Default:base.html.twig' %}
+
+{% block content %}
+
+    {%  include 'LogopediaBundle:Default:menu.html.twig' %}
+
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('.tabs .tab-links a').on('click', function(e)  {
+                var currentAttrValue = jQuery(this).attr('href');
+
+                // Show/Hide Tabs
+                jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+                // Change/remove current tab to active
+                jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+
+                e.preventDefault();
+            });
+        });
+
+    </script>
+    <style>
+        form label, form input {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        form label {
+            width: 30%;
+            float: left;
+            text-align: right;
+            padding: 0% 3% 0% 0%;
+            margin-top: 2%;
+        }
+
+        form input {
+            margin-top: 1%;
+            width: 70%;
+            float: right;
+        }
+        form button {
+            margin-top: 15%;
+
+        }
+    </style>
+    <br>
+    <br>
+
+    <div class="section group">
+        <div class="col span_1_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Informacja</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        Witamy w aplikacji Logopedia!<br>
+                        Proszę się zalogować
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col span_3_of_4">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab2">Logowanie</a></li>
+
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tab2" class="tab active">
+                    <div class="section group">
+                        <div class="cols span_1_of_2">
+
+                            {% if error %}
+                                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            <form action="{{ path('login_check') }}" method="post">
+                                <label for="username">Login:</label>
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" /><br>
+
+                                <label for="password">Hasło:</label>
+                                <input type="password" id="password" name="_password" /><br>
+
+                                {#
+                                    If you want to control the URL the user
+                                    is redirected to on success (more details below)
+                                    <input type="hidden" name="_target_path" value="/account" />
+                                #}
+
+                                <button type="submit">Zaloguj</button>
+                            </form>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}
+
