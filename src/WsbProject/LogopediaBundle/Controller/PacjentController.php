@@ -496,16 +496,23 @@ class PacjentController extends Controller
      */
     public function pobierz_diagnozeAction(Request $request)
     {
-        $dane = $request->request->all();
+
         //exit (\Doctrine\Common\Util\Debug::dump($dane));
 
-        $id_pacjenta = $dane['id_pacjenta'];
+        $id_pacjenta = $request->request->get('id_pacjenta');
 
         $em = $this->getDoctrine()->getManager();
         $diagnoza = $em->getRepository('LogopediaBundle:Diagnoza')
-            ->findOneBy(array('pacjent' => (int)$id_pacjenta));
+            ->findBy(array('pacjent' => $id_pacjenta));
 
-        $text = $diagnoza->getTresc();
+        if($diagnoza) {
+            $text = $diagnoza->getTresc();
+        } else {
+
+            $text = '';
+        }
+
+
 
         return new Response($text, 200, array('Content-Type' => 'text/html'));
 
