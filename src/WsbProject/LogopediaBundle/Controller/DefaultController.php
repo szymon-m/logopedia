@@ -10,15 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="main", options={"expose"=true})
-     * @Template("LogopediaBundle:Default:index.html.twig")
-     */
-    public function indexAction()
-    {
-        $name = "Szymon";
-        return array('name' => $name);
-    }
+
     /**
      * @Route("/artykulacja", name="artykulacja")
      * @Template("LogopediaBundle:Default:artykulacja.html.twig")
