@@ -1,6 +1,6 @@
 Logopedia
 ===
-demo: http://logopedaweb.pl/logopedia/web/
+
 
 Szymon Matyla
 
